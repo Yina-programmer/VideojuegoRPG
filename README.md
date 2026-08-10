@@ -61,3 +61,16 @@ exploración.
 
 📸 **Fotografías y recuerdos**  
 Asocia fotografías y textos propios con los lugares que hayas explorado.
+
+
+## 👥 Equipo
+
+<p align="center">
+
+| 👩‍💻 Integrante | 🔗 GitHub |
+|---|---|
+| **[Yina Stefanny Ardila Romero](https://github.com/Yina-programmer)** | [@Yina-programmer](https://github.com/Yina-programmer) |
+| **[Maria Jose Torres Torres](https://github.com/m00077)** | [@m00077](https://github.com/m00077) |
+| **[Nicolas Stiven Canizales Ortegon](https://github.com/ICovenI)** | [@ICovenI](https://github.com/ICovenI) |
+
+</p>
