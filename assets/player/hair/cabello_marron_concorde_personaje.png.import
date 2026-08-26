@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdireyqaof27f"
-path="res://.godot/imported/cabello_marron_concorde_personaje.png-d4f15e002127a3212a14852c70103720.ctex"
+path="res://.godot/imported/cabello_marron_concorde_personaje.png-c26afa7db1cf6d5324dc83c6e98bd6f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/personaje/cabello_marron_concorde_personaje.png"
-dest_files=["res://.godot/imported/cabello_marron_concorde_personaje.png-d4f15e002127a3212a14852c70103720.ctex"]
+source_file="res://assets/player/hair/cabello_marron_concorde_personaje.png"
+dest_files=["res://.godot/imported/cabello_marron_concorde_personaje.png-c26afa7db1cf6d5324dc83c6e98bd6f4.ctex"]
 
 [params]
 

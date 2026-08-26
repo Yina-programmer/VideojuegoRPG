@@ -1,55 +1,55 @@
 [gd_scene format=3 uid="uid://ca38sdhdt350"]
 
-[ext_resource type="Script" uid="uid://c46c24r1pudki" path="res://personaje.gd" id="1_4e5bt"]
-[ext_resource type="Texture2D" uid="uid://deurg18g2sqgg" path="res://assets/personaje/c8c8b05b-6890-429b-8ac9-eac98615561e.png" id="2_yppqc"]
-[ext_resource type="Texture2D" uid="uid://cdireyqaof27f" path="res://assets/personaje/cabello_marron_concorde_personaje.png" id="3_yppqc"]
+[ext_resource type="Script" uid="uid://c46c24r1pudki" path="res://scripts/player/player.gd" id="1_gmlin"]
+[ext_resource type="Texture2D" uid="uid://deurg18g2sqgg" path="res://assets/player/body/c8c8b05b-6890-429b-8ac9-eac98615561e.png" id="2_lvxji"]
+[ext_resource type="Texture2D" uid="uid://cdireyqaof27f" path="res://assets/player/hair/cabello_marron_concorde_personaje.png" id="3_p47bc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gj0cs"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(0, 0, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ck3sb"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(325, 0, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cx4ix"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(650, 0, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_35kqm"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(0, 403, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1y5k2"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(325, 403, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f8plh"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(650, 403, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqm5q"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(0, 806, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2vb47"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(325, 806, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xeorn"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(650, 806, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_chw5a"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(0, 1209, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wdwyh"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(325, 1209, 325, 403)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h755h"]
-atlas = ExtResource("2_yppqc")
+atlas = ExtResource("2_lvxji")
 region = Rect2(650, 1209, 325, 403)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_56mys"]
@@ -112,15 +112,15 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pyv6t"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(0, 0, 130, 161)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wyluk"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(130, 0, 130, 161)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n8vmr"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(260, 0, 130, 161)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dfirp"]
@@ -141,15 +141,15 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vopn2"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(0, 161, 130, 161)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3rvlt"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(130, 161, 130, 161)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cgtbb"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(260, 161, 130, 161)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pcy2s"]
@@ -170,15 +170,15 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8huex"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(0, 322, 130, 161)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vpyix"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(130, 322, 130, 161)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mcxej"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(260, 322, 130, 161)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wwi55"]
@@ -199,15 +199,15 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pe31f"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(0, 483, 130, 161)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y2l4a"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(130, 483, 130, 161)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hujys"]
-atlas = ExtResource("3_yppqc")
+atlas = ExtResource("3_p47bc")
 region = Rect2(260, 483, 130, 161)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_c37aq"]
@@ -227,45 +227,40 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="personaje" type="CharacterBody2D" unique_id=18230161]
-script = ExtResource("1_4e5bt")
+[node name="player" type="CharacterBody2D" unique_id=18230161]
+script = ExtResource("1_gmlin")
 
 [node name="visual" type="Node2D" parent="." unique_id=586947521]
 
-[node name="cuerpo" type="AnimatedSprite2D" parent="visual" unique_id=1136563526]
+[node name="body" type="AnimatedSprite2D" parent="visual" unique_id=1136563526]
 position = Vector2(3.75, 9.75)
 scale = Vector2(0.97692305, 0.9863524)
 sprite_frames = SubResource("SpriteFrames_56mys")
 animation = &"walk_down"
-frame_progress = 0.053580422
 
-[node name="cabello_down" type="AnimatedSprite2D" parent="visual" unique_id=305267257]
+[node name="hair_down" type="AnimatedSprite2D" parent="visual" unique_id=305267257]
 position = Vector2(3.999998, 28.531273)
 scale = Vector2(3.3276324, 2.4538047)
 sprite_frames = SubResource("SpriteFrames_dfirp")
 animation = &"walk_down"
-frame = 1
 
-[node name="cabello_left" type="AnimatedSprite2D" parent="visual" unique_id=1673429369]
+[node name="hair_left" type="AnimatedSprite2D" parent="visual" unique_id=1673429369]
 visible = false
 position = Vector2(25.25, 14.999991)
 scale = Vector2(3.1807692, 2.5465837)
 sprite_frames = SubResource("SpriteFrames_pcy2s")
 animation = &"walk_left"
-frame = 1
 
-[node name="cabello_right" type="AnimatedSprite2D" parent="visual" unique_id=72276997]
+[node name="hair_right" type="AnimatedSprite2D" parent="visual" unique_id=72276997]
 visible = false
 position = Vector2(-37.499996, -2.0000124)
 scale = Vector2(3.0538461, 2.3602486)
 sprite_frames = SubResource("SpriteFrames_wwi55")
 animation = &"walk_right"
-frame = 1
 
-[node name="cabello_up" type="AnimatedSprite2D" parent="visual" unique_id=1698240680]
+[node name="hair_up" type="AnimatedSprite2D" parent="visual" unique_id=1698240680]
 visible = false
 position = Vector2(9.000001, -4.343768)
 scale = Vector2(2.9346151, 2.728649)
 sprite_frames = SubResource("SpriteFrames_c37aq")
 animation = &"walk_up"
-frame = 2
