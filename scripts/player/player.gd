@@ -2,11 +2,11 @@
 extends CharacterBody2D
 
 func _process(_delta):
-	var cuerpo = get_node_or_null("visual/cuerpo")
-	var down = get_node_or_null("visual/cabello_down")
-	var left = get_node_or_null("visual/cabello_left")
-	var right = get_node_or_null("visual/cabello_right")
-	var up = get_node_or_null("visual/cabello_up")
+	var cuerpo = get_node_or_null("visual/body")
+	var down = get_node_or_null("visual/hair_down")
+	var left = get_node_or_null("visual/hair_left")
+	var right = get_node_or_null("visual/hair_right")
+	var up = get_node_or_null("visual/hair_up")
 
 	if cuerpo == null or down == null or left == null or right == null or up == null:
 		return

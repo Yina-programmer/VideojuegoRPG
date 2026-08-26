@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4dt437wfu3s4"
-path="res://.godot/imported/personaje_base_MATCH_390x644.png-3842676ff9e5657ea3241df2ea256dec.ctex"
+uid="uid://crl4mlry5chpb"
+path="res://.godot/imported/cabello_MATCH_975x1612.png-d83d6d373cb1ed8b72c516086e11c741.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/personaje/personaje_base_MATCH_390x644.png"
-dest_files=["res://.godot/imported/personaje_base_MATCH_390x644.png-3842676ff9e5657ea3241df2ea256dec.ctex"]
+source_file="res://assets/player/hair/cabello_MATCH_975x1612.png"
+dest_files=["res://.godot/imported/cabello_MATCH_975x1612.png-d83d6d373cb1ed8b72c516086e11c741.ctex"]
 
 [params]
 
