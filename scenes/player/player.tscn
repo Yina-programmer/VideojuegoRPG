@@ -227,8 +227,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h11f"]
+size = Vector2(174, 365)
+
 [node name="player" type="CharacterBody2D" unique_id=18230161]
 script = ExtResource("1_gmlin")
+metadata/_edit_group_ = true
 
 [node name="visual" type="Node2D" parent="." unique_id=586947521]
 
@@ -264,3 +268,10 @@ position = Vector2(9.000001, -4.343768)
 scale = Vector2(2.9346151, 2.728649)
 sprite_frames = SubResource("SpriteFrames_c37aq")
 animation = &"walk_up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=166824803]
+modulate = Color(0.9999997, 0.11356702, 0.86151034, 1)
+position = Vector2(1, 20.5)
+shape = SubResource("RectangleShape2D_5h11f")
+
+[node name="MovementController" type="Node" parent="." unique_id=1039112491]

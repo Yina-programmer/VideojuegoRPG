@@ -1,5 +1,6 @@
 @tool
 extends CharacterBody2D
+var speed = 400.0
 
 func _process(_delta):
 	var cuerpo = get_node_or_null("visual/body")
@@ -36,3 +37,8 @@ func _process(_delta):
 			up.animation = "walk_up"
 			up.frame = cuerpo.frame
 			up.visible = true
+
+func _physics_process(delta):
+	var inputDirection = Input.get_vector("MoveLeft", "MoveRight", "MoveUp", "MoveDown")
+	velocity = speed * inputDirection
+	move_and_slide()
