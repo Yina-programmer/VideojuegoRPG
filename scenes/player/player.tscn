@@ -227,8 +227,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h11f"]
+size = Vector2(174, 365)
+
 [node name="player" type="CharacterBody2D" unique_id=18230161]
 script = ExtResource("1_gmlin")
+metadata/_edit_group_ = true
 
 [node name="visual" type="Node2D" parent="." unique_id=586947521]
 
@@ -239,6 +243,7 @@ sprite_frames = SubResource("SpriteFrames_56mys")
 animation = &"walk_down"
 
 [node name="hair_down" type="AnimatedSprite2D" parent="visual" unique_id=305267257]
+visible = false
 position = Vector2(3.999998, 28.531273)
 scale = Vector2(3.3276324, 2.4538047)
 sprite_frames = SubResource("SpriteFrames_dfirp")
@@ -257,6 +262,7 @@ position = Vector2(-37.499996, -2.0000124)
 scale = Vector2(3.0538461, 2.3602486)
 sprite_frames = SubResource("SpriteFrames_wwi55")
 animation = &"walk_right"
+frame = 1
 
 [node name="hair_up" type="AnimatedSprite2D" parent="visual" unique_id=1698240680]
 visible = false
@@ -264,3 +270,9 @@ position = Vector2(9.000001, -4.343768)
 scale = Vector2(2.9346151, 2.728649)
 sprite_frames = SubResource("SpriteFrames_c37aq")
 animation = &"walk_up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=166824803]
+visible = false
+modulate = Color(0.9999997, 0.11356702, 0.86151034, 1)
+position = Vector2(1, 20.5)
+shape = SubResource("RectangleShape2D_5h11f")
