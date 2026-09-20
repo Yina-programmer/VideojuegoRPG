@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://ma3t1isn0bvj"]
+
+[ext_resource type="Script" uid="uid://b35mwxo4axjii" path="res://scenes/player/closet_ui.gd" id="1_0pphy"]
+[ext_resource type="PackedScene" uid="uid://ca38sdhdt350" path="res://scenes/player/player.tscn" id="1_o7bm5"]
+
+[node name="ClosetUI" type="Control" unique_id=768611624]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0pphy")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="ColorRect" parent="." unique_id=1454689809]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ClosetPanel" type="Panel" parent="." unique_id=1337110570]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 64.0
+offset_right = 1026.0
+offset_bottom = 584.0
+
+[node name="TitleLabel" type="Label" parent="ClosetPanel" unique_id=1673069495]
+layout_mode = 0
+offset_left = 224.0
+offset_top = -44.0
+offset_right = 424.0
+offset_bottom = 6.0
+text = "CLOSET"
+
+[node name="CharacterPanel" type="Panel" parent="ClosetPanel" unique_id=802187111]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 90.0
+offset_right = 365.0
+offset_bottom = 490.0
+
+[node name="player" parent="ClosetPanel/CharacterPanel" unique_id=18230161 instance=ExtResource("1_o7bm5")]
+position = Vector2(165, 200)
+scale = Vector2(0.8, 0.8)
+
+[node name="OutfitsPanel" type="Panel" parent="ClosetPanel" unique_id=1450532885]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 90.0
+offset_right = 865.0
+offset_bottom = 490.0
+
+[node name="OutfitsLabel" type="Label" parent="ClosetPanel/OutfitsPanel" unique_id=1910534119]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 15.0
+offset_right = 450.0
+offset_bottom = 55.0
+text = "OUTFITS"
+
+[node name="OutfitsGrid" type="GridContainer" parent="ClosetPanel/OutfitsPanel" unique_id=425216524]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 85.0
+offset_right = 470.0
+offset_bottom = 365.0
+columns = 3
+
+[node name="OriginalButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1879809752]
+custom_minimum_size = Vector2(130, 100)
+layout_mode = 2
+text = "Original"
+
+[node name="PinkButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1565761011]
+custom_minimum_size = Vector2(130, 100)
+layout_mode = 2
+text = "Pink"
+
+[node name="BlueButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1527508789]
+custom_minimum_size = Vector2(130, 100)
+layout_mode = 2
+text = "Blue"
+
+[node name="BlackButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1731554553]
+custom_minimum_size = Vector2(130, 100)
+layout_mode = 2
+text = "Black"
+
+[node name="WhiteBowButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=360252763]
+custom_minimum_size = Vector2(130, 100)
+layout_mode = 2
+text = "White Bow
+"
+
+[node name="BlackBowButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1579062821]
+custom_minimum_size = Vector2(130, 100)
+layout_mode = 2
+text = "Black Bow"
