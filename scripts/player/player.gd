@@ -11,6 +11,17 @@ extends CharacterBody2D
 var speed = 400.0
 var lastDirection = "down"
 
+var outfits = {
+	"original": preload("res://assets/player/outfits/outfit_original_frames.tres"),
+	"rosa": preload("res://assets/player/outfits/outfit_rosa_frames.tres"),
+	"azul": preload("res://assets/player/outfits/outfit_azul_frames.tres"),
+	"negro": preload("res://assets/player/outfits/outfit_negro_frames.tres"),
+	"blanco_mono": preload("res://assets/player/outfits/outfit_blanco_mono_frames.tres"),
+	"negro_mono": preload("res://assets/player/outfits/outfit_negro_mono_frames.tres")
+}
+
+var outfit_actual: String = "original"
+
 func _process(_delta):
 	var cuerpo = get_node_or_null("visual/body")
 	var down = get_node_or_null("visual/hair_down")
@@ -47,7 +58,6 @@ func _process(_delta):
 			up.frame = cuerpo.frame
 			up.visible = true
 
-
 func _physics_process(_delta):
 	getInput()
 	move_and_slide()
@@ -77,3 +87,35 @@ func getInput():
 
 func updateAnimation (state):
 	body.play(state + "_" + lastDirection)
+func cambiar_outfit(nombre: String):
+	if not outfits.has(nombre):
+		print("No existe el outfit: ", nombre)
+		return
+
+	body.sprite_frames = outfits[nombre]
+	outfit_actual = nombre
+
+	print("Outfit cambiado a: ", outfit_actual)
+	print("Recurso: ", body.sprite_frames.resource_path)
+
+	body.play("walk_" + lastDirection)
+func _unhandled_key_input(event):
+	if event is InputEventKey and event.pressed and not event.echo:
+		match event.physical_keycode:
+			KEY_1, KEY_KP_1:
+				cambiar_outfit("original")
+
+			KEY_2, KEY_KP_2:
+				cambiar_outfit("rosa")
+
+			KEY_3, KEY_KP_3:
+				cambiar_outfit("azul")
+
+			KEY_4, KEY_KP_4:
+				cambiar_outfit("negro")
+
+			KEY_5, KEY_KP_5:
+				cambiar_outfit("blanco_mono")
+
+			KEY_6, KEY_KP_6:
+				cambiar_outfit("negro_mono")

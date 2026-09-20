@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ca38sdhdt350"]
 
 [ext_resource type="Script" uid="uid://c46c24r1pudki" path="res://scripts/player/player.gd" id="1_gmlin"]
-[ext_resource type="SpriteFrames" uid="uid://cgjdqt5st7r76" path="res://assets/player/outfits/outfit_negro_mono_frames.tres" id="2_gmlin"]
+[ext_resource type="SpriteFrames" uid="uid://c7jl1gqh4qpcp" path="res://assets/player/outfits/outfit_original_frames.tres" id="2_gmlin"]
 [ext_resource type="Texture2D" uid="uid://cdireyqaof27f" path="res://assets/player/hair/cabello_marron_concorde_personaje.png" id="3_p47bc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pyv6t"]
