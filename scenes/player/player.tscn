@@ -1,115 +1,8 @@
 [gd_scene format=3 uid="uid://ca38sdhdt350"]
 
 [ext_resource type="Script" uid="uid://c46c24r1pudki" path="res://scripts/player/player.gd" id="1_gmlin"]
-[ext_resource type="Texture2D" uid="uid://deurg18g2sqgg" path="res://assets/player/body/c8c8b05b-6890-429b-8ac9-eac98615561e.png" id="2_lvxji"]
+[ext_resource type="SpriteFrames" uid="uid://cgjdqt5st7r76" path="res://assets/player/outfits/outfit_negro_mono_frames.tres" id="2_gmlin"]
 [ext_resource type="Texture2D" uid="uid://cdireyqaof27f" path="res://assets/player/hair/cabello_marron_concorde_personaje.png" id="3_p47bc"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gj0cs"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(0, 0, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ck3sb"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(325, 0, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cx4ix"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(650, 0, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_35kqm"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(0, 403, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1y5k2"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(325, 403, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f8plh"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(650, 403, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pqm5q"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(0, 806, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2vb47"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(325, 806, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xeorn"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(650, 806, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_chw5a"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(0, 1209, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wdwyh"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(325, 1209, 325, 403)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h755h"]
-atlas = ExtResource("2_lvxji")
-region = Rect2(650, 1209, 325, 403)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_56mys"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gj0cs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ck3sb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cx4ix")
-}],
-"loop": 1,
-"name": &"walk_down",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_35kqm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1y5k2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f8plh")
-}],
-"loop": 1,
-"name": &"walk_left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pqm5q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2vb47")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xeorn")
-}],
-"loop": 1,
-"name": &"walk_right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_chw5a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wdwyh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h755h")
-}],
-"loop": 1,
-"name": &"walk_up",
-"speed": 5.0
-}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pyv6t"]
 atlas = ExtResource("3_p47bc")
@@ -231,6 +124,7 @@ animations = [{
 size = Vector2(174, 365)
 
 [node name="player" type="CharacterBody2D" unique_id=18230161]
+position = Vector2(-3, -24)
 script = ExtResource("1_gmlin")
 metadata/_edit_group_ = true
 
@@ -239,8 +133,8 @@ metadata/_edit_group_ = true
 [node name="body" type="AnimatedSprite2D" parent="visual" unique_id=1136563526]
 position = Vector2(3.75, 9.75)
 scale = Vector2(0.97692305, 0.9863524)
-sprite_frames = SubResource("SpriteFrames_56mys")
-animation = &"walk_down"
+sprite_frames = ExtResource("2_gmlin")
+animation = &"walk_up"
 
 [node name="hair_down" type="AnimatedSprite2D" parent="visual" unique_id=305267257]
 visible = false
@@ -274,5 +168,5 @@ animation = &"walk_up"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=166824803]
 visible = false
 modulate = Color(0.9999997, 0.11356702, 0.86151034, 1)
-position = Vector2(1, 20.5)
+position = Vector2(500, 300)
 shape = SubResource("RectangleShape2D_5h11f")
