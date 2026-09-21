@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="VideojuegoRPG"
-run/main_scene="uid://ca38sdhdt350"
+run/main_scene="uid://bco5vu8jl7txc"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [autoload]
