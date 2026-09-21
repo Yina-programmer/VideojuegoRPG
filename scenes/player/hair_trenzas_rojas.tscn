@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce61slo6785u7"]
+
+[ext_resource type="SpriteFrames" uid="uid://c8wbbrp3vrtla" path="res://assets/player/hair/cabello_trenzas_rojas_frames.tres" id="1_frames"]
+
+[node name="hair_trenzas_rojas" type="Node2D" unique_id=1935266573]
+
+[node name="hair_down" type="AnimatedSprite2D" parent="." unique_id=1960220508]
+position = Vector2(3.999998, 28.531273)
+scale = Vector2(1.3310529, 0.9803041)
+sprite_frames = ExtResource("1_frames")
+animation = &"walk_down"
+
+[node name="hair_left" type="AnimatedSprite2D" parent="." unique_id=1853291448]
+visible = false
+position = Vector2(25.25, 14.999991)
+scale = Vector2(1.2723076, 1.0173696)
+sprite_frames = ExtResource("1_frames")
+animation = &"walk_left"
+
+[node name="hair_right" type="AnimatedSprite2D" parent="." unique_id=1319234679]
+visible = false
+position = Vector2(-37.499996, -2.0000114)
+scale = Vector2(1.2215384, 0.9429281)
+sprite_frames = ExtResource("1_frames")
+animation = &"walk_right"
+
+[node name="hair_up" type="AnimatedSprite2D" parent="." unique_id=1225438339]
+visible = false
+position = Vector2(9.000001, -4.343769)
+scale = Vector2(1.173846, 1.0901054)
+sprite_frames = ExtResource("1_frames")
+animation = &"walk_up"

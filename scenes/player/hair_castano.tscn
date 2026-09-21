@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://dyj7rdpmqofrj"]
+
+[ext_resource type="Texture2D" uid="uid://cdireyqaof27f" path="res://assets/player/hair/cabello_marron_concorde_personaje.png" id="1_cwkl4"]
+[ext_resource type="SpriteFrames" path="res://assets/hair/hair_castano.tres" id="2_msr7n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe31f"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(0, 483, 130, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2l4a"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(130, 483, 130, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hujys"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(260, 483, 130, 161)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c37aq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe31f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y2l4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hujys")
+}],
+"loop": 1,
+"name": &"walk_up",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8huex"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(0, 322, 130, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpyix"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(130, 322, 130, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcxej"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(260, 322, 130, 161)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wwi55"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8huex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vpyix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcxej")
+}],
+"loop": 1,
+"name": &"walk_right",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vopn2"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(0, 161, 130, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rvlt"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(130, 161, 130, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgtbb"]
+atlas = ExtResource("1_cwkl4")
+region = Rect2(260, 161, 130, 161)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pcy2s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vopn2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rvlt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgtbb")
+}],
+"loop": 1,
+"name": &"walk_left",
+"speed": 5.0
+}]
+
+[node name="hair_castano" type="Node2D" unique_id=1935266573]
+
+[node name="hair_up" type="AnimatedSprite2D" parent="." unique_id=1225438339]
+visible = false
+position = Vector2(9.000001, -4.343769)
+scale = Vector2(2.9346151, 2.728649)
+sprite_frames = SubResource("SpriteFrames_c37aq")
+animation = &"walk_up"
+
+[node name="hair_right" type="AnimatedSprite2D" parent="." unique_id=1319234679]
+visible = false
+position = Vector2(-37.499996, -2.0000114)
+scale = Vector2(3.0538461, 2.3602486)
+sprite_frames = SubResource("SpriteFrames_wwi55")
+animation = &"walk_right"
+frame = 1
+
+[node name="hair_left" type="AnimatedSprite2D" parent="." unique_id=1853291448]
+visible = false
+position = Vector2(25.25, 14.999991)
+scale = Vector2(3.1807692, 2.5465837)
+sprite_frames = SubResource("SpriteFrames_pcy2s")
+animation = &"walk_left"
+
+[node name="hair_down" type="AnimatedSprite2D" parent="." unique_id=1960220508]
+position = Vector2(3.999998, 28.531273)
+scale = Vector2(3.3276324, 2.4538047)
+sprite_frames = ExtResource("2_msr7n")
+animation = &"walk_down"

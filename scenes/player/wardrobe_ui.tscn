@@ -1,7 +1,219 @@
 [gd_scene format=3 uid="uid://ma3t1isn0bvj"]
 
-[ext_resource type="Script" uid="uid://b35mwxo4axjii" path="res://scenes/player/closet_ui.gd" id="1_0pphy"]
-[ext_resource type="PackedScene" uid="uid://ca38sdhdt350" path="res://scenes/player/player.tscn" id="1_o7bm5"]
+[ext_resource type="Script" uid="uid://b35mwxo4axjii" path="res://scenes/player/closet_ui.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://ca38sdhdt350" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="Texture2D" uid="uid://f2pw5p6jpt1g" path="res://assets/ui/closet/closet_chapinero_bg.png" id="3_bg"]
+[ext_resource type="Texture2D" uid="uid://deurg18g2sqgg" path="res://assets/player/body/c8c8b05b-6890-429b-8ac9-eac98615561e.png" id="4_original"]
+[ext_resource type="Texture2D" uid="uid://bu14ucb61p3ap" path="res://assets/player/outfits/outfit_rosa.png" id="5_rosa"]
+[ext_resource type="Texture2D" uid="uid://3umce12yjgpv" path="res://assets/player/outfits/outfit_azul.png" id="6_azul"]
+[ext_resource type="Texture2D" uid="uid://dythy4wctv5mp" path="res://assets/player/outfits/outfit_negro.png" id="7_negro"]
+[ext_resource type="Texture2D" uid="uid://c7ykkvgx28mq6" path="res://assets/player/outfits/outfit_blanco_mono.png" id="8_blanco"]
+[ext_resource type="Texture2D" uid="uid://mh5lb0jq3lra" path="res://assets/player/outfits/outfit_negro_mono.png" id="9_negro_mono"]
+[ext_resource type="Texture2D" uid="uid://crl4mlry5chpb" path="res://assets/player/hair/cabello_MATCH_975x1612.png" id="10_castano"]
+[ext_resource type="Texture2D" uid="uid://hpplw8kdhyy7" path="res://assets/player/hair/cabello_trenzas_rojas.png" id="11_rojo"]
+[ext_resource type="Texture2D" uid="uid://cp88p7f4sdxdw" path="res://assets/player/hair/cabello_trenza_flor_verde.png" id="12_verde"]
+
+[sub_resource type="StyleBoxFlat" id="MainPanel"]
+bg_color = Color(0.07, 0.04, 0.03, 0.58)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.73, 0.47, 0.22, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="TitlePanel"]
+bg_color = Color(0.12, 0.09, 0.1, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.98, 0.72, 0.32, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="DarkCard"]
+bg_color = Color(0.13, 0.1, 0.11, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.85, 0.74, 0.64, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+shadow_color = Color(0, 0, 0, 0.52)
+shadow_size = 7
+
+[sub_resource type="StyleBoxFlat" id="TabNormal"]
+content_margin_left = 18.0
+content_margin_top = 14.0
+content_margin_right = 18.0
+content_margin_bottom = 14.0
+bg_color = Color(0.19, 0.15, 0.18, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.45, 0.38, 0.42, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="TabPressed"]
+content_margin_left = 18.0
+content_margin_top = 14.0
+content_margin_right = 18.0
+content_margin_bottom = 14.0
+bg_color = Color(1, 0.89, 0.66, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.65, 0.14, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+bg_color = Color(1, 0.94, 0.78, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.96, 0.63, 0.16, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="EmptyFocus"]
+
+[sub_resource type="ButtonGroup" id="CategoryGroup"]
+
+[sub_resource type="StyleBoxFlat" id="PreviewCard"]
+bg_color = Color(0.96, 0.73, 0.42, 0.12)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.97, 0.7, 0.3, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="ArrowButton"]
+bg_color = Color(0.19, 0.16, 0.19, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.94, 0.78, 0.58, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="ButtonPressed"]
+bg_color = Color(1, 0.91, 0.69, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.61, 0.05, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="LightCard"]
+bg_color = Color(0.95, 0.91, 0.85, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.36, 0.3, 0.34, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.58)
+shadow_size = 9
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+bg_color = Color(0.87, 0.83, 0.78, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.76, 0.7, 0.66, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="ButtonGroup" id="OutfitGroup"]
+
+[sub_resource type="AtlasTexture" id="IconOriginal"]
+atlas = ExtResource("4_original")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="IconRosa"]
+atlas = ExtResource("5_rosa")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="IconAzul"]
+atlas = ExtResource("6_azul")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="IconNegro"]
+atlas = ExtResource("7_negro")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="IconBlanco"]
+atlas = ExtResource("8_blanco")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="IconNegroMono"]
+atlas = ExtResource("9_negro_mono")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="ButtonGroup" id="HairGroup"]
+
+[sub_resource type="AtlasTexture" id="IconCastano"]
+atlas = ExtResource("10_castano")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="IconRojo"]
+atlas = ExtResource("11_rojo")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="IconVerde"]
+atlas = ExtResource("12_verde")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="StyleBoxFlat" id="SaveButton"]
+bg_color = Color(0.08, 0.46, 0.23, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.35, 0.95, 0.48, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
 
 [node name="ClosetUI" type="Control" unique_id=768611624]
 layout_mode = 3
@@ -10,90 +222,478 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_0pphy")
-metadata/_edit_use_anchors_ = true
+script = ExtResource("1_script")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1454689809]
+[node name="Background" type="TextureRect" parent="." unique_id=1117440743]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Shade" type="ColorRect" parent="." unique_id=2036624193]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.02, 0.012, 0.008, 0.14)
+
+[node name="ClosetPanel" type="Panel" parent="." unique_id=1959571200]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -566.0
+offset_top = -314.0
+offset_right = 566.0
+offset_bottom = 314.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("MainPanel")
+
+[node name="TitlePanel" type="Panel" parent="ClosetPanel" unique_id=1636418809]
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_left = 322.0
+offset_top = 12.0
+offset_right = 810.0
+offset_bottom = 82.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("TitlePanel")
 
-[node name="ClosetPanel" type="Panel" parent="." unique_id=1337110570]
+[node name="Title" type="Label" parent="ClosetPanel/TitlePanel" unique_id=416586045]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.89, 0.7, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 34
+text = "ARMARIO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CategoryPanel" type="Panel" parent="ClosetPanel" unique_id=608784453]
 layout_mode = 0
-offset_left = 126.0
-offset_top = 64.0
-offset_right = 1026.0
-offset_bottom = 584.0
+offset_left = 18.0
+offset_top = 148.0
+offset_right = 218.0
+offset_bottom = 363.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("DarkCard")
 
-[node name="TitleLabel" type="Label" parent="ClosetPanel" unique_id=1673069495]
+[node name="OutfitsTab" type="Button" parent="ClosetPanel/CategoryPanel" unique_id=908516898]
 layout_mode = 0
-offset_left = 224.0
-offset_top = -44.0
-offset_right = 424.0
-offset_bottom = 6.0
-text = "CLOSET"
-
-[node name="CharacterPanel" type="Panel" parent="ClosetPanel" unique_id=802187111]
-layout_mode = 0
-offset_left = 35.0
-offset_top = 90.0
-offset_right = 365.0
-offset_bottom = 490.0
-
-[node name="player" parent="ClosetPanel/CharacterPanel" unique_id=18230161 instance=ExtResource("1_o7bm5")]
-position = Vector2(165, 200)
-scale = Vector2(0.8, 0.8)
-
-[node name="OutfitsPanel" type="Panel" parent="ClosetPanel" unique_id=1450532885]
-layout_mode = 0
-offset_left = 395.0
-offset_top = 90.0
-offset_right = 865.0
-offset_bottom = 490.0
-
-[node name="OutfitsLabel" type="Label" parent="ClosetPanel/OutfitsPanel" unique_id=1910534119]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 15.0
-offset_right = 450.0
-offset_bottom = 55.0
+offset_left = 14.0
+offset_top = 18.0
+offset_right = 186.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0.94, 0.9, 0.88, 1)
+theme_override_colors/font_pressed_color = Color(0.18, 0.14, 0.12, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("TabNormal")
+theme_override_styles/pressed = SubResource("TabPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("CategoryGroup")
 text = "OUTFITS"
 
-[node name="OutfitsGrid" type="GridContainer" parent="ClosetPanel/OutfitsPanel" unique_id=425216524]
+[node name="HairTab" type="Button" parent="ClosetPanel/CategoryPanel" unique_id=204647078]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 85.0
-offset_right = 470.0
-offset_bottom = 365.0
+offset_left = 14.0
+offset_top = 116.0
+offset_right = 186.0
+offset_bottom = 194.0
+theme_override_colors/font_color = Color(0.94, 0.9, 0.88, 1)
+theme_override_colors/font_pressed_color = Color(0.18, 0.14, 0.12, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("TabNormal")
+theme_override_styles/pressed = SubResource("TabPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("CategoryGroup")
+text = "CABELLO"
+
+[node name="CharacterPanel" type="Panel" parent="ClosetPanel" unique_id=1495047033]
+layout_mode = 0
+offset_left = 234.0
+offset_top = 98.0
+offset_right = 680.0
+offset_bottom = 548.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PreviewCard")
+
+[node name="CharacterLabel" type="Label" parent="ClosetPanel/CharacterPanel" unique_id=1831323535]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 14.0
+offset_right = 351.0
+offset_bottom = 43.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.66, 1)
+theme_override_font_sizes/font_size = 18
+text = "PERSONAJE: MUJER  1 / 1"
+horizontal_alignment = 1
+
+[node name="PreviousCharacter" type="Button" parent="ClosetPanel/CharacterPanel" unique_id=624302338]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 190.0
+offset_right = 78.0
+offset_bottom = 260.0
+tooltip_text = "Personaje anterior"
+theme_override_colors/font_color = Color(1, 0.89, 0.72, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("ArrowButton")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+text = "<"
+
+[node name="NextCharacter" type="Button" parent="ClosetPanel/CharacterPanel" unique_id=648880928]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 190.0
+offset_right = 422.0
+offset_bottom = 260.0
+tooltip_text = "Personaje siguiente"
+theme_override_colors/font_color = Color(1, 0.89, 0.72, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("ArrowButton")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+text = ">"
+
+[node name="player" parent="ClosetPanel/CharacterPanel" unique_id=361832575 instance=ExtResource("2_player")]
+position = Vector2(223, 235)
+scale = Vector2(0.64, 0.64)
+
+[node name="SelectionLabel" type="Label" parent="ClosetPanel/CharacterPanel" unique_id=1385885055]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 392.0
+offset_right = 398.0
+offset_bottom = 430.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.89, 0.69, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 15
+text = "Clásico  •  Castaño"
+horizontal_alignment = 1
+
+[node name="InventoryPanel" type="Panel" parent="ClosetPanel" unique_id=2116532483]
+layout_mode = 0
+offset_left = 696.0
+offset_top = 96.0
+offset_right = 1114.0
+offset_bottom = 528.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("LightCard")
+
+[node name="InventoryHeader" type="ColorRect" parent="ClosetPanel/InventoryPanel" unique_id=19773650]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 406.0
+offset_bottom = 54.0
+mouse_filter = 2
+color = Color(0.22, 0.18, 0.21, 1)
+
+[node name="SectionTitle" type="Label" parent="ClosetPanel/InventoryPanel/InventoryHeader" unique_id=708225985]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_right = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.92, 1)
+theme_override_font_sizes/font_size = 19
+text = "OUTFITS"
+vertical_alignment = 1
+
+[node name="CounterLabel" type="Label" parent="ClosetPanel/InventoryPanel/InventoryHeader" unique_id=159769883]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_right = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.94, 0.9, 0.88, 1)
+theme_override_font_sizes/font_size = 15
+text = "1 / 6"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="OutfitsGrid" type="GridContainer" parent="ClosetPanel/InventoryPanel" unique_id=788610395]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 68.0
+offset_right = 400.0
+offset_bottom = 340.0
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="OriginalButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1879809752]
-custom_minimum_size = Vector2(130, 100)
+[node name="OriginalButton" type="Button" parent="ClosetPanel/InventoryPanel/OutfitsGrid" unique_id=698613592]
+custom_minimum_size = Vector2(120, 126)
 layout_mode = 2
-text = "Original"
+tooltip_text = "Conjunto clásico"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("OutfitGroup")
+icon = SubResource("IconOriginal")
+expand_icon = true
 
-[node name="PinkButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1565761011]
-custom_minimum_size = Vector2(130, 100)
+[node name="PinkButton" type="Button" parent="ClosetPanel/InventoryPanel/OutfitsGrid" unique_id=1013984704]
+custom_minimum_size = Vector2(120, 126)
 layout_mode = 2
-text = "Pink"
+tooltip_text = "Conjunto rosa"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("OutfitGroup")
+icon = SubResource("IconRosa")
+expand_icon = true
 
-[node name="BlueButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1527508789]
-custom_minimum_size = Vector2(130, 100)
+[node name="BlueButton" type="Button" parent="ClosetPanel/InventoryPanel/OutfitsGrid" unique_id=1526079218]
+custom_minimum_size = Vector2(120, 126)
 layout_mode = 2
-text = "Blue"
+tooltip_text = "Conjunto azul"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("OutfitGroup")
+icon = SubResource("IconAzul")
+expand_icon = true
 
-[node name="BlackButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1731554553]
-custom_minimum_size = Vector2(130, 100)
+[node name="BlackButton" type="Button" parent="ClosetPanel/InventoryPanel/OutfitsGrid" unique_id=1530998914]
+custom_minimum_size = Vector2(120, 126)
 layout_mode = 2
-text = "Black"
+tooltip_text = "Conjunto negro"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("OutfitGroup")
+icon = SubResource("IconNegro")
+expand_icon = true
 
-[node name="WhiteBowButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=360252763]
-custom_minimum_size = Vector2(130, 100)
+[node name="WhiteBowButton" type="Button" parent="ClosetPanel/InventoryPanel/OutfitsGrid" unique_id=322437581]
+custom_minimum_size = Vector2(120, 126)
 layout_mode = 2
-text = "White Bow
-"
+tooltip_text = "Conjunto con lazo blanco"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("OutfitGroup")
+icon = SubResource("IconBlanco")
+expand_icon = true
 
-[node name="BlackBowButton" type="Button" parent="ClosetPanel/OutfitsPanel/OutfitsGrid" unique_id=1579062821]
-custom_minimum_size = Vector2(130, 100)
+[node name="BlackBowButton" type="Button" parent="ClosetPanel/InventoryPanel/OutfitsGrid" unique_id=1681654444]
+custom_minimum_size = Vector2(120, 126)
 layout_mode = 2
-text = "Black Bow"
+tooltip_text = "Conjunto con lazo negro"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("OutfitGroup")
+icon = SubResource("IconNegroMono")
+expand_icon = true
+
+[node name="HairGrid" type="GridContainer" parent="ClosetPanel/InventoryPanel" unique_id=2074153976]
+visible = false
+layout_mode = 0
+offset_left = 18.0
+offset_top = 68.0
+offset_right = 400.0
+offset_bottom = 210.0
+theme_override_constants/h_separation = 10
+columns = 3
+
+[node name="BrownHairButton" type="Button" parent="ClosetPanel/InventoryPanel/HairGrid" unique_id=1463492837]
+custom_minimum_size = Vector2(120, 142)
+layout_mode = 2
+tooltip_text = "Cabello castaño"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("HairGroup")
+icon = SubResource("IconCastano")
+expand_icon = true
+
+[node name="RedBraidsButton" type="Button" parent="ClosetPanel/InventoryPanel/HairGrid" unique_id=1086282019]
+custom_minimum_size = Vector2(120, 142)
+layout_mode = 2
+tooltip_text = "Trenzas con lazos rojos"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("HairGroup")
+icon = SubResource("IconRojo")
+expand_icon = true
+
+[node name="GreenFlowerButton" type="Button" parent="ClosetPanel/InventoryPanel/HairGrid" unique_id=1675605429]
+custom_minimum_size = Vector2(120, 142)
+layout_mode = 2
+tooltip_text = "Trenza con flor verde"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("HairGroup")
+icon = SubResource("IconVerde")
+expand_icon = true
+
+[node name="PaletteLabel" type="Label" parent="ClosetPanel/InventoryPanel" unique_id=1955393221]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 354.0
+offset_right = 92.0
+offset_bottom = 384.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.2, 0.16, 0.14, 1)
+theme_override_font_sizes/font_size = 17
+text = "Color"
+vertical_alignment = 1
+
+[node name="ColorRow" type="HBoxContainer" parent="ClosetPanel/InventoryPanel" unique_id=1024526400]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 348.0
+offset_right = 394.0
+offset_bottom = 390.0
+theme_override_constants/separation = 8
+
+[node name="ClassicColor" type="Button" parent="ClosetPanel/InventoryPanel/ColorRow" unique_id=632686860]
+modulate = Color(0.24, 0.35, 0.25, 1)
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+tooltip_text = "Clásico"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+
+[node name="PinkColor" type="Button" parent="ClosetPanel/InventoryPanel/ColorRow" unique_id=1052012309]
+modulate = Color(0.92, 0.48, 0.6, 1)
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+tooltip_text = "Rosa"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+
+[node name="BlueColor" type="Button" parent="ClosetPanel/InventoryPanel/ColorRow" unique_id=922278321]
+modulate = Color(0.36, 0.58, 0.82, 1)
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+tooltip_text = "Azul"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+
+[node name="BlackColor" type="Button" parent="ClosetPanel/InventoryPanel/ColorRow" unique_id=306336098]
+modulate = Color(0.16, 0.15, 0.18, 1)
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+tooltip_text = "Negro"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+
+[node name="WhiteColor" type="Button" parent="ClosetPanel/InventoryPanel/ColorRow" unique_id=1918930791]
+modulate = Color(0.92, 0.88, 0.78, 1)
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+tooltip_text = "Blanco"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+
+[node name="BowColor" type="Button" parent="ClosetPanel/InventoryPanel/ColorRow" unique_id=1937513729]
+modulate = Color(0.32, 0.25, 0.25, 1)
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+tooltip_text = "Lazo negro"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+
+[node name="StatusLabel" type="Label" parent="ClosetPanel/InventoryPanel" unique_id=848070444]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 396.0
+offset_right = 398.0
+offset_bottom = 421.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.23, 0.19, 0.16, 1)
+theme_override_font_sizes/font_size = 14
+text = "Selecciona una opción para previsualizarla"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="ClosetPanel" unique_id=345393875]
+layout_mode = 0
+offset_left = 696.0
+offset_top = 544.0
+offset_right = 888.0
+offset_bottom = 608.0
+theme_override_colors/font_color = Color(1, 0.96, 0.93, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("ArrowButton")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+text = "<  VOLVER"
+
+[node name="SaveButton" type="Button" parent="ClosetPanel" unique_id=1866520949]
+layout_mode = 0
+offset_left = 904.0
+offset_top = 544.0
+offset_right = 1114.0
+offset_bottom = 608.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("SaveButton")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+text = "GUARDAR"

@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://d4ejqwpx2h6pe"]
+
+[ext_resource type="Texture2D" uid="uid://cdireyqaof27f" path="res://assets/player/hair/cabello_marron_concorde_personaje.png" id="1_evxl1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyv6t"]
+atlas = ExtResource("1_evxl1")
+region = Rect2(0, 0, 130, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wyluk"]
+atlas = ExtResource("1_evxl1")
+region = Rect2(130, 0, 130, 161)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8vmr"]
+atlas = ExtResource("1_evxl1")
+region = Rect2(260, 0, 130, 161)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pyv6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wyluk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8vmr")
+}],
+"loop": 1,
+"name": &"walk_down",
+"speed": 5.0
+}]

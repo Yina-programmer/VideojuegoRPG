@@ -2,118 +2,238 @@
 
 [ext_resource type="Script" uid="uid://c46c24r1pudki" path="res://scripts/player/player.gd" id="1_gmlin"]
 [ext_resource type="SpriteFrames" uid="uid://c7jl1gqh4qpcp" path="res://assets/player/outfits/outfit_original_frames.tres" id="2_gmlin"]
-[ext_resource type="Texture2D" uid="uid://cdireyqaof27f" path="res://assets/player/hair/cabello_marron_concorde_personaje.png" id="3_p47bc"]
+[ext_resource type="PackedScene" uid="uid://dyj7rdpmqofrj" path="res://scenes/player/hair_castano.tscn" id="4_castano"]
+[ext_resource type="Texture2D" uid="uid://cp88p7f4sdxdw" path="res://assets/player/hair/cabello_trenza_flor_verde.png" id="5_0owmy"]
+[ext_resource type="PackedScene" uid="uid://cq53yb263kfed" path="res://scenes/player/hair_flor_verde.tscn" id="5_verde"]
+[ext_resource type="PackedScene" uid="uid://ce61slo6785u7" path="res://scenes/player/hair_trenzas_rojas.tscn" id="6_rojas"]
+[ext_resource type="Texture2D" uid="uid://hpplw8kdhyy7" path="res://assets/player/hair/cabello_trenzas_rojas.png" id="7_qek5x"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pyv6t"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(0, 0, 130, 161)
+[sub_resource type="AtlasTexture" id="D1"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(0, 0, 325, 403)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wyluk"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(130, 0, 130, 161)
+[sub_resource type="AtlasTexture" id="D2"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(325, 0, 325, 403)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n8vmr"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(260, 0, 130, 161)
+[sub_resource type="AtlasTexture" id="D3"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(650, 0, 325, 403)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_dfirp"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_5gtgg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pyv6t")
+"texture": SubResource("D1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wyluk")
+"texture": SubResource("D2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_n8vmr")
+"texture": SubResource("D3")
 }],
 "loop": 1,
 "name": &"walk_down",
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vopn2"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(0, 161, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_h17s1"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(0, 403, 325, 403)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3rvlt"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(130, 161, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_je7p5"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(325, 403, 325, 403)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cgtbb"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(260, 161, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fm80t"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(650, 403, 325, 403)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_pcy2s"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_gx1jg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vopn2")
+"texture": SubResource("AtlasTexture_h17s1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3rvlt")
+"texture": SubResource("AtlasTexture_je7p5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cgtbb")
+"texture": SubResource("AtlasTexture_fm80t")
 }],
 "loop": 1,
 "name": &"walk_left",
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8huex"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(0, 322, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugbui"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(0, 806, 325, 403)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vpyix"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(130, 322, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcs02"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(325, 806, 325, 403)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mcxej"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(260, 322, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_myrg7"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(650, 806, 325, 403)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_wwi55"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_kvlxm"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8huex")
+"texture": SubResource("AtlasTexture_ugbui")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vpyix")
+"texture": SubResource("AtlasTexture_fcs02")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mcxej")
+"texture": SubResource("AtlasTexture_myrg7")
 }],
 "loop": 1,
 "name": &"walk_right",
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pe31f"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(0, 483, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf5tr"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(0, 1209, 325, 403)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y2l4a"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(130, 483, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgqa7"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(325, 1209, 325, 403)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hujys"]
-atlas = ExtResource("3_p47bc")
-region = Rect2(260, 483, 130, 161)
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ydkj"]
+atlas = ExtResource("5_0owmy")
+region = Rect2(650, 1209, 325, 403)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_c37aq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_3j4b4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pe31f")
+"texture": SubResource("AtlasTexture_uf5tr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y2l4a")
+"texture": SubResource("AtlasTexture_lgqa7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hujys")
+"texture": SubResource("AtlasTexture_8ydkj")
+}],
+"loop": 1,
+"name": &"walk_up",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yj68g"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ioxgp"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(325, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnsyf"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(650, 0, 325, 403)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_007i1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yj68g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ioxgp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnsyf")
+}],
+"loop": 1,
+"name": &"walk_down",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="L1"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(0, 403, 325, 403)
+
+[sub_resource type="AtlasTexture" id="L2"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(325, 403, 325, 403)
+
+[sub_resource type="AtlasTexture" id="L3"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(650, 403, 325, 403)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6cv16"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("L1")
+}, {
+"duration": 1.0,
+"texture": SubResource("L2")
+}, {
+"duration": 1.0,
+"texture": SubResource("L3")
+}],
+"loop": 1,
+"name": &"walk_left",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="R1"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(0, 806, 325, 403)
+
+[sub_resource type="AtlasTexture" id="R2"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(325, 806, 325, 403)
+
+[sub_resource type="AtlasTexture" id="R3"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(650, 806, 325, 403)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j4nxn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("R1")
+}, {
+"duration": 1.0,
+"texture": SubResource("R2")
+}, {
+"duration": 1.0,
+"texture": SubResource("R3")
+}],
+"loop": 1,
+"name": &"walk_right",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="U1"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(0, 1209, 325, 403)
+
+[sub_resource type="AtlasTexture" id="U2"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(325, 1209, 325, 403)
+
+[sub_resource type="AtlasTexture" id="U3"]
+atlas = ExtResource("7_qek5x")
+region = Rect2(650, 1209, 325, 403)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_28m0y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("U1")
+}, {
+"duration": 1.0,
+"texture": SubResource("U2")
+}, {
+"duration": 1.0,
+"texture": SubResource("U3")
 }],
 "loop": 1,
 "name": &"walk_up",
@@ -131,42 +251,66 @@ metadata/_edit_group_ = true
 [node name="visual" type="Node2D" parent="." unique_id=586947521]
 
 [node name="body" type="AnimatedSprite2D" parent="visual" unique_id=1136563526]
-position = Vector2(3.75, 9.75)
-scale = Vector2(0.97692305, 0.9863524)
+position = Vector2(3.000016, 9.75)
+scale = Vector2(0.97230774, 0.9863524)
 sprite_frames = ExtResource("2_gmlin")
-animation = &"walk_up"
-
-[node name="hair_down" type="AnimatedSprite2D" parent="visual" unique_id=305267257]
-visible = false
-position = Vector2(3.999998, 28.531273)
-scale = Vector2(3.3276324, 2.4538047)
-sprite_frames = SubResource("SpriteFrames_dfirp")
 animation = &"walk_down"
 
-[node name="hair_left" type="AnimatedSprite2D" parent="visual" unique_id=1673429369]
+[node name="hair_castano" parent="visual" unique_id=305267257 instance=ExtResource("4_castano")]
 visible = false
-position = Vector2(25.25, 14.999991)
-scale = Vector2(3.1807692, 2.5465837)
-sprite_frames = SubResource("SpriteFrames_pcy2s")
-animation = &"walk_left"
 
-[node name="hair_right" type="AnimatedSprite2D" parent="visual" unique_id=72276997]
+[node name="hair_flor_verde" parent="visual" unique_id=1673429369 instance=ExtResource("5_verde")]
 visible = false
-position = Vector2(-37.499996, -2.0000124)
-scale = Vector2(3.0538461, 2.3602486)
-sprite_frames = SubResource("SpriteFrames_wwi55")
-animation = &"walk_right"
-frame = 1
 
-[node name="hair_up" type="AnimatedSprite2D" parent="visual" unique_id=1698240680]
+[node name="hair_down" parent="visual/hair_flor_verde" index="0" unique_id=1960220508]
 visible = false
-position = Vector2(9.000001, -4.343768)
-scale = Vector2(2.9346151, 2.728649)
-sprite_frames = SubResource("SpriteFrames_c37aq")
-animation = &"walk_up"
+position = Vector2(12.499996, -52)
+scale = Vector2(0.91999996, 0.73945415)
+sprite_frames = SubResource("SpriteFrames_5gtgg")
+
+[node name="hair_left" parent="visual/hair_flor_verde" index="1" unique_id=1853291448]
+position = Vector2(0, -23.249996)
+scale = Vector2(1.0815384, 0.90694785)
+sprite_frames = SubResource("SpriteFrames_gx1jg")
+
+[node name="hair_right" parent="visual/hair_flor_verde" index="2" unique_id=1319234679]
+position = Vector2(0, -38.499977)
+scale = Vector2(0.98307693, 0.9205955)
+sprite_frames = SubResource("SpriteFrames_kvlxm")
+
+[node name="hair_up" parent="visual/hair_flor_verde" index="3" unique_id=1225438339]
+position = Vector2(9.312505, -42)
+scale = Vector2(0.8657692, 0.9032258)
+sprite_frames = SubResource("SpriteFrames_3j4b4")
+
+[node name="hair_trenzas_rojas" parent="visual" unique_id=72276997 instance=ExtResource("6_rojas")]
+
+[node name="hair_down" parent="visual/hair_trenzas_rojas" index="0" unique_id=1960220508]
+position = Vector2(-3.9999905, -23.499989)
+scale = Vector2(1.126154, 0.97518617)
+sprite_frames = SubResource("SpriteFrames_007i1")
+
+[node name="hair_left" parent="visual/hair_trenzas_rojas" index="1" unique_id=1853291448]
+position = Vector2(14.750007, 12.500003)
+scale = Vector2(1.2076923, 1.0049628)
+sprite_frames = SubResource("SpriteFrames_6cv16")
+
+[node name="hair_right" parent="visual/hair_trenzas_rojas" index="2" unique_id=1319234679]
+position = Vector2(-16.999987, -5.500008)
+scale = Vector2(1.1446153, 0.9751861)
+sprite_frames = SubResource("SpriteFrames_j4nxn")
+
+[node name="hair_up" parent="visual/hair_trenzas_rojas" index="3" unique_id=1225438339]
+position = Vector2(0, -19.750013)
+scale = Vector2(0.9530767, 0.9292804)
+sprite_frames = SubResource("SpriteFrames_28m0y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=166824803]
 visible = false
 modulate = Color(0.9999997, 0.11356702, 0.86151034, 1)
 position = Vector2(500, 300)
 shape = SubResource("RectangleShape2D_5h11f")
+
+[editable path="visual/hair_castano"]
+[editable path="visual/hair_flor_verde"]
+[editable path="visual/hair_trenzas_rojas"]

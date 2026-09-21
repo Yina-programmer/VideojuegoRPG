@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c8wbbrp3vrtla"]
+
+[ext_resource type="Texture2D" uid="uid://hpplw8kdhyy7" path="res://assets/player/hair/cabello_trenzas_rojas.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="U1"]
+atlas = ExtResource("1")
+region = Rect2(0, 1209, 325, 403)
+
+[sub_resource type="AtlasTexture" id="U2"]
+atlas = ExtResource("1")
+region = Rect2(325, 1209, 325, 403)
+
+[sub_resource type="AtlasTexture" id="U3"]
+atlas = ExtResource("1")
+region = Rect2(650, 1209, 325, 403)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("U1")
+}, {
+"duration": 1.0,
+"texture": SubResource("U2")
+}, {
+"duration": 1.0,
+"texture": SubResource("U3")
+}],
+"loop": 1,
+"name": &"walk_up",
+"speed": 5.0
+}]
