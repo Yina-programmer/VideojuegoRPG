@@ -309,7 +309,7 @@ sprite_frames = SubResource("SpriteFrames_28m0y")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=166824803]
 visible = false
 modulate = Color(0.9999997, 0.11356702, 0.86151034, 1)
-position = Vector2(500, 300)
+position = Vector2(0, 10)
 shape = SubResource("RectangleShape2D_5h11f")
 
 [editable path="visual/hair_castano"]

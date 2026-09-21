@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://v5g3hw65uh0p" path="res://assets/tilesets/tileset_urbano.png" id="1_palki"]
 [ext_resource type="PackedScene" uid="uid://ca38sdhdt350" path="res://scenes/player/player.tscn" id="2_tdpcy"]
+[ext_resource type="Script" path="res://scripts/map/mapa_chapinero.gd" id="3_limites"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]
 texture = ExtResource("1_palki")
@@ -6096,6 +6097,7 @@ tile_size = Vector2i(156, 156)
 sources/0 = SubResource("TileSetAtlasSource_tdpcy")
 
 [node name="MapaChapinero" type="Node2D" unique_id=1481978993]
+script = ExtResource("3_limites")
 
 [node name="Calles" type="TileMapLayer" parent="." unique_id=949440172]
 position = Vector2(-3, 3)
