@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://bco5vu8jl7txc"]
 
 [ext_resource type="Texture2D" uid="uid://v5g3hw65uh0p" path="res://assets/tilesets/tileset_urbano.png" id="1_palki"]
+[ext_resource type="PackedScene" uid="uid://ca38sdhdt350" path="res://scenes/player/player.tscn" id="2_tdpcy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]
 texture = ExtResource("1_palki")
@@ -6104,10 +6105,6 @@ tile_set = SubResource("TileSet_1p0ps")
 [node name="Politecnico GC" type="Marker2D" parent="." unique_id=1417549321]
 position = Vector2(-415, -3112)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=164388566]
-position = Vector2(-388, -3089)
-zoom = Vector2(0.8, 0.8)
-
 [node name="Politecnico GC2" type="Marker2D" parent="." unique_id=444323721]
 position = Vector2(-388, -3089)
 
@@ -6116,3 +6113,10 @@ position = Vector2(-603, -1410)
 
 [node name="Theatron" type="Marker2D" parent="." unique_id=1767085314]
 position = Vector2(-4473, 733)
+
+[node name="player" parent="." unique_id=18230161 instance=ExtResource("2_tdpcy")]
+position = Vector2(-415, -3112)
+
+[node name="Camera2D" type="Camera2D" parent="player" unique_id=164388566]
+scale = Vector2(3.6496353, 3.6496353)
+zoom = Vector2(0.8, 0.8)
