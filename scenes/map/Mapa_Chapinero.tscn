@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://bco5vu8jl7txc"]
 
-[ext_resource type="Texture2D" uid="uid://v5g3hw65uh0p" path="res://assets/tilesets/tileset_urbano.png" id="1_7hnqg"]
+[ext_resource type="Texture2D" uid="uid://v5g3hw65uh0p" path="res://assets/tilesets/tileset_urbano.png" id="1_palki"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]
-texture = ExtResource("1_7hnqg")
+texture = ExtResource("1_palki")
 texture_region_size = Vector2i(156, 156)
 0:0/0 = 0
 1:0/0 = 0
