@@ -245,6 +245,7 @@ size = Vector2(174, 365)
 
 [node name="player" type="CharacterBody2D" unique_id=18230161]
 position = Vector2(-3, -24)
+scale = Vector2(0.274, 0.274)
 script = ExtResource("1_gmlin")
 metadata/_edit_group_ = true
 
