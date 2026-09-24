@@ -9,7 +9,9 @@ const CUSTOMIZATION_PATH = "user://player_customization.cfg"
 @onready var hair_styles = {
 	"castano": $visual/hair_castano,
 	"flor_verde": $visual/hair_flor_verde,
-	"trenzas_rojas": $visual/hair_trenzas_rojas
+	"trenzas_rojas": $visual/hair_trenzas_rojas,
+	"rojo_medio": $visual/hair_rojo_medio,
+	"negro_liso": $visual/hair_negro_liso
 }
 
 var speed = 400.0

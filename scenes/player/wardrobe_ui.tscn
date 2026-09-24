@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://crl4mlry5chpb" path="res://assets/player/hair/cabello_MATCH_975x1612.png" id="10_castano"]
 [ext_resource type="Texture2D" uid="uid://hpplw8kdhyy7" path="res://assets/player/hair/cabello_trenzas_rojas.png" id="11_rojo"]
 [ext_resource type="Texture2D" uid="uid://cp88p7f4sdxdw" path="res://assets/player/hair/cabello_trenza_flor_verde.png" id="12_verde"]
+[ext_resource type="Texture2D" uid="uid://bms5ykhgvo2r3" path="res://assets/hair/cabello_rojo_medio.png" id="13_tk8lq"]
+[ext_resource type="Texture2D" uid="uid://cx1hgncu8apci" path="res://assets/hair/cabello_negro_liso.png" id="14_qtg1v"]
 
 [sub_resource type="StyleBoxFlat" id="MainPanel"]
 bg_color = Color(0.07, 0.04, 0.03, 0.58)
@@ -202,6 +204,14 @@ region = Rect2(0, 0, 325, 403)
 [sub_resource type="AtlasTexture" id="IconVerde"]
 atlas = ExtResource("12_verde")
 region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gtgg"]
+atlas = ExtResource("13_tk8lq")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtg1v"]
+atlas = ExtResource("14_qtg1v")
+region = Rect2(0, 0, 325, 395)
 
 [sub_resource type="StyleBoxFlat" id="SaveButton"]
 bg_color = Color(0.08, 0.46, 0.23, 1)
@@ -448,6 +458,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="OutfitsGrid" type="GridContainer" parent="ClosetPanel/InventoryPanel" unique_id=788610395]
+visible = false
 layout_mode = 0
 offset_left = 18.0
 offset_top = 68.0
@@ -511,6 +522,7 @@ icon = SubResource("IconNegro")
 expand_icon = true
 
 [node name="WhiteBowButton" type="Button" parent="ClosetPanel/InventoryPanel/OutfitsGrid" unique_id=322437581]
+visible = false
 custom_minimum_size = Vector2(120, 126)
 layout_mode = 2
 tooltip_text = "Conjunto con lazo blanco"
@@ -537,7 +549,6 @@ icon = SubResource("IconNegroMono")
 expand_icon = true
 
 [node name="HairGrid" type="GridContainer" parent="ClosetPanel/InventoryPanel" unique_id=2074153976]
-visible = false
 layout_mode = 0
 offset_left = 18.0
 offset_top = 68.0
@@ -584,6 +595,32 @@ theme_override_styles/focus = SubResource("EmptyFocus")
 toggle_mode = true
 button_group = SubResource("HairGroup")
 icon = SubResource("IconVerde")
+expand_icon = true
+
+[node name="RedMediumHairButton" type="Button" parent="ClosetPanel/InventoryPanel/HairGrid" unique_id=788208745]
+custom_minimum_size = Vector2(120, 142)
+layout_mode = 2
+tooltip_text = "Trenza con flor verde"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("HairGroup")
+icon = SubResource("AtlasTexture_5gtgg")
+expand_icon = true
+
+[node name="BlackStraightHairButton" type="Button" parent="ClosetPanel/InventoryPanel/HairGrid" unique_id=569668081]
+custom_minimum_size = Vector2(120, 142)
+layout_mode = 2
+tooltip_text = "Trenza con flor verde"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("HairGroup")
+icon = SubResource("AtlasTexture_qtg1v")
 expand_icon = true
 
 [node name="PaletteLabel" type="Label" parent="ClosetPanel/InventoryPanel" unique_id=1955393221]

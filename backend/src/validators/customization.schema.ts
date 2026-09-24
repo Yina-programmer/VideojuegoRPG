@@ -16,6 +16,8 @@ export const VALID_HAIR_STYLES = [
   'castano',
   'trenzas_rojas',
   'flor_verde',
+  'rojo_medio',
+  'negro_liso',
 ] as const;
 
 export const VALID_CHARACTER_TYPES = ['mujer'] as const;

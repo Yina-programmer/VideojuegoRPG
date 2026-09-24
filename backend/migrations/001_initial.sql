@@ -42,7 +42,9 @@ INSERT INTO hair_styles (slug, label)
 VALUES
     ('castano',       'Castaño'),
     ('trenzas_rojas', 'Trenzas rojas'),
-    ('flor_verde',    'Flor verde')
+    ('flor_verde',    'Flor verde'),
+    ('rojo_medio',    'Rojo medio'),
+    ('negro_liso',    'Negro liso')
 ON CONFLICT (slug) DO NOTHING;
 
 -- ── Tabla principal: un único registro de personalización por jugador ───────

@@ -27,7 +27,9 @@ const PLAYER_SCENE = "res://scenes/player/player.tscn"
 @onready var hair_buttons = {
 	"castano": $ClosetPanel/InventoryPanel/HairGrid/BrownHairButton,
 	"trenzas_rojas": $ClosetPanel/InventoryPanel/HairGrid/RedBraidsButton,
-	"flor_verde": $ClosetPanel/InventoryPanel/HairGrid/GreenFlowerButton
+	"flor_verde": $ClosetPanel/InventoryPanel/HairGrid/GreenFlowerButton,
+	"rojo_medio": $ClosetPanel/InventoryPanel/HairGrid/RedMediumHairButton,
+	"negro_liso": $ClosetPanel/InventoryPanel/HairGrid/BlackStraightHairButton
 }
 
 var outfit_names = {
@@ -42,7 +44,9 @@ var outfit_names = {
 var hair_names = {
 	"castano": "Castaño",
 	"trenzas_rojas": "Trenzas rojas",
-	"flor_verde": "Flor verde"
+	"flor_verde": "Flor verde",
+	"rojo_medio": "Rojo medio",
+	"negro_liso": "Negro liso"
 }
 
 
@@ -157,7 +161,7 @@ func _show_hair() -> void:
 	color_row.visible = false
 	hair_tab.button_pressed = true
 	section_title.text = "CABELLO"
-	status_label.text = "Elige uno de los tres estilos de cabello"
+	status_label.text = "Elige uno de los cinco estilos de cabello"
 	_update_counter()
 
 
