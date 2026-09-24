@@ -7,31 +7,33 @@ const CUSTOMIZATION_PATH = "user://player_customization.cfg"
 @onready var body: AnimatedSprite2D = $visual/body
 @onready var visual: Node2D = $visual
 @onready var hair_styles = {
-	"castano": $visual/hair_castano,
-	"flor_verde": $visual/hair_flor_verde,
-	"trenzas_rojas": $visual/hair_trenzas_rojas,
-	"rojo_medio": $visual/hair_rojo_medio,
-	"negro_liso": $visual/hair_negro_liso
+	"hair_male_black": $visual/hair_male_black,
+	"hair_male_brown": $visual/hair_male_brown,
+	"hair_male_silver": $visual/hair_male_silver,
+	"hair_male_blonde": $visual/hair_male_blonde
 }
 
 var speed = 400.0
 var lastDirection = "down"
 
 var outfits = {
-	"original": preload("res://assets/player/outfits/outfit_original_frames.tres"),
-	"rosa": preload("res://assets/player/outfits/outfit_rosa_frames.tres"),
-	"azul": preload("res://assets/player/outfits/outfit_azul_frames.tres"),
-	"negro": preload("res://assets/player/outfits/outfit_negro_frames.tres"),
-	"blanco_mono": preload("res://assets/player/outfits/outfit_blanco_mono_frames.tres"),
-	"negro_mono": preload("res://assets/player/outfits/outfit_negro_mono_frames.tres")
+	"general": preload("res://assets/player_male/outfits/outfit_male_general_frames.tres"),
+	"blue": preload("res://assets/player_male/outfits/outfit_male_blue_frames.tres"),
+	"beige": preload("res://assets/player_male/outfits/outfit_male_beige_frames.tres"),
+	"black": preload("res://assets/player_male/outfits/outfit_male_black_frames.tres"),
+	"olive": preload("res://assets/player_male/outfits/outfit_male_olive_frames.tres"),
+	"formal": preload("res://assets/player_male/outfits/outfit_male_formal_frames.tres"),
+	"shirtless": preload("res://assets/player_male/outfits/outfit_male_shirtless_frames.tres")
 }
 
-var outfit_actual: String = "original"
-var cabello_actual: String = "castano"
+var outfit_actual: String = "general"
+var cabello_actual: String = "hair_male_black"
 
 
 func _ready() -> void:
+	cambiar_outfit(outfit_actual)
 	cargar_personalizacion()
+	actualizar_cabello_visual()
 
 
 func _process(_delta) -> void:
@@ -60,8 +62,7 @@ func getInput() -> void:
 
 
 func updateAnimation(state: String) -> void:
-	var animation_name = state + "_" + lastDirection
-	body.play(animation_name)
+	body.play(state + "_" + lastDirection)
 
 
 func actualizar_cabello_visual() -> void:
@@ -87,7 +88,6 @@ func actualizar_cabello_visual() -> void:
 			direction = "up"
 
 	var active_hair: AnimatedSprite2D = selected_style.get_node("hair_" + direction)
-
 	active_hair.animation = body.animation
 	active_hair.frame = body.frame
 	active_hair.frame_progress = body.frame_progress
@@ -96,7 +96,7 @@ func actualizar_cabello_visual() -> void:
 
 func cambiar_outfit(nombre: String) -> void:
 	if not outfits.has(nombre):
-		push_warning("No existe el outfit: " + nombre)
+		push_warning("No existe el outfit masculino: " + nombre)
 		return
 
 	body.sprite_frames = outfits[nombre]
@@ -107,7 +107,7 @@ func cambiar_outfit(nombre: String) -> void:
 
 func cambiar_cabello(nombre: String) -> void:
 	if not hair_styles.has(nombre):
-		push_warning("No existe el cabello: " + nombre)
+		push_warning("No existe el cabello masculino: " + nombre)
 		return
 
 	cabello_actual = nombre
@@ -117,7 +117,7 @@ func cambiar_cabello(nombre: String) -> void:
 
 func guardar_personalizacion() -> Error:
 	var config = ConfigFile.new()
-	config.set_value("character", "type", "mujer")
+	config.set_value("character", "type", "hombre")
 	config.set_value("character", "outfit", outfit_actual)
 	config.set_value("character", "hair", cabello_actual)
 	return config.save(CUSTOMIZATION_PATH)
@@ -126,6 +126,8 @@ func guardar_personalizacion() -> Error:
 func cargar_personalizacion() -> void:
 	var config = ConfigFile.new()
 	if config.load(CUSTOMIZATION_PATH) != OK:
+		return
+	if str(config.get_value("character", "type", "mujer")) != "hombre":
 		return
 
 	var saved_outfit = str(config.get_value("character", "outfit", outfit_actual))
@@ -138,16 +140,7 @@ func cargar_personalizacion() -> void:
 
 func _unhandled_key_input(event) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		match event.physical_keycode:
-			KEY_1, KEY_KP_1:
-				cambiar_outfit("original")
-			KEY_2, KEY_KP_2:
-				cambiar_outfit("rosa")
-			KEY_3, KEY_KP_3:
-				cambiar_outfit("azul")
-			KEY_4, KEY_KP_4:
-				cambiar_outfit("negro")
-			KEY_5, KEY_KP_5:
-				cambiar_outfit("blanco_mono")
-			KEY_6, KEY_KP_6:
-				cambiar_outfit("negro_mono")
+		var outfit_keys = outfits.keys()
+		var number: int = int(event.physical_keycode) - int(KEY_1)
+		if number >= 0 and number < outfit_keys.size():
+			cambiar_outfit(outfit_keys[number])

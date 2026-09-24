@@ -13,7 +13,9 @@ CREATE TABLE IF NOT EXISTS character_types (
 );
 
 INSERT INTO character_types (slug, label)
-VALUES ('mujer', 'Personaje Mujer')
+VALUES
+    ('mujer', 'Personaje Mujer'),
+    ('hombre', 'Personaje Hombre')
 ON CONFLICT (slug) DO NOTHING;
 
 -- ── Catálogo: outfits ───────────────────────────────────────────────────────
@@ -24,12 +26,19 @@ CREATE TABLE IF NOT EXISTS outfits (
 
 INSERT INTO outfits (slug, label)
 VALUES
-    ('original',    'Clásico'),
-    ('rosa',        'Rosa'),
-    ('azul',        'Azul'),
-    ('negro',       'Negro'),
-    ('blanco_mono', 'Lazo blanco'),
-    ('negro_mono',  'Lazo negro')
+    ('original',       'Clásico'),
+    ('rosa',           'Rosa'),
+    ('azul',           'Azul'),
+    ('negro',          'Negro'),
+    ('blanco_mono',    'Lazo blanco'),
+    ('negro_mono',     'Lazo negro'),
+    ('male_general',   'Hombre - General'),
+    ('male_blue',      'Hombre - Azul'),
+    ('male_beige',     'Hombre - Beige'),
+    ('male_black',     'Hombre - Negro'),
+    ('male_olive',     'Hombre - Oliva'),
+    ('male_formal',    'Hombre - Formal'),
+    ('male_shirtless', 'Hombre - Sin camisa')
 ON CONFLICT (slug) DO NOTHING;
 
 -- ── Catálogo: estilos de cabello ────────────────────────────────────────────
@@ -40,9 +49,15 @@ CREATE TABLE IF NOT EXISTS hair_styles (
 
 INSERT INTO hair_styles (slug, label)
 VALUES
-    ('castano',       'Castaño'),
-    ('trenzas_rojas', 'Trenzas rojas'),
-    ('flor_verde',    'Flor verde')
+    ('castano',        'Castaño'),
+    ('trenzas_rojas',  'Trenzas rojas'),
+    ('flor_verde',     'Flor verde'),
+    ('rojo_medio',     'Rojo medio'),
+    ('negro_liso',     'Negro liso'),
+    ('male_black',     'Hombre - Negro'),
+    ('male_brown',     'Hombre - Castaño'),
+    ('male_silver',    'Hombre - Plateado'),
+    ('male_blonde',    'Hombre - Rubio')
 ON CONFLICT (slug) DO NOTHING;
 
 -- ── Tabla principal: un único registro de personalización por jugador ───────
