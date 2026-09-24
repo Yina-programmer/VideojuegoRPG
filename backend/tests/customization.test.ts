@@ -9,11 +9,18 @@ import { pool } from '../src/db';
 // Este ID nunca debe aparecer en la base de desarrollo.
 // Se usa para aislar los datos de test y limpiarlos con DELETE puntual.
 const TEST_PLAYER_ID = 'a1b2c3d4-e5f6-4789-8abc-def012345678';
+const TEST_MALE_PLAYER_ID = 'b1b2c3d4-e5f6-4789-8abc-def012345678';
 
 const VALID_BODY = {
   outfit_id: 'rosa',
   hair_style_id: 'castano',
   character_type: 'mujer',
+};
+
+const VALID_MALE_BODY = {
+  outfit_id: 'male_general',
+  hair_style_id: 'male_black',
+  character_type: 'hombre',
 };
 
 // ── Configuración global ─────────────────────────────────────────────────────
@@ -28,16 +35,16 @@ beforeAll(async () => {
 
   // Eliminar únicamente la fila de test si existe de una ejecución anterior
   await pool.query(
-    'DELETE FROM player_customization WHERE player_id = $1',
-    [TEST_PLAYER_ID],
+    'DELETE FROM player_customization WHERE player_id IN ($1, $2)',
+    [TEST_PLAYER_ID, TEST_MALE_PLAYER_ID],
   );
 });
 
 afterAll(async () => {
   // Limpiar la fila de test y cerrar conexiones
   await pool.query(
-    'DELETE FROM player_customization WHERE player_id = $1',
-    [TEST_PLAYER_ID],
+    'DELETE FROM player_customization WHERE player_id IN ($1, $2)',
+    [TEST_PLAYER_ID, TEST_MALE_PLAYER_ID],
   );
   await pool.end();
 });
@@ -86,7 +93,7 @@ describe('PUT /api/customization/:playerId — validación Zod', () => {
   it('devuelve 422 para character_type no permitido', async () => {
     const res = await request(app)
       .put(`/api/customization/${TEST_PLAYER_ID}`)
-      .send({ ...VALID_BODY, character_type: 'hombre' });
+      .send({ ...VALID_BODY, character_type: 'robot' });
 
     expect(res.status).toBe(422);
     expect(res.body).toHaveProperty('error');
@@ -171,6 +178,28 @@ describe('PUT /api/customization/:playerId — UPSERT', () => {
 });
 
 // ── Tests: GET después de los PUTs ───────────────────────────────────────────
+
+describe('PUT/GET masculino — persistencia completa', () => {
+  it('guarda y recupera outfit, cabello y tipo del personaje hombre', async () => {
+    const putResponse = await request(app)
+      .put(`/api/customization/${TEST_MALE_PLAYER_ID}`)
+      .send(VALID_MALE_BODY);
+
+    expect(putResponse.status).toBe(200);
+    expect(putResponse.body.outfit_id).toBe(VALID_MALE_BODY.outfit_id);
+    expect(putResponse.body.hair_style_id).toBe(VALID_MALE_BODY.hair_style_id);
+    expect(putResponse.body.character_type).toBe(VALID_MALE_BODY.character_type);
+
+    const getResponse = await request(app).get(
+      `/api/customization/${TEST_MALE_PLAYER_ID}`,
+    );
+
+    expect(getResponse.status).toBe(200);
+    expect(getResponse.body.outfit_id).toBe(VALID_MALE_BODY.outfit_id);
+    expect(getResponse.body.hair_style_id).toBe(VALID_MALE_BODY.hair_style_id);
+    expect(getResponse.body.character_type).toBe(VALID_MALE_BODY.character_type);
+  });
+});
 
 describe('GET /api/customization/:playerId — después de UPSERT', () => {
   it('devuelve los datos del último PUT correctamente', async () => {

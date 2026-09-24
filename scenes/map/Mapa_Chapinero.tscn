@@ -1,8 +1,7 @@
 [gd_scene format=4 uid="uid://bco5vu8jl7txc"]
 
 [ext_resource type="Texture2D" uid="uid://v5g3hw65uh0p" path="res://assets/tilesets/tileset_urbano.png" id="1_palki"]
-[ext_resource type="PackedScene" uid="uid://ca38sdhdt350" path="res://scenes/player/player.tscn" id="2_tdpcy"]
-[ext_resource type="Script" path="res://scripts/map/mapa_chapinero.gd" id="3_limites"]
+[ext_resource type="Script" uid="uid://begrmp2uqyyxu" path="res://scripts/map/mapa_chapinero.gd" id="3_limites"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]
 texture = ExtResource("1_palki")
@@ -6096,6 +6095,58 @@ texture_region_size = Vector2i(156, 156)
 tile_size = Vector2i(156, 156)
 sources/0 = SubResource("TileSetAtlasSource_tdpcy")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_closet_normal"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.12, 0.08, 0.08, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.94, 0.68, 0.28, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_closet_pressed"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.93, 0.67, 0.3, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.91, 0.68, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_closet_hover"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.28, 0.17, 0.11, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.82, 0.46, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 8
+
 [node name="MapaChapinero" type="Node2D" unique_id=1481978993]
 script = ExtResource("3_limites")
 
@@ -6116,9 +6167,32 @@ position = Vector2(-603, -1410)
 [node name="Theatron" type="Marker2D" parent="." unique_id=1767085314]
 position = Vector2(-4473, 733)
 
-[node name="player" parent="." unique_id=18230161 instance=ExtResource("2_tdpcy")]
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1840160797]
 position = Vector2(-415, -3112)
 
-[node name="Camera2D" type="Camera2D" parent="player" unique_id=164388566]
-scale = Vector2(3.6496353, 3.6496353)
+[node name="Camera2D" type="Camera2D" parent="PlayerSpawn" unique_id=164388566]
 zoom = Vector2(0.8, 0.8)
+
+[node name="MapUI" type="CanvasLayer" parent="." unique_id=1101365408]
+layer = 10
+
+[node name="ClosetButton" type="Button" parent="MapUI" unique_id=1905756570]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -230.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 82.0
+grow_horizontal = 0
+tooltip_text = "Cambiar ropa y personaje"
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_pressed_color = Color(0.18, 0.11, 0.08, 1)
+theme_override_colors/font_hover_color = Color(1, 0.96, 0.84, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_closet_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_closet_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_closet_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_closet_hover")
+text = "✦  ARMARIO"

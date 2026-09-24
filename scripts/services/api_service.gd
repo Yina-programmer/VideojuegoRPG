@@ -18,7 +18,7 @@ extends Node
 # ── Señales públicas ─────────────────────────────────────────────────────────
 
 ## El servidor devolvió la personalización del jugador.
-signal customization_loaded(outfit_id: String, hair_style_id: String)
+signal customization_loaded(outfit_id: String, hair_style_id: String, character_type: String)
 
 ## No se pudo cargar del servidor (primera vez o error de red).
 ## closet_ui debe usar los valores locales existentes.
@@ -67,14 +67,18 @@ func get_player_id() -> String:
 ## Regla: si hay pending_sync, los datos locales tienen prioridad
 ## y se envían primero al servidor (PUT). Solo si no hay pendientes
 ## se carga del servidor (GET) para no sobreescribir cambios locales.
-func iniciar_sincronizacion(outfit_local: String, hair_local: String) -> void:
+func iniciar_sincronizacion(
+	outfit_local: String,
+	hair_local: String,
+	character_type: String = "mujer",
+) -> void:
 	if _request_in_progress:
 		return
 
 	if _get_pending_sync():
 		# Cambios locales no sincronizados → prioridad al dato local
 		print("[ApiService] pending_sync = true. Sincronizando datos locales...")
-		guardar_personalizacion(outfit_local, hair_local, "mujer")
+		guardar_personalizacion(outfit_local, hair_local, character_type)
 	else:
 		# Sin cambios pendientes → cargar del servidor
 		print("[ApiService] Sin pendientes. Cargando del servidor...")
@@ -102,10 +106,12 @@ func guardar_personalizacion(
 	# 2. Enviar PUT
 	_request_in_progress = true
 	_current_req = _ReqType.PUT_CUSTOMIZATION
+	var api_outfit_id := _to_backend_outfit_id(outfit_id, character_type)
+	var api_hair_style_id := _to_backend_hair_style_id(hair_style_id, character_type)
 
 	var body := JSON.stringify({
-		"outfit_id":      outfit_id,
-		"hair_style_id":  hair_style_id,
+		"outfit_id":      api_outfit_id,
+		"hair_style_id":  api_hair_style_id,
 		"character_type": character_type,
 	})
 	var headers := PackedStringArray(["Content-Type: application/json"])
@@ -184,13 +190,42 @@ func _manejar_respuesta_get(
 
 	var outfit     := str(data.get("outfit_id",     ""))
 	var hair_style := str(data.get("hair_style_id", ""))
+	var character_type := str(data.get("character_type", ""))
+	if character_type not in ["mujer", "hombre"]:
+		character_type = "hombre" if outfit.begins_with("male_") or hair_style.begins_with("male_") else "mujer"
 
 	if outfit.is_empty() or hair_style.is_empty():
 		customization_load_failed.emit("Datos incompletos en la respuesta")
 		return
 
 	print("[ApiService] Personalización cargada: outfit=%s, cabello=%s" % [outfit, hair_style])
-	customization_loaded.emit(outfit, hair_style)
+	outfit = _from_backend_outfit_id(outfit, character_type)
+	hair_style = _from_backend_hair_style_id(hair_style, character_type)
+	customization_loaded.emit(outfit, hair_style, character_type)
+
+func _to_backend_outfit_id(outfit_id: String, character_type: String) -> String:
+	if character_type != "hombre" or outfit_id.begins_with("male_"):
+		return outfit_id
+	return "male_" + outfit_id
+
+
+func _to_backend_hair_style_id(hair_style_id: String, character_type: String) -> String:
+	if character_type != "hombre" or hair_style_id.begins_with("male_"):
+		return hair_style_id
+	return hair_style_id.trim_prefix("hair_")
+
+
+func _from_backend_outfit_id(outfit_id: String, character_type: String) -> String:
+	if character_type == "hombre":
+		return outfit_id.trim_prefix("male_")
+	return outfit_id
+
+
+func _from_backend_hair_style_id(hair_style_id: String, character_type: String) -> String:
+	if character_type == "hombre" and hair_style_id.begins_with("male_"):
+		return "hair_" + hair_style_id
+	return hair_style_id
+
 
 func _manejar_respuesta_put(result: int, response_code: int) -> void:
 	if result != HTTPRequest.RESULT_SUCCESS:

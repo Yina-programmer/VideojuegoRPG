@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ca38sdhdt350" path="res://scenes/player/player.tscn" id="2_player"]
 [ext_resource type="Texture2D" uid="uid://f2pw5p6jpt1g" path="res://assets/ui/closet/closet_chapinero_bg.png" id="3_bg"]
 [ext_resource type="Texture2D" uid="uid://deurg18g2sqgg" path="res://assets/player/body/c8c8b05b-6890-429b-8ac9-eac98615561e.png" id="4_original"]
+[ext_resource type="PackedScene" uid="uid://dl28riyty8fyd" path="res://scenes/player/player_male.tscn" id="4_pb17x"]
 [ext_resource type="Texture2D" uid="uid://bu14ucb61p3ap" path="res://assets/player/outfits/outfit_rosa.png" id="5_rosa"]
 [ext_resource type="Texture2D" uid="uid://3umce12yjgpv" path="res://assets/player/outfits/outfit_azul.png" id="6_azul"]
 [ext_resource type="Texture2D" uid="uid://dythy4wctv5mp" path="res://assets/player/outfits/outfit_negro.png" id="7_negro"]
@@ -353,9 +354,9 @@ theme_override_styles/panel = SubResource("PreviewCard")
 
 [node name="CharacterLabel" type="Label" parent="ClosetPanel/CharacterPanel" unique_id=1831323535]
 layout_mode = 0
-offset_left = 95.0
+offset_left = 48.0
 offset_top = 14.0
-offset_right = 351.0
+offset_right = 398.0
 offset_bottom = 43.0
 theme_override_colors/font_color = Color(1, 0.88, 0.66, 1)
 theme_override_font_sizes/font_size = 18
@@ -409,6 +410,11 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 15
 text = "Clásico  •  Castaño"
 horizontal_alignment = 1
+
+[node name="player_male" parent="ClosetPanel/CharacterPanel" unique_id=18230161 instance=ExtResource("4_pb17x")]
+visible = false
+position = Vector2(223, 235)
+scale = Vector2(0.64, 0.64)
 
 [node name="InventoryPanel" type="Panel" parent="ClosetPanel" unique_id=2116532483]
 layout_mode = 0
@@ -546,6 +552,19 @@ theme_override_styles/focus = SubResource("EmptyFocus")
 toggle_mode = true
 button_group = SubResource("OutfitGroup")
 icon = SubResource("IconNegroMono")
+expand_icon = true
+
+[node name="ExtraOutfitButton" type="Button" parent="ClosetPanel/InventoryPanel/OutfitsGrid" unique_id=967235175]
+visible = false
+custom_minimum_size = Vector2(120, 82)
+layout_mode = 2
+tooltip_text = "Outfit adicional"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/pressed = SubResource("ButtonPressed")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("EmptyFocus")
+toggle_mode = true
+button_group = SubResource("OutfitGroup")
 expand_icon = true
 
 [node name="HairGrid" type="GridContainer" parent="ClosetPanel/InventoryPanel" unique_id=2074153976]
@@ -687,6 +706,14 @@ modulate = Color(0.32, 0.25, 0.25, 1)
 custom_minimum_size = Vector2(42, 42)
 layout_mode = 2
 tooltip_text = "Lazo negro"
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+
+[node name="ExtraColor" type="Button" parent="ClosetPanel/InventoryPanel/ColorRow" unique_id=1189594555]
+visible = false
+custom_minimum_size = Vector2(34, 42)
+layout_mode = 2
+tooltip_text = "Outfit adicional"
 theme_override_styles/normal = SubResource("ButtonNormal")
 theme_override_styles/hover = SubResource("ButtonHover")
 

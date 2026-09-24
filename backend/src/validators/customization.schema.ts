@@ -10,6 +10,13 @@ export const VALID_OUTFITS = [
   'negro',
   'blanco_mono',
   'negro_mono',
+  'male_general',
+  'male_blue',
+  'male_beige',
+  'male_black',
+  'male_olive',
+  'male_formal',
+  'male_shirtless',
 ] as const;
 
 export const VALID_HAIR_STYLES = [
@@ -18,9 +25,13 @@ export const VALID_HAIR_STYLES = [
   'flor_verde',
   'rojo_medio',
   'negro_liso',
+  'male_black',
+  'male_brown',
+  'male_silver',
+  'male_blonde',
 ] as const;
 
-export const VALID_CHARACTER_TYPES = ['mujer'] as const;
+export const VALID_CHARACTER_TYPES = ['mujer', 'hombre'] as const;
 
 // ── Validador de UUID v4 ──────────────────────────────────────────────────────
 
