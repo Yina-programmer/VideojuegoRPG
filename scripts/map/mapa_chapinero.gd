@@ -6,6 +6,7 @@ const FEMALE_PLAYER_SCENE = "res://scenes/player/player.tscn"
 const MALE_PLAYER_SCENE = "res://scenes/player/player_male.tscn"
 
 @onready var calles: TileMapLayer = $Calles
+@onready var map_ui: CanvasLayer = $MapUI
 @onready var closet_button: Button = $MapUI/ClosetButton
 @onready var player_spawn: Marker2D = $PlayerSpawn
 
@@ -15,6 +16,8 @@ var active_player: CharacterBody2D
 func _ready() -> void:
 	_spawn_selected_player()
 	closet_button.pressed.connect(_open_closet)
+	InteractionManager.dialogue_started.connect(_on_dialogue_started)
+	InteractionManager.dialogue_finished.connect(_on_dialogue_finished)
 	crear_limites_del_mapa()
 
 
@@ -28,6 +31,8 @@ func _spawn_selected_player() -> void:
 	selected_player.name = "player"
 	selected_player.position = player_spawn.position
 	add_child(selected_player)
+	if not selected_player.is_in_group("player"):
+		selected_player.add_to_group("player")
 	player_camera.reparent(selected_player, true)
 	player_spawn.free()
 	active_player = selected_player
@@ -42,6 +47,14 @@ func _load_character_type() -> String:
 
 func _open_closet() -> void:
 	get_tree().change_scene_to_file(CLOSET_SCENE)
+
+
+func _on_dialogue_started() -> void:
+	map_ui.visible = false
+
+
+func _on_dialogue_finished() -> void:
+	map_ui.visible = true
 
 
 ## Crea cuatro paredes invisibles alrededor de todas las celdas usadas del mapa.

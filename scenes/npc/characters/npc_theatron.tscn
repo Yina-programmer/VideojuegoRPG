@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dako7agcuujpn"]
+
+[ext_resource type="PackedScene" uid="uid://brtrmyf1ru7e2" path="res://scenes/npc/base/npc_base.tscn" id="1_base"]
+[ext_resource type="SpriteFrames" uid="uid://dkl0clhpbcq01" path="res://assets/npc/theatron/theatron_frames.tres" id="2_frames"]
+
+[node name="TheatronHost" unique_id=263235029 instance=ExtResource("1_base")]
+npc_id = "theatron_host"
+display_name = "Dante"
+role = "Anfitrión de vida nocturna"
+category = "Entretenimiento y vida nocturna"
+location_name = "Theatron"
+dialogue_lines = PackedStringArray("Llegaste a Theatron. Soy Dante; esta noche, Chapinero cambia de ritmo.", "Aquí se encuentran música, diversidad y muchas formas de celebrar la ciudad.", "Disfruta la energía del sector, conoce gente y recuerda: una gran noche también se vive con respeto.")
+accent_color = Color(0.73, 0.43, 0.92, 1)
+default_facing = "right"
+glance_interval = 5.3
+patrol_points = PackedVector2Array(0, -410, 315, -410, 630, -410, 630, 80, 630, -410, 315, -410, 0, -410, 0, 0)
+patrol_speed = 108.0
+
+[node name="Body" parent="Visual" index="0"]
+scale = Vector2(0.26, 0.26)
+sprite_frames = ExtResource("2_frames")
+animation = &"walk_up"
+
+[node name="InteractionIndicator" parent="." index="4"]
+layout_mode = 3
+anchors_preset = 0

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dr4h3mst7lagc"]
+
+[ext_resource type="PackedScene" uid="uid://brtrmyf1ru7e2" path="res://scenes/npc/base/npc_base.tscn" id="1_base"]
+[ext_resource type="SpriteFrames" path="res://assets/npc/polito/polito_frames.tres" id="2_frames"]
+
+[node name="Polito" unique_id=713183103 instance=ExtResource("1_base")]
+npc_id = "polito"
+display_name = "Polito"
+role = "Guía universitario"
+category = "Educación y conocimiento"
+location_name = "Politécnico Grancolombiano"
+dialogue_lines = PackedStringArray("¡Hola! Soy Polito. Bienvenido al sector universitario de Chapinero.", "El Poli es un punto de encuentro para aprender, crear y convertir ideas en proyectos.", "Cuando termines tu recorrido, visita el Parque de los Hippies y descubre cómo cambia la ciudad camino a Theatron.")
+accent_color = Color(0.2, 0.67, 0.87, 1)
+glance_interval = 4.2
+patrol_points = PackedVector2Array(462, 0, 462, 542, 462, 1084, -244, 1084, -950, 1084, -950, 542, -950, 0, 0, 0)
+patrol_speed = 110.0
+
+[node name="Body" parent="Visual" index="0"]
+scale = Vector2(0.265, 0.265)
+sprite_frames = ExtResource("2_frames")
+animation = &"walk_up"
+
+[node name="InteractionIndicator" parent="." index="4"]
+layout_mode = 3
+anchors_preset = 0

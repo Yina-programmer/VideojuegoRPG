@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bj3re664oamet"]
+
+[ext_resource type="PackedScene" uid="uid://brtrmyf1ru7e2" path="res://scenes/npc/base/npc_base.tscn" id="1_base"]
+[ext_resource type="SpriteFrames" uid="uid://150dmne37tge" path="res://assets/npc/hippie/hippie_frames.tres" id="2_frames"]
+
+[node name="Hippie" unique_id=1500101375 instance=ExtResource("1_base")]
+npc_id = "hippie"
+display_name = "Nico"
+role = "Habitante bohemio"
+category = "Arte y encuentro urbano"
+location_name = "Parque de los Hippies"
+dialogue_lines = PackedStringArray("Qué más, viajero. Soy Nico. Aquí el parque siempre tiene una historia nueva sonando bajito.", "Entre música, dibujo y conversación, la gente convierte este lugar en un pequeño escenario de la ciudad.", "Camina sin afán: Chapinero se entiende mejor cuando uno se detiene a mirar quién lo habita.")
+accent_color = Color(0.93, 0.48, 0.25, 1)
+default_facing = "left"
+glance_interval = 6.1
+patrol_points = PackedVector2Array(543, 0, 543, 546, 543, 1093, -160, 1093, -864, 1093, -864, 546, -864, 0, 0, 0)
+patrol_speed = 105.0
+
+[node name="Body" parent="Visual" index="0"]
+scale = Vector2(0.255, 0.255)
+sprite_frames = ExtResource("2_frames")
+animation = &"walk_up"
+
+[node name="InteractionIndicator" parent="." index="4"]
+layout_mode = 3
+anchors_preset = 0

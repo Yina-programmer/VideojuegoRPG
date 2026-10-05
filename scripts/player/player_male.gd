@@ -15,6 +15,7 @@ const CUSTOMIZATION_PATH = "user://player_customization.cfg"
 
 var speed = 400.0
 var lastDirection = "down"
+var movement_enabled := true
 
 var outfits = {
 	"general": preload("res://assets/player_male/outfits/outfit_male_general_frames.tres"),
@@ -41,8 +42,32 @@ func _process(_delta) -> void:
 
 
 func _physics_process(_delta) -> void:
+	if not movement_enabled:
+		velocity = Vector2.ZERO
+		return
 	getInput()
 	move_and_slide()
+
+
+func set_movement_enabled(enabled: bool) -> void:
+	movement_enabled = enabled
+	if not movement_enabled:
+		velocity = Vector2.ZERO
+		body.pause()
+		body.frame = 1
+	else:
+		body.play("walk_" + lastDirection)
+
+
+func face_towards(target_position: Vector2) -> void:
+	var direction := target_position - global_position
+	if absf(direction.x) > absf(direction.y):
+		lastDirection = "right" if direction.x > 0.0 else "left"
+	else:
+		lastDirection = "down" if direction.y > 0.0 else "up"
+	body.play("walk_" + lastDirection)
+	body.pause()
+	body.frame = 1
 
 
 func getInput() -> void:
@@ -139,6 +164,8 @@ func cargar_personalizacion() -> void:
 
 
 func _unhandled_key_input(event) -> void:
+	if not movement_enabled:
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var outfit_keys = outfits.keys()
 		var number: int = int(event.physical_keycode) - int(KEY_1)

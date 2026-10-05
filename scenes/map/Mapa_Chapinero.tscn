@@ -2,6 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://v5g3hw65uh0p" path="res://assets/tilesets/tileset_urbano.png" id="1_palki"]
 [ext_resource type="Script" uid="uid://begrmp2uqyyxu" path="res://scripts/map/mapa_chapinero.gd" id="3_limites"]
+[ext_resource type="PackedScene" uid="uid://dr4h3mst7lagc" path="res://scenes/npc/characters/npc_polito.tscn" id="3_o16v3"]
+[ext_resource type="PackedScene" uid="uid://bj3re664oamet" path="res://scenes/npc/characters/npc_hippie.tscn" id="4_hippie"]
+[ext_resource type="PackedScene" uid="uid://dako7agcuujpn" path="res://scenes/npc/characters/npc_theatron.tscn" id="5_theatron"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]
 texture = ExtResource("1_palki")
@@ -6196,3 +6199,20 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_closet_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_closet_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_closet_hover")
 text = "✦  ARMARIO"
+
+[node name="Polito" parent="." unique_id=1229645785 instance=ExtResource("3_o16v3")]
+position = Vector2(-384, -3355)
+patrol_points = PackedVector2Array(160, 0, 160, 48, 0, 48, 0, 0)
+patrol_speed = 95.0
+
+[node name="Hippie" parent="." unique_id=1160161538 instance=ExtResource("4_hippie")]
+position = Vector2(-492, -1949)
+patrol_offset = Vector2(-96, 0)
+patrol_points = null
+patrol_speed = 34.0
+
+[node name="TheatronHost" parent="." unique_id=1787626785 instance=ExtResource("5_theatron")]
+position = Vector2(-4610, 640)
+patrol_offset = Vector2(-72, 0)
+patrol_points = null
+patrol_speed = 40.0

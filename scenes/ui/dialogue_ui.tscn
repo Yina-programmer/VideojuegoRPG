@@ -1,0 +1,168 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/dialogue_ui.gd" id="1_dialogue"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_dialogue"]
+content_margin_left = 28.0
+content_margin_top = 22.0
+content_margin_right = 28.0
+content_margin_bottom = 20.0
+bg_color = Color(0.105, 0.075, 0.068, 0.975)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.53, 0.25, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_location"]
+content_margin_left = 12.0
+content_margin_top = 5.0
+content_margin_right = 12.0
+content_margin_bottom = 5.0
+bg_color = Color(0.2, 0.145, 0.12, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_continue"]
+content_margin_left = 13.0
+content_margin_top = 7.0
+content_margin_right = 13.0
+content_margin_bottom = 7.0
+bg_color = Color(0.91, 0.68, 0.34, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.88, 0.61, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_separator"]
+bg_color = Color(0.67, 0.45, 0.24, 0.55)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[node name="DialogueUI" type="CanvasLayer"]
+layer = 30
+script = ExtResource("1_dialogue")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Shade" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.022, 0.02, 0.2)
+
+[node name="DialoguePanel" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 12
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = -264.0
+offset_right = -48.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBox_dialogue")
+
+[node name="Margin" type="MarginContainer" parent="Root/DialoguePanel"]
+layout_mode = 2
+
+[node name="Content" type="VBoxContainer" parent="Root/DialoguePanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Header" type="HBoxContainer" parent="Root/DialoguePanel/Margin/Content"]
+layout_mode = 2
+
+[node name="LocationPanel" type="PanelContainer" parent="Root/DialoguePanel/Margin/Content/Header"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_location")
+
+[node name="Location" type="Label" parent="Root/DialoguePanel/Margin/Content/Header/LocationPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.81, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "CATEGORIA  •  LUGAR"
+
+[node name="Name" type="Label" parent="Root/DialoguePanel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.7, 0.34, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 28
+text = "PERSONAJE"
+
+[node name="Role" type="Label" parent="Root/DialoguePanel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.73, 0.67, 1)
+theme_override_font_sizes/font_size = 15
+text = "Rol del personaje"
+
+[node name="Separator" type="Panel" parent="Root/DialoguePanel/Margin/Content"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_separator")
+
+[node name="DialogueText" type="RichTextLabel" parent="Root/DialoguePanel/Margin/Content"]
+custom_minimum_size = Vector2(0, 82)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.96, 0.93, 0.86, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.65)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+text = "Texto de dialogo"
+
+[node name="Footer" type="HBoxContainer" parent="Root/DialoguePanel/Margin/Content"]
+layout_mode = 2
+alignment = 2
+
+[node name="Progress" type="Label" parent="Root/DialoguePanel/Margin/Content/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.78, 0.7, 0.59, 1)
+theme_override_font_sizes/font_size = 13
+text = "01 / 03"
+vertical_alignment = 1
+
+[node name="ContinuePanel" type="PanelContainer" parent="Root/DialoguePanel/Margin/Content/Footer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_continue")
+
+[node name="Continue" type="Label" parent="Root/DialoguePanel/Margin/Content/Footer/ContinuePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.18, 0.105, 0.075, 1)
+theme_override_font_sizes/font_size = 14
+text = "E   CONTINUAR"
