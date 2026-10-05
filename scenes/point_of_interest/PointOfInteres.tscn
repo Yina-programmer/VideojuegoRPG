@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dxpgvulkkfdkx"]
+
+[ext_resource type="Script" uid="uid://f52vxnsw2oku" path="res://scenes/point_of_interest/point_of_interes.gd" id="1_x8xo3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h11f"]
+size = Vector2(42, 38)
+
+[node name="PointOfInteres" type="Area2D" unique_id=133967856 groups=["point_of_interest"]]
+script = ExtResource("1_x8xo3")
+title = "Parque de los Hippies"
+narrative = "El Parque de los Hippies es uno de los lugares representativos
+de Chapinero y constituye un punto de encuentro cultural y social
+de la localidad."
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=547561212]
+shape = SubResource("RectangleShape2D_5h11f")
