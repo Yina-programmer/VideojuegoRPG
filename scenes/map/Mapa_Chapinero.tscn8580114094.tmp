@@ -6170,8 +6170,6 @@ position = Vector2(-603, -1410)
 position = Vector2(-4473, 733)
 
 [node name="PointOfInteres" parent="." unique_id=775087451 instance=ExtResource("3_nbb1n")]
-position = Vector2(-633.00006, -1480.0001)
-scale = Vector2(37, 28)
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1840160797]
 position = Vector2(-415, -3112)

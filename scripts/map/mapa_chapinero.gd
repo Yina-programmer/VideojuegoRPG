@@ -8,6 +8,7 @@ const MALE_PLAYER_SCENE = "res://scenes/player/player_male.tscn"
 @onready var calles: TileMapLayer = $Calles
 @onready var closet_button: Button = $MapUI/ClosetButton
 @onready var player_spawn: Marker2D = $PlayerSpawn
+@onready var narrative_panel = $UI_narrative/NarrativePanel
 
 var active_player: CharacterBody2D
 
@@ -16,6 +17,10 @@ func _ready() -> void:
 	_spawn_selected_player()
 	closet_button.pressed.connect(_open_closet)
 	crear_limites_del_mapa()
+	for point_of_interest in get_tree().get_nodes_in_group("point_of_interest"):
+		point_of_interest.narrative_requested.connect(
+			narrative_panel.show_narrative
+		)
 
 
 func _spawn_selected_player() -> void:
