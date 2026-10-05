@@ -3,10 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://v5g3hw65uh0p" path="res://assets/tilesets/tileset_urbano.png" id="1_palki"]
 [ext_resource type="Script" uid="uid://begrmp2uqyyxu" path="res://scripts/map/mapa_chapinero.gd" id="3_limites"]
 [ext_resource type="PackedScene" uid="uid://dxpgvulkkfdkx" path="res://scenes/point_of_interest/PointOfInteres.tscn" id="3_nbb1n"]
-[ext_resource type="PackedScene" uid="uid://bf8x24d4gqcqo" path="res://assets/ui/Narrativa/NarrativePanel.tscn" id="4_nrt70"]
 [ext_resource type="PackedScene" uid="uid://dr4h3mst7lagc" path="res://scenes/npc/characters/npc_polito.tscn" id="3_o16v3"]
 [ext_resource type="PackedScene" uid="uid://bj3re664oamet" path="res://scenes/npc/characters/npc_hippie.tscn" id="4_hippie"]
+[ext_resource type="PackedScene" uid="uid://bf8x24d4gqcqo" path="res://assets/ui/Narrativa/NarrativePanel.tscn" id="4_nrt70"]
 [ext_resource type="PackedScene" uid="uid://dako7agcuujpn" path="res://scenes/npc/characters/npc_theatron.tscn" id="5_theatron"]
+[ext_resource type="PackedScene" path="res://scenes/ui/poi_prompt.tscn" id="6_poi_prompt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]
 texture = ExtResource("1_palki")
@@ -6175,6 +6176,10 @@ position = Vector2(-4473, 733)
 [node name="PointOfInteres" parent="." unique_id=775087451 instance=ExtResource("3_nbb1n")]
 position = Vector2(-633.00006, -1480.0001)
 scale = Vector2(37, 28)
+place_name = "Parque de los Hippies"
+category = "Cultura urbana"
+description = "El Parque de los Hippies es uno de los lugares representativos de Chapinero y constituye un punto de encuentro cultural, artístico y social de la localidad. Su plazoleta reúne expresiones urbanas, música, conversación y distintas formas de habitar colectivamente la ciudad."
+category_color = Color(0.93, 0.48, 0.25, 1)
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1840160797]
 position = Vector2(-415, -3112)
@@ -6206,6 +6211,8 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_closet_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_closet_hover")
 text = "✦  ARMARIO"
 
+[node name="POIPrompt" parent="." unique_id=2000506176 instance=ExtResource("6_poi_prompt")]
+
 [node name="Polito" parent="." unique_id=1229645785 instance=ExtResource("3_o16v3")]
 position = Vector2(-384, -3355)
 patrol_points = PackedVector2Array(160, 0, 160, 48, 0, 48, 0, 0)
@@ -6224,5 +6231,6 @@ patrol_points = null
 patrol_speed = 40.0
 
 [node name="UI_narrative" type="CanvasLayer" parent="." unique_id=1139727262]
+layer = 20
 
 [node name="NarrativePanel" parent="UI_narrative" unique_id=358796154 instance=ExtResource("4_nrt70")]

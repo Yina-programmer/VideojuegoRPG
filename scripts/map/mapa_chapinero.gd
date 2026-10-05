@@ -10,8 +10,11 @@ const MALE_PLAYER_SCENE = "res://scenes/player/player_male.tscn"
 @onready var closet_button: Button = $MapUI/ClosetButton
 @onready var player_spawn: Marker2D = $PlayerSpawn
 @onready var narrative_panel = $UI_narrative/NarrativePanel
+@onready var poi_prompt = $POIPrompt
 
 var active_player: CharacterBody2D
+var active_pois: Array[Area2D] = []
+var narrative_open := false
 
 
 func _ready() -> void:
@@ -19,11 +22,13 @@ func _ready() -> void:
 	closet_button.pressed.connect(_open_closet)
 	InteractionManager.dialogue_started.connect(_on_dialogue_started)
 	InteractionManager.dialogue_finished.connect(_on_dialogue_finished)
+	poi_prompt.poi_selected.connect(_on_poi_selected)
+	narrative_panel.closed.connect(_on_narrative_closed)
 	crear_limites_del_mapa()
 	for point_of_interest in get_tree().get_nodes_in_group("point_of_interest"):
-		point_of_interest.narrative_requested.connect(
-			narrative_panel.show_narrative
-		)
+		if point_of_interest is Area2D:
+			point_of_interest.zone_entered.connect(_on_poi_zone_entered)
+			point_of_interest.zone_exited.connect(_on_poi_zone_exited)
 
 
 func _spawn_selected_player() -> void:
@@ -56,10 +61,61 @@ func _open_closet() -> void:
 
 func _on_dialogue_started() -> void:
 	map_ui.visible = false
+	poi_prompt.set_suspended(true)
 
 
 func _on_dialogue_finished() -> void:
-	map_ui.visible = true
+	map_ui.visible = not narrative_open
+	poi_prompt.set_suspended(narrative_open)
+
+
+func _on_poi_zone_entered(point_of_interest: Area2D) -> void:
+	if point_of_interest not in active_pois:
+		active_pois.append(point_of_interest)
+	_refresh_poi_prompt()
+
+
+func _on_poi_zone_exited(point_of_interest: Area2D) -> void:
+	active_pois.erase(point_of_interest)
+	_refresh_poi_prompt()
+
+
+func _refresh_poi_prompt() -> void:
+	for index in range(active_pois.size() - 1, -1, -1):
+		if not is_instance_valid(active_pois[index]):
+			active_pois.remove_at(index)
+	if active_pois.is_empty():
+		poi_prompt.clear_poi()
+	else:
+		poi_prompt.show_poi(active_pois.back())
+
+
+func _on_poi_selected(point_of_interest: Area2D) -> void:
+	if narrative_open or InteractionManager.is_dialogue_active():
+		return
+	if point_of_interest not in active_pois or not point_of_interest.has_method("get_poi_data"):
+		return
+	var data: Dictionary = point_of_interest.get_poi_data()
+	narrative_open = true
+	poi_prompt.set_suspended(true)
+	map_ui.visible = false
+	if is_instance_valid(active_player):
+		active_player.set_movement_enabled(false)
+	narrative_panel.show_narrative(
+		str(data.get("name", "Lugar cultural")),
+		str(data.get("description", "")),
+		str(data.get("category", "Cultura")),
+		data.get("category_color", Color("d99a45")) as Color,
+	)
+
+
+func _on_narrative_closed() -> void:
+	narrative_open = false
+	if is_instance_valid(active_player) and not InteractionManager.is_dialogue_active():
+		active_player.set_movement_enabled(true)
+	map_ui.visible = not InteractionManager.is_dialogue_active()
+	poi_prompt.set_suspended(InteractionManager.is_dialogue_active())
+	_refresh_poi_prompt()
 
 
 ## Crea cuatro paredes invisibles alrededor de todas las celdas usadas del mapa.

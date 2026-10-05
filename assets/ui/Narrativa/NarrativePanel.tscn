@@ -1,6 +1,44 @@
-[gd_scene format=3 uid="uid://bf8x24d4gqcqo"]
+[gd_scene load_steps=5 format=3 uid="uid://bf8x24d4gqcqo"]
 
 [ext_resource type="Script" uid="uid://d10keohp8p26a" path="res://assets/ui/Narrativa/narrative_panel.gd" id="1_14jq0"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.105, 0.072, 0.064, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.86, 0.57, 0.25, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 14
+shadow_offset = Vector2(0, 7)
+
+[sub_resource type="StyleBoxFlat" id="CloseButtonStyle"]
+content_margin_top = 11.0
+content_margin_bottom = 11.0
+bg_color = Color(0.76, 0.42, 0.17, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[sub_resource type="StyleBoxFlat" id="CloseButtonHover"]
+content_margin_top = 11.0
+content_margin_bottom = 11.0
+bg_color = Color(0.9, 0.56, 0.25, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.82, 0.5, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
 
 [node name="NarrativePanel" type="PanelContainer" unique_id=358796154]
 custom_minimum_size = Vector2(700, 360)
@@ -17,26 +55,65 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 0
+theme_override_styles/panel = SubResource("PanelStyle")
 script = ExtResource("1_14jq0")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1699581925]
 layout_mode = 2
 theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
+theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 24
+theme_override_constants/margin_bottom = 22
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2052835397]
 layout_mode = 2
+theme_override_constants/separation = 14
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=715358747]
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/Header" unique_id=715358747]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.92, 0.75, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 28
+text = "Lugar cultural"
+vertical_alignment = 1
+
+[node name="CloseIcon" type="Button" parent="MarginContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.83, 0.58, 1)
+theme_override_colors/font_hover_color = Color(1, 0.96, 0.86, 1)
+theme_override_font_sizes/font_size = 24
+text = "×"
+flat = true
+
+[node name="Category" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.69, 0.36, 1)
+theme_override_font_sizes/font_size = 17
+text = "Cultura"
 
 [node name="Narrative" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=1064021393]
 custom_minimum_size = Vector2(0, 210)
 layout_mode = 2
+theme_override_colors/default_color = Color(0.94, 0.89, 0.81, 1)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+fit_content = true
 
 [node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=792949258]
 layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.14, 0.08, 0.05, 1)
+theme_override_colors/font_hover_color = Color(0.1, 0.055, 0.035, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("CloseButtonStyle")
+theme_override_styles/hover = SubResource("CloseButtonHover")
+theme_override_styles/pressed = SubResource("CloseButtonStyle")
 text = "Cerrar"

@@ -1,9 +1,14 @@
 extends Area2D
 
-signal narrative_requested(title: String, narrative: String)
+signal zone_entered(point_of_interest: Area2D)
+signal zone_exited(point_of_interest: Area2D)
 
-@export var title: String = "Punto de interés"
-@export_multiline var narrative: String = "Aquí aparecerá la información del lugar."
+@export_category("Cartografía cultural")
+@export var place_name := "Punto de interés"
+@export var category := "Cultura"
+@export_multiline var description := "Aquí aparecerá la información cultural del lugar."
+@export var icon: Texture2D
+@export var category_color := Color("d99a45")
 
 var player_inside := false
 
@@ -14,16 +19,24 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		player_inside = true
+	if not body.is_in_group("player") or player_inside:
+		return
+	player_inside = true
+	zone_entered.emit(self)
 
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("player"):
-		player_inside = false
+	if not body.is_in_group("player") or not player_inside:
+		return
+	player_inside = false
+	zone_exited.emit(self)
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if player_inside and event.is_action_pressed("Interact"):
-		narrative_requested.emit(title, narrative)
-		get_viewport().set_input_as_handled()
+func get_poi_data() -> Dictionary:
+	return {
+		"name": place_name,
+		"category": category,
+		"description": description,
+		"icon": icon,
+		"category_color": category_color,
+	}

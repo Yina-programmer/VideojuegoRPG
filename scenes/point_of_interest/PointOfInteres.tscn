@@ -6,11 +6,13 @@
 size = Vector2(42, 38)
 
 [node name="PointOfInteres" type="Area2D" unique_id=133967856 groups=["point_of_interest"]]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
 script = ExtResource("1_x8xo3")
-title = "Parque de los Hippies"
-narrative = "El Parque de los Hippies es uno de los lugares representativos
-de Chapinero y constituye un punto de encuentro cultural y social
-de la localidad."
+place_name = "Punto de interés"
+category = "Cultura"
+description = "Configura desde el Inspector la información cultural de este lugar."
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=547561212]
 shape = SubResource("RectangleShape2D_5h11f")
