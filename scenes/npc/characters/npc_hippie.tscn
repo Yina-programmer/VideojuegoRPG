@@ -17,10 +17,15 @@ patrol_points = PackedVector2Array(543, 0, 543, 546, 543, 1093, -160, 1093, -864
 patrol_speed = 105.0
 
 [node name="Body" parent="Visual" index="0"]
-scale = Vector2(0.255, 0.255)
+position = Vector2(0, -11)
+scale = Vector2(0.31, 0.31)
 sprite_frames = ExtResource("2_frames")
 animation = &"walk_up"
 
 [node name="InteractionIndicator" parent="." index="4"]
 layout_mode = 3
 anchors_preset = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 134.0
+offset_bottom = 44.0

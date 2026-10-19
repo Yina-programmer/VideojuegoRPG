@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dr4h3mst7lagc"]
 
 [ext_resource type="PackedScene" uid="uid://brtrmyf1ru7e2" path="res://scenes/npc/base/npc_base.tscn" id="1_base"]
-[ext_resource type="SpriteFrames" path="res://assets/npc/polito/polito_frames.tres" id="2_frames"]
+[ext_resource type="SpriteFrames" uid="uid://cegmymni54y4o" path="res://assets/npc/polito/polito_frames.tres" id="2_frames"]
 
 [node name="Polito" unique_id=713183103 instance=ExtResource("1_base")]
 npc_id = "polito"
@@ -16,10 +16,15 @@ patrol_points = PackedVector2Array(462, 0, 462, 542, 462, 1084, -244, 1084, -950
 patrol_speed = 110.0
 
 [node name="Body" parent="Visual" index="0"]
-scale = Vector2(0.265, 0.265)
+position = Vector2(0, -11)
+scale = Vector2(0.32, 0.32)
 sprite_frames = ExtResource("2_frames")
-animation = &"walk_up"
+animation = &"walk_down"
 
 [node name="InteractionIndicator" parent="." index="4"]
 layout_mode = 3
 anchors_preset = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 134.0
+offset_bottom = 44.0

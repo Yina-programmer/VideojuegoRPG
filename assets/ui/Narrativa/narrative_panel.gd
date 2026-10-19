@@ -29,9 +29,10 @@ func show_narrative(
 	_closing = false
 	title_label.text = title
 	category_label.text = category
-	category_label.add_theme_color_override("font_color", category_color.lightened(0.18))
+	_apply_category_color(category_color)
 	narrative_label.text = narrative
 	show()
+	narrative_label.get_v_scroll_bar().value = 0.0
 	set_process_input(true)
 	pivot_offset = size * 0.5
 	modulate.a = 0.0
@@ -41,6 +42,30 @@ func show_narrative(
 	_transition.tween_property(self, "modulate:a", 1.0, 0.2)
 	_transition.tween_property(self, "scale", Vector2.ONE, 0.25)
 	close_icon.grab_focus()
+
+
+func _apply_category_color(color: Color) -> void:
+	category_label.add_theme_color_override("font_color", color.lightened(0.18))
+	close_icon.add_theme_color_override("font_color", color.lightened(0.25))
+	close_icon.add_theme_color_override("font_focus_color", color.lightened(0.25))
+	close_icon.add_theme_color_override("font_hover_color", color.lightened(0.45))
+
+	var panel_style := get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+	panel_style.border_color = color
+	add_theme_stylebox_override("panel", panel_style)
+
+	var normal_style := close_button.get_theme_stylebox("normal").duplicate() as StyleBoxFlat
+	normal_style.bg_color = color.darkened(0.12)
+	close_button.add_theme_stylebox_override("normal", normal_style)
+
+	var hover_style := close_button.get_theme_stylebox("hover").duplicate() as StyleBoxFlat
+	hover_style.bg_color = color.lightened(0.08)
+	hover_style.border_color = color.lightened(0.34)
+	close_button.add_theme_stylebox_override("hover", hover_style)
+
+	var pressed_style := close_button.get_theme_stylebox("pressed").duplicate() as StyleBoxFlat
+	pressed_style.bg_color = color.darkened(0.24)
+	close_button.add_theme_stylebox_override("pressed", pressed_style)
 
 
 func _on_close_pressed() -> void:

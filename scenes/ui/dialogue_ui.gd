@@ -45,7 +45,7 @@ func open_dialogue(data: Dictionary) -> void:
 	_transition_tween = create_tween().set_parallel(true)
 	_transition_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	_transition_tween.tween_property(root, "modulate:a", 1.0, 0.22)
-	_transition_tween.tween_property(shade, "color:a", 0.2, 0.25)
+	_transition_tween.tween_property(shade, "color:a", 0.08, 0.25)
 	_transition_tween.tween_property(dialogue_panel, "scale", Vector2.ONE, 0.28).set_trans(Tween.TRANS_BACK)
 
 

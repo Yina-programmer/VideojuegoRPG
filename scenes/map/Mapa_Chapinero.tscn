@@ -6181,6 +6181,22 @@ category = "Cultura urbana"
 description = "El Parque de los Hippies es uno de los lugares representativos de Chapinero y constituye un punto de encuentro cultural, artístico y social de la localidad. Su plazoleta reúne expresiones urbanas, música, conversación y distintas formas de habitar colectivamente la ciudad."
 category_color = Color(0.93, 0.48, 0.25, 1)
 
+[node name="PolitecnicoPOI" parent="." instance=ExtResource("3_nbb1n")]
+position = Vector2(-415, -3112)
+scale = Vector2(32, 35)
+place_name = "Politécnico Grancolombiano"
+category = "Educación, tecnología e innovación"
+description = "¿Sabías que el Politécnico Grancolombiano comenzó su historia hace más de cuatro décadas?\n\nLa institución fue fundada en 1980 y comenzó sus actividades académicas en marzo de 1981. Desde sus primeros años ofreció formación tecnológica, incluyendo estudios relacionados con la administración de sistemas.\n\nEn 1991 adquirió el carácter de institución universitaria y con el paso del tiempo amplió su oferta académica, incorporando nuevas modalidades de formación.\n\nSu campus en Chapinero reúne espacios de aprendizaje, una biblioteca y recursos audiovisuales dedicados a la fotografía, el sonido y la producción de contenidos.\n\nHoy, el Poli representa un punto de encuentro entre estudiantes, tecnología y creatividad. Aquí las ideas pueden convertirse en investigaciones, proyectos y soluciones para la sociedad.\n\nDato interesante: la formación relacionada con los sistemas y la tecnología formó parte de sus primeros años de enseñanza.\n\nFuentes de referencia:\nhttps://www.poli.edu.co/fundadores\nhttps://www.poli.edu.co/crea/areas-que-componen-el-crea"
+category_color = Color(0.2, 0.67, 0.87, 1)
+
+[node name="TheatronPOI" parent="." instance=ExtResource("3_nbb1n")]
+position = Vector2(-4473, 733)
+scale = Vector2(24, 26)
+place_name = "Theatron: historia, música y diversidad"
+category = "Vida nocturna, cultura y diversidad"
+description = "¿Sabías que antes de convertirse en uno de los lugares más representativos de la vida nocturna de Bogotá, Theatron fue un cine?\n\nEn este edificio funcionó el antiguo cine Metro Riviera. Con el paso de los años, el espacio tuvo diferentes usos, incluyendo una etapa como iglesia.\n\nEn 2002 comenzó una nueva historia: el lugar se transformó en un espacio de entretenimiento, música y encuentro.\n\nCon el tiempo, Theatron creció y reunió diferentes ambientes musicales, convirtiéndose en uno de los referentes de la vida nocturna de Chapinero.\n\nPero su importancia no está solamente en las fiestas. También se ha convertido en un espacio simbólico de visibilidad, encuentro y expresión para la comunidad LGBTIQ+.\n\nDato interesante: el edificio ha pasado de proyectar películas a reunir personas de diferentes culturas e identidades alrededor de la música.\n\nSu historia demuestra cómo un mismo lugar puede transformarse y adquirir nuevos significados para una ciudad.\n\nFuentes de referencia:\nhttps://bogota.gov.co/mi-ciudad/desarrollo-economico/orgullo-lgbti-en-bogota-empresas-y-organizaciones-con-diversidad\nhttps://www.archdaily.cl/cl/941293/theatron-espacios-que-aprenden-en-colombia"
+category_color = Color(0.73, 0.43, 0.92, 1)
+
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1840160797]
 position = Vector2(-415, -3112)
 
