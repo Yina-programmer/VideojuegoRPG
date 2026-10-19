@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/discovery_notification.gd" id="1_notification"]
+
+[sub_resource type="StyleBoxFlat" id="CardStyle"]
+bg_color = Color(0.105, 0.072, 0.064, 0.50)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.68, 0.34, 1)
+corner_radius_top_left = 17
+corner_radius_top_right = 17
+corner_radius_bottom_right = 17
+corner_radius_bottom_left = 17
+shadow_color = Color(0, 0, 0, 0.48)
+shadow_size = 11
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="ProgressTrack"]
+bg_color = Color(0.15, 0.12, 0.11, 0.85)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="ProgressFill"]
+bg_color = Color(0.9, 0.68, 0.34, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="DiscoveryNotification" type="CanvasLayer"]
+layer = 35
+script = ExtResource("1_notification")
+
+[node name="Root" type="Control" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Card" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 18.0
+offset_right = 260.0
+offset_bottom = 194.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("CardStyle")
+
+[node name="Margin" type="MarginContainer" parent="Root/Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 15
+
+[node name="Content" type="VBoxContainer" parent="Root/Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="Headline" type="Label" parent="Root/Card/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.52, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 15
+text = "✦  ¡NUEVO LUGAR DESCUBIERTO!"
+horizontal_alignment = 1
+
+[node name="Place" type="Label" parent="Root/Card/Margin/Content"]
+layout_mode = 2
+autowrap_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.78, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 25
+text = "LUGAR CULTURAL"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="Root/Card/Margin/Content"]
+layout_mode = 2
+autowrap_mode = 2
+theme_override_colors/font_color = Color(0.97, 0.89, 0.79, 1)
+theme_override_font_sizes/font_size = 13
+text = "Una nueva historia de Chapinero se ha añadido a tu bitácora."
+horizontal_alignment = 1
+
+[node name="Progress" type="ProgressBar" parent="Root/Card/Margin/Content"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/background = SubResource("ProgressTrack")
+theme_override_styles/fill = SubResource("ProgressFill")
+max_value = 100.0
+show_percentage = false
+
+[node name="Counter" type="Label" parent="Root/Card/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.87, 0.62, 1)
+theme_override_font_sizes/font_size = 13
+text = "+1 descubrimiento cultural  ·  Progreso: 1 / 3"
+horizontal_alignment = 1
+
+[node name="Sync" type="Label" parent="Root/Card/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.94, 0.82, 1)
+theme_override_font_sizes/font_size = 11
+text = "✓ Guardado en la bitácora"
+horizontal_alignment = 1
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]

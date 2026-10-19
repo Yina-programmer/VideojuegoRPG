@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://bf8x24d4gqcqo" path="res://assets/ui/Narrativa/NarrativePanel.tscn" id="4_nrt70"]
 [ext_resource type="PackedScene" uid="uid://dako7agcuujpn" path="res://scenes/npc/characters/npc_theatron.tscn" id="5_theatron"]
 [ext_resource type="PackedScene" path="res://scenes/ui/poi_prompt.tscn" id="6_poi_prompt"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ExplorationJournal.tscn" id="7_journal"]
+[ext_resource type="PackedScene" path="res://scenes/ui/DiscoveryNotification.tscn" id="8_discovery"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]
 texture = ExtResource("1_palki")
@@ -6176,25 +6178,34 @@ position = Vector2(-4473, 733)
 [node name="PointOfInteres" parent="." unique_id=775087451 instance=ExtResource("3_nbb1n")]
 position = Vector2(-633.00006, -1480.0001)
 scale = Vector2(37, 28)
+place_id = "hippies"
 place_name = "Parque de los Hippies"
 category = "Cultura urbana"
 description = "El Parque de los Hippies es uno de los lugares representativos de Chapinero y constituye un punto de encuentro cultural, artístico y social de la localidad. Su plazoleta reúne expresiones urbanas, música, conversación y distintas formas de habitar colectivamente la ciudad."
+discovery_hint = "Un espacio donde el arte y las historias se encuentran."
+related_npc_name = "Nico"
 category_color = Color(0.93, 0.48, 0.25, 1)
 
 [node name="PolitecnicoPOI" parent="." instance=ExtResource("3_nbb1n")]
 position = Vector2(-415, -3112)
 scale = Vector2(32, 35)
+place_id = "politecnico"
 place_name = "Politécnico Grancolombiano"
 category = "Educación, tecnología e innovación"
 description = "¿Sabías que el Politécnico Grancolombiano comenzó su historia hace más de cuatro décadas?\n\nLa institución fue fundada en 1980 y comenzó sus actividades académicas en marzo de 1981. Desde sus primeros años ofreció formación tecnológica, incluyendo estudios relacionados con la administración de sistemas.\n\nEn 1991 adquirió el carácter de institución universitaria y con el paso del tiempo amplió su oferta académica, incorporando nuevas modalidades de formación.\n\nSu campus en Chapinero reúne espacios de aprendizaje, una biblioteca y recursos audiovisuales dedicados a la fotografía, el sonido y la producción de contenidos.\n\nHoy, el Poli representa un punto de encuentro entre estudiantes, tecnología y creatividad. Aquí las ideas pueden convertirse en investigaciones, proyectos y soluciones para la sociedad.\n\nDato interesante: la formación relacionada con los sistemas y la tecnología formó parte de sus primeros años de enseñanza.\n\nFuentes de referencia:\nhttps://www.poli.edu.co/fundadores\nhttps://www.poli.edu.co/crea/areas-que-componen-el-crea"
+discovery_hint = "Un lugar donde las ideas se transforman en conocimiento."
+related_npc_name = "Polito"
 category_color = Color(0.2, 0.67, 0.87, 1)
 
 [node name="TheatronPOI" parent="." instance=ExtResource("3_nbb1n")]
 position = Vector2(-4473, 733)
 scale = Vector2(24, 26)
+place_id = "theatron"
 place_name = "Theatron: historia, música y diversidad"
 category = "Vida nocturna, cultura y diversidad"
 description = "¿Sabías que antes de convertirse en uno de los lugares más representativos de la vida nocturna de Bogotá, Theatron fue un cine?\n\nEn este edificio funcionó el antiguo cine Metro Riviera. Con el paso de los años, el espacio tuvo diferentes usos, incluyendo una etapa como iglesia.\n\nEn 2002 comenzó una nueva historia: el lugar se transformó en un espacio de entretenimiento, música y encuentro.\n\nCon el tiempo, Theatron creció y reunió diferentes ambientes musicales, convirtiéndose en uno de los referentes de la vida nocturna de Chapinero.\n\nPero su importancia no está solamente en las fiestas. También se ha convertido en un espacio simbólico de visibilidad, encuentro y expresión para la comunidad LGBTIQ+.\n\nDato interesante: el edificio ha pasado de proyectar películas a reunir personas de diferentes culturas e identidades alrededor de la música.\n\nSu historia demuestra cómo un mismo lugar puede transformarse y adquirir nuevos significados para una ciudad.\n\nFuentes de referencia:\nhttps://bogota.gov.co/mi-ciudad/desarrollo-economico/orgullo-lgbti-en-bogota-empresas-y-organizaciones-con-diversidad\nhttps://www.archdaily.cl/cl/941293/theatron-espacios-que-aprenden-en-colombia"
+discovery_hint = "Un antiguo escenario que encontró una nueva forma de brillar."
+related_npc_name = "Dante"
 category_color = Color(0.73, 0.43, 0.92, 1)
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1840160797]
@@ -6227,6 +6238,26 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_closet_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_closet_hover")
 text = "✦  ARMARIO"
 
+[node name="JournalButton" type="Button" parent="MapUI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -230.0
+offset_top = 94.0
+offset_right = -24.0
+offset_bottom = 152.0
+grow_horizontal = 0
+tooltip_text = "Abrir la Bitácora de Chapinero (J)"
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_hover_color = Color(1, 0.96, 0.84, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("StyleBoxFlat_closet_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_closet_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_closet_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_closet_hover")
+text = "📖  BITÁCORA"
+
 [node name="POIPrompt" parent="." unique_id=2000506176 instance=ExtResource("6_poi_prompt")]
 
 [node name="Polito" parent="." unique_id=1229645785 instance=ExtResource("3_o16v3")]
@@ -6250,3 +6281,7 @@ patrol_speed = 40.0
 layer = 20
 
 [node name="NarrativePanel" parent="UI_narrative" unique_id=358796154 instance=ExtResource("4_nrt70")]
+
+[node name="ExplorationJournal" parent="." instance=ExtResource("7_journal")]
+
+[node name="DiscoveryNotification" parent="." instance=ExtResource("8_discovery")]

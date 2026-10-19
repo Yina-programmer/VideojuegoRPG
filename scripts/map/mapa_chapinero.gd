@@ -8,27 +8,41 @@ const MALE_PLAYER_SCENE = "res://scenes/player/player_male.tscn"
 @onready var calles: TileMapLayer = $Calles
 @onready var map_ui: CanvasLayer = $MapUI
 @onready var closet_button: Button = $MapUI/ClosetButton
+@onready var journal_button: Button = $MapUI/JournalButton
 @onready var player_spawn: Marker2D = $PlayerSpawn
 @onready var narrative_panel = $UI_narrative/NarrativePanel
 @onready var poi_prompt = $POIPrompt
+@onready var journal = $ExplorationJournal
+@onready var discovery_notification = $DiscoveryNotification
 
 var active_player: CharacterBody2D
 var active_pois: Array[Area2D] = []
 var narrative_open := false
+var journal_open := false
+var _spawn_position := Vector2.ZERO
+var _has_moved_from_spawn := false
 
 
 func _ready() -> void:
 	_spawn_selected_player()
 	closet_button.pressed.connect(_open_closet)
+	journal_button.pressed.connect(_open_journal)
+	journal.closed.connect(_on_journal_closed)
+	discovery_notification.finished.connect(_try_show_discovery_notification)
+	ProgressManager.discovery_reward_available.connect(_try_show_discovery_notification)
 	InteractionManager.dialogue_started.connect(_on_dialogue_started)
 	InteractionManager.dialogue_finished.connect(_on_dialogue_finished)
 	poi_prompt.poi_selected.connect(_on_poi_selected)
 	narrative_panel.closed.connect(_on_narrative_closed)
 	crear_limites_del_mapa()
+	var catalog: Array[Dictionary] = []
 	for point_of_interest in get_tree().get_nodes_in_group("point_of_interest"):
 		if point_of_interest is Area2D:
+			catalog.append(point_of_interest.get_poi_data())
 			point_of_interest.zone_entered.connect(_on_poi_zone_entered)
 			point_of_interest.zone_exited.connect(_on_poi_zone_exited)
+	ProgressManager.register_places(catalog)
+	call_deferred("_try_show_discovery_notification")
 
 
 func _spawn_selected_player() -> void:
@@ -46,6 +60,17 @@ func _spawn_selected_player() -> void:
 	player_camera.reparent(selected_player, true)
 	player_spawn.free()
 	active_player = selected_player
+	_spawn_position = selected_player.global_position
+
+
+func _physics_process(_delta: float) -> void:
+	if _has_moved_from_spawn or not is_instance_valid(active_player):
+		return
+	if active_player.global_position.distance_to(_spawn_position) < 8.0:
+		return
+	_has_moved_from_spawn = true
+	for point_of_interest in active_pois:
+		ProgressManager.record_visit(str(point_of_interest.get("place_id")))
 
 
 func _load_character_type() -> String:
@@ -59,19 +84,52 @@ func _open_closet() -> void:
 	get_tree().change_scene_to_file(CLOSET_SCENE)
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("OpenJournal") and not journal_open:
+		get_viewport().set_input_as_handled()
+		_open_journal()
+
+
+func _open_journal() -> void:
+	if journal_open or narrative_open or InteractionManager.is_dialogue_active():
+		return
+	journal_open = true
+	map_ui.hide()
+	poi_prompt.set_suspended(true)
+	if is_instance_valid(active_player):
+		active_player.set_movement_enabled(false)
+	discovery_notification.dismiss()
+	journal.open_journal()
+
+
+func _on_journal_closed() -> void:
+	journal_open = false
+	if is_instance_valid(active_player) and not narrative_open and not InteractionManager.is_dialogue_active():
+		active_player.set_movement_enabled(true)
+	map_ui.visible = not narrative_open and not InteractionManager.is_dialogue_active()
+	poi_prompt.set_suspended(narrative_open or InteractionManager.is_dialogue_active())
+	_refresh_poi_prompt()
+	_try_show_discovery_notification()
+
+
 func _on_dialogue_started() -> void:
 	map_ui.visible = false
 	poi_prompt.set_suspended(true)
+	discovery_notification.dismiss()
 
 
 func _on_dialogue_finished() -> void:
-	map_ui.visible = not narrative_open
-	poi_prompt.set_suspended(narrative_open)
+	map_ui.visible = not narrative_open and not journal_open
+	poi_prompt.set_suspended(narrative_open or journal_open)
+	_try_show_discovery_notification()
 
 
 func _on_poi_zone_entered(point_of_interest: Area2D) -> void:
 	if point_of_interest not in active_pois:
 		active_pois.append(point_of_interest)
+		# Al aparecer dentro del Politécnico, aún no hubo exploración real.
+		if _has_moved_from_spawn or active_player.global_position.distance_to(_spawn_position) >= 8.0:
+			ProgressManager.record_visit(str(point_of_interest.get("place_id")))
 	_refresh_poi_prompt()
 
 
@@ -91,7 +149,7 @@ func _refresh_poi_prompt() -> void:
 
 
 func _on_poi_selected(point_of_interest: Area2D) -> void:
-	if narrative_open or InteractionManager.is_dialogue_active():
+	if narrative_open or journal_open or InteractionManager.is_dialogue_active():
 		return
 	if point_of_interest not in active_pois or not point_of_interest.has_method("get_poi_data"):
 		return
@@ -101,21 +159,42 @@ func _on_poi_selected(point_of_interest: Area2D) -> void:
 	map_ui.visible = false
 	if is_instance_valid(active_player):
 		active_player.set_movement_enabled(false)
+	ProgressManager.record_visit(str(data.get("place_id", "")))
 	narrative_panel.show_narrative(
 		str(data.get("name", "Lugar cultural")),
 		str(data.get("description", "")),
 		str(data.get("category", "Cultura")),
 		data.get("category_color", Color("d99a45")) as Color,
 	)
+	ProgressManager.record_discovery(str(data.get("place_id", "")))
 
 
 func _on_narrative_closed() -> void:
 	narrative_open = false
-	if is_instance_valid(active_player) and not InteractionManager.is_dialogue_active():
+	if is_instance_valid(active_player) and not journal_open and not InteractionManager.is_dialogue_active():
 		active_player.set_movement_enabled(true)
-	map_ui.visible = not InteractionManager.is_dialogue_active()
-	poi_prompt.set_suspended(InteractionManager.is_dialogue_active())
+	map_ui.visible = not journal_open and not InteractionManager.is_dialogue_active()
+	poi_prompt.set_suspended(journal_open or InteractionManager.is_dialogue_active())
 	_refresh_poi_prompt()
+	_try_show_discovery_notification()
+
+
+func _try_show_discovery_notification() -> void:
+	if narrative_open or journal_open or InteractionManager.is_dialogue_active():
+		return
+	if discovery_notification.is_showing():
+		return
+	var place_id := ProgressManager.take_discovery_reward()
+	if place_id.is_empty():
+		return
+	var place := ProgressManager.get_place_data(place_id)
+	if place.is_empty():
+		return
+	discovery_notification.show_discovery(
+		place,
+		ProgressManager.get_discovered_count(),
+		ProgressManager.get_total_count(),
+	)
 
 
 ## Crea cuatro paredes invisibles alrededor de todas las celdas usadas del mapa.

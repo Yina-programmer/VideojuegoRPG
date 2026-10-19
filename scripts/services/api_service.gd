@@ -31,6 +31,12 @@ signal customization_saved()
 ## pending_sync queda en true para reintentar al abrir el armario.
 signal customization_save_failed(reason: String)
 
+## HU_7: respuestas de exploración, separadas de las de personalización.
+signal exploration_loaded(places: Array)
+signal exploration_load_failed(reason: String)
+signal exploration_event_saved(place_id: String, event_type: String, record: Dictionary)
+signal exploration_event_failed(place_id: String, event_type: String, reason: String)
+
 # ── Configuración ─────────────────────────────────────────────────────────────
 
 ## URL base de la API. Cambiar aquí si el backend corre en otro puerto o host.
@@ -45,6 +51,10 @@ var _http: HTTPRequest
 var _request_in_progress := false
 var _current_req: _ReqType = _ReqType.NONE
 var _player_id := ""
+var _exploration_http: HTTPRequest
+var _exploration_queue: Array[Dictionary] = []
+var _exploration_current: Dictionary = {}
+var _exploration_busy := false
 
 # ── Ciclo de vida ─────────────────────────────────────────────────────────────
 
@@ -53,6 +63,10 @@ func _ready() -> void:
 	_http.timeout = 10.0
 	add_child(_http)
 	_http.request_completed.connect(_on_request_completed)
+	_exploration_http = HTTPRequest.new()
+	_exploration_http.timeout = 10.0
+	add_child(_exploration_http)
+	_exploration_http.request_completed.connect(_on_exploration_request_completed)
 	_player_id = _load_or_create_player_id()
 	print("[ApiService] Inicializado. Player ID: ", _player_id)
 
@@ -61,6 +75,85 @@ func _ready() -> void:
 ## Devuelve el player_id del jugador actual (UUID v4).
 func get_player_id() -> String:
 	return _player_id
+
+
+## Usa una solicitud HTTP independiente para no bloquear el guardado del armario.
+func cargar_exploracion() -> void:
+	_exploration_queue.append({"kind": "get"})
+	_pump_exploration_queue()
+
+
+func registrar_evento_exploracion(place_id: String, event_type: String) -> void:
+	_exploration_queue.append({
+		"kind": "put",
+		"place_id": place_id,
+		"event": event_type,
+	})
+	_pump_exploration_queue()
+
+
+func _pump_exploration_queue() -> void:
+	if _exploration_busy or _exploration_queue.is_empty():
+		return
+	_exploration_current = _exploration_queue.pop_front()
+	_exploration_busy = true
+	var kind := str(_exploration_current["kind"])
+	var url := "%s/api/exploration/%s" % [API_BASE_URL, _player_id]
+	var error := OK
+	if kind == "get":
+		error = _exploration_http.request(url, PackedStringArray(), HTTPClient.METHOD_GET)
+	else:
+		url += "/%s" % str(_exploration_current["place_id"])
+		var body := JSON.stringify({"event": _exploration_current["event"]})
+		error = _exploration_http.request(
+			url,
+			PackedStringArray(["Content-Type: application/json"]),
+			HTTPClient.METHOD_PUT,
+			body,
+		)
+	if error != OK:
+		_exploration_busy = false
+		_emit_exploration_failure("No se pudo iniciar la solicitud HTTP (%d)" % error)
+		call_deferred("_pump_exploration_queue")
+
+
+func _on_exploration_request_completed(
+	result: int,
+	response_code: int,
+	_headers: PackedStringArray,
+	body: PackedByteArray,
+) -> void:
+	_exploration_busy = false
+	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
+		_emit_exploration_failure("Error de conexión o servidor (%d / %d)" % [result, response_code])
+		call_deferred("_pump_exploration_queue")
+		return
+	var data: Variant = JSON.parse_string(body.get_string_from_utf8())
+	if not data is Dictionary:
+		_emit_exploration_failure("Respuesta JSON inválida")
+	elif str(_exploration_current["kind"]) == "get":
+		if data.get("places") is Array:
+			exploration_loaded.emit(data["places"])
+		else:
+			_emit_exploration_failure("Lista de lugares inválida")
+	else:
+		exploration_event_saved.emit(
+			str(_exploration_current["place_id"]),
+			str(_exploration_current["event"]),
+			data,
+		)
+	call_deferred("_pump_exploration_queue")
+
+
+func _emit_exploration_failure(reason: String) -> void:
+	if str(_exploration_current.get("kind", "")) == "get":
+		exploration_load_failed.emit(reason)
+	else:
+		exploration_event_failed.emit(
+			str(_exploration_current.get("place_id", "")),
+			str(_exploration_current.get("event", "")),
+			reason,
+		)
 
 ## Inicia la sincronización al abrir el armario.
 ##

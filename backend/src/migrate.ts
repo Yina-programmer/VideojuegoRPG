@@ -9,9 +9,8 @@ import { Pool } from 'pg';
 /**
  * Script de migración — ejecutar con: npm run migrate
  *
- * Lee DATABASE_URL del archivo .env y aplica migrations/001_initial.sql.
- * El script es idempotente: puede ejecutarse varias veces sin efectos
- * secundarios gracias a CREATE TABLE IF NOT EXISTS e INSERT ... ON CONFLICT DO NOTHING.
+ * Lee DATABASE_URL del archivo .env y aplica todas las migraciones .sql
+ * ordenadas por nombre. Cada archivo es idempotente.
  */
 async function runMigration(): Promise<void> {
   const connectionString = process.env.DATABASE_URL;
@@ -26,13 +25,16 @@ async function runMigration(): Promise<void> {
   const pool = new Pool({ connectionString });
 
   try {
-    const sqlPath = path.resolve(__dirname, '../migrations/001_initial.sql');
-    const sql = fs.readFileSync(sqlPath, 'utf8');
+    const migrationsPath = path.resolve(__dirname, '../migrations');
+    const files = fs.readdirSync(migrationsPath)
+      .filter((file) => /^\d+_.*\.sql$/.test(file))
+      .sort();
 
-    console.log('⏳  Ejecutando migración...');
-    await pool.query(sql);
-    console.log('✅  Migración completada exitosamente.');
-    console.log('    Tablas creadas: character_types, outfits, hair_styles, player_customization');
+    for (const file of files) {
+      console.log(`⏳  Aplicando ${file}...`);
+      await pool.query(fs.readFileSync(path.join(migrationsPath, file), 'utf8'));
+      console.log(`✅  ${file} completada.`);
+    }
   } catch (err) {
     console.error('❌  Error al ejecutar la migración:', err);
     process.exit(1);

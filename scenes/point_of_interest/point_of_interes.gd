@@ -4,9 +4,12 @@ signal zone_entered(point_of_interest: Area2D)
 signal zone_exited(point_of_interest: Area2D)
 
 @export_category("Cartografía cultural")
+@export var place_id := ""
 @export var place_name := "Punto de interés"
 @export var category := "Cultura"
 @export_multiline var description := "Aquí aparecerá la información cultural del lugar."
+@export_multiline var discovery_hint := "Una historia espera ser descubierta."
+@export var related_npc_name := ""
 @export var icon: Texture2D
 @export var category_color := Color("d99a45")
 
@@ -34,9 +37,12 @@ func _on_body_exited(body: Node) -> void:
 
 func get_poi_data() -> Dictionary:
 	return {
+		"place_id": place_id,
 		"name": place_name,
 		"category": category,
 		"description": description,
+		"hint": discovery_hint,
+		"npc_name": related_npc_name,
 		"icon": icon,
 		"category_color": category_color,
 	}
