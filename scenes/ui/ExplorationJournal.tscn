@@ -1,0 +1,233 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/exploration_journal.gd" id="1_journal"]
+
+[sub_resource type="StyleBoxFlat" id="WindowStyle"]
+bg_color = Color(0.105, 0.072, 0.064, 0.50)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.86, 0.57, 0.25, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 14
+shadow_offset = Vector2(0, 6)
+
+[sub_resource type="StyleBoxFlat" id="ProgressTrack"]
+bg_color = Color(0.19, 0.14, 0.12, 0.9)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="ProgressFill"]
+bg_color = Color(0.87, 0.61, 0.29, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.78, 0.49, 0.24, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.94, 0.69, 0.36, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="ExplorationJournal" type="CanvasLayer"]
+layer = 25
+script = ExtResource("1_journal")
+
+[node name="Root" type="Control" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Shade" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.035, 0.022, 0.02, 0.08)
+
+[node name="Window" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchor_left = 0.06
+anchor_top = 0.05
+anchor_right = 0.94
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme_override_styles/panel = SubResource("WindowStyle")
+
+[node name="Margin" type="MarginContainer" parent="Root/Window"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="VBoxContainer" parent="Root/Window/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="Header" type="HBoxContainer" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+
+[node name="Heading" type="VBoxContainer" parent="Root/Window/Margin/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="Title" type="Label" parent="Root/Window/Margin/Content/Header/Heading"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 29
+text = "Bitácora de Chapinero"
+
+[node name="Subtitle" type="Label" parent="Root/Window/Margin/Content/Header/Heading"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.79, 0.64, 1)
+theme_override_font_sizes/font_size = 14
+text = "Colección de lugares e historias"
+
+[node name="CloseButton" type="Button" parent="Root/Window/Margin/Content/Header"]
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.89, 0.7, 1)
+theme_override_font_sizes/font_size = 25
+text = "×"
+flat = true
+
+[node name="Stats" type="HBoxContainer" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+
+[node name="Count" type="Label" parent="Root/Window/Margin/Content/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.94, 0.83, 1)
+theme_override_font_sizes/font_size = 18
+text = "Lugares descubiertos: 0 de 3"
+
+[node name="Percent" type="Label" parent="Root/Window/Margin/Content/Stats"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.48, 1)
+theme_override_font_sizes/font_size = 17
+text = "Exploración completada: 0%"
+
+[node name="Progress" type="ProgressBar" parent="Root/Window/Margin/Content"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+theme_override_styles/background = SubResource("ProgressTrack")
+theme_override_styles/fill = SubResource("ProgressFill")
+max_value = 100.0
+show_percentage = false
+
+[node name="Status" type="Label" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.78, 0.61, 1)
+theme_override_font_sizes/font_size = 13
+text = "Cargando recorrido..."
+
+[node name="Completion" type="Label" parent="Root/Window/Margin/Content"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "✦ Colección completada: Chapinero ya forma parte de tu historia."
+
+[node name="CardsScroll" type="ScrollContainer" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="CardsFlow" type="HFlowContainer" parent="Root/Window/Margin/Content/CardsScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 14
+
+[node name="DetailScroll" type="ScrollContainer" parent="Root/Window/Margin/Content"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Detail" type="VBoxContainer" parent="Root/Window/Margin/Content/DetailScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="BackButton" type="Button" parent="Root/Window/Margin/Content/DetailScroll/Detail"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.18, 0.11, 0.08, 1)
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "‹  Volver a la colección"
+
+[node name="DetailIcon" type="Label" parent="Root/Window/Margin/Content/DetailScroll/Detail"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.76, 0.4, 1)
+theme_override_font_sizes/font_size = 27
+text = "✦"
+
+[node name="DetailName" type="Label" parent="Root/Window/Margin/Content/DetailScroll/Detail"]
+layout_mode = 2
+autowrap_mode = 2
+theme_override_colors/font_color = Color(1, 0.93, 0.79, 1)
+theme_override_font_sizes/font_size = 25
+
+[node name="DetailMeta" type="Label" parent="Root/Window/Margin/Content/DetailScroll/Detail"]
+layout_mode = 2
+autowrap_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.77, 0.47, 1)
+theme_override_font_sizes/font_size = 15
+
+[node name="DetailStory" type="RichTextLabel" parent="Root/Window/Margin/Content/DetailScroll/Detail"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0.94, 0.84, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/normal_font_size = 17
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="Footer" type="Label" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.73, 0.59, 1)
+theme_override_font_sizes/font_size = 12
+text = "J o Esc para cerrar  ·  Explora el mapa para encontrar nuevas historias"

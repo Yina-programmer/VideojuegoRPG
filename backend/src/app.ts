@@ -1,6 +1,7 @@
 import express from 'express';
 import { errorHandler } from './middleware/errorHandler';
 import customizationRouter from './routes/customization';
+import explorationRouter from './routes/exploration';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/health', (_req, res) => {
 });
 
 app.use('/api/customization', customizationRouter);
+app.use('/api/exploration', explorationRouter);
 
 // Ruta no encontrada
 app.use((_req, res) => {
