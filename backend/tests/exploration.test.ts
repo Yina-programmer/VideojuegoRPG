@@ -10,15 +10,17 @@ const TEST_PLAYER_ID = 'c1b2c3d4-e5f6-4789-8abc-def012345678';
 const endpoint = `/api/exploration/${TEST_PLAYER_ID}`;
 
 beforeAll(async () => {
-  for (const file of ['001_initial.sql', '002_player_place_progress.sql']) {
+  for (const file of ['001_initial.sql', '002_player_place_progress.sql', '003_quest_progress.sql']) {
     const sql = fs.readFileSync(path.resolve(__dirname, '../migrations', file), 'utf8');
     await pool.query(sql);
   }
   await pool.query('DELETE FROM player_place_progress WHERE player_id = $1', [TEST_PLAYER_ID]);
+  await pool.query('DELETE FROM player_quest_progress WHERE player_id = $1', [TEST_PLAYER_ID]);
 });
 
 afterAll(async () => {
   await pool.query('DELETE FROM player_place_progress WHERE player_id = $1', [TEST_PLAYER_ID]);
+  await pool.query('DELETE FROM player_quest_progress WHERE player_id = $1', [TEST_PLAYER_ID]);
   await pool.end();
 });
 
@@ -53,6 +55,12 @@ describe('HU_7: exploración persistente', () => {
     expect(repeatedVisit.body.changed).toBe(false);
     expect(repeatedVisit.body.visited_at).toBe(firstVisitedAt);
 
+    expect((await request(app).put(`${endpoint}/hippies`).send({ event: 'discover' })).status).toBe(403);
+    await pool.query(
+      `INSERT INTO player_quest_progress (player_id, quest_id, status, completed_at, narrative_unlocked_at)
+       VALUES ($1, 'hippies', 'completed', NOW(), NOW())`, [TEST_PLAYER_ID],
+    );
+
     const discovery = await request(app).put(`${endpoint}/hippies`).send({ event: 'discover' });
     expect(discovery.body.state).toBe('discovered');
     expect(discovery.body.changed).toBe(true);
@@ -84,10 +92,13 @@ describe('HU_7: exploración persistente', () => {
     );
     expect(customization.rows).toHaveLength(0);
 
+    await pool.query(
+      `INSERT INTO player_place_progress (player_id, place_id, visited_at, discovered_at)
+       VALUES ($1, 'politecnico', NOW(), NOW())`, [TEST_PLAYER_ID],
+    );
     const discovery = await request(app).put(`${endpoint}/politecnico`).send({ event: 'discover' });
     expect(discovery.status).toBe(200);
-    expect(discovery.body.newly_discovered).toBe(true);
-    expect(discovery.body.visited_at).toBeTruthy();
+    expect(discovery.body.newly_discovered).toBe(false);
 
     const loaded = await request(app).get(endpoint);
     expect(loaded.status).toBe(200);
@@ -99,6 +110,10 @@ describe('HU_7: exploración persistente', () => {
   });
 
   it('solo confirma una recompensa entre dos descubrimientos simultáneos', async () => {
+    await pool.query(
+      `INSERT INTO player_quest_progress (player_id, quest_id, status, completed_at, narrative_unlocked_at)
+       VALUES ($1, 'theatron', 'completed', NOW(), NOW())`, [TEST_PLAYER_ID],
+    );
     const responses = await Promise.all([
       request(app).put(`${endpoint}/theatron`).send({ event: 'discover' }),
       request(app).put(`${endpoint}/theatron`).send({ event: 'discover' }),

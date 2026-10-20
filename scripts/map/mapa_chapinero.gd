@@ -9,16 +9,24 @@ const MALE_PLAYER_SCENE = "res://scenes/player/player_male.tscn"
 @onready var map_ui: CanvasLayer = $MapUI
 @onready var closet_button: Button = $MapUI/ClosetButton
 @onready var journal_button: Button = $MapUI/JournalButton
+@onready var quest_button: Button = $MapUI/QuestButton
+@onready var quest_hint_panel: PanelContainer = $MapUI/QuestHintPanel
+@onready var quest_hint: Label = $MapUI/QuestHintPanel/Margin/QuestHint
+@onready var quest_toast: PanelContainer = $MapUI/QuestToast
+@onready var quest_toast_text: Label = $MapUI/QuestToast/Text
 @onready var player_spawn: Marker2D = $PlayerSpawn
 @onready var narrative_panel = $UI_narrative/NarrativePanel
 @onready var poi_prompt = $POIPrompt
 @onready var journal = $ExplorationJournal
+@onready var quest_notebook = $QuestNotebook
 @onready var discovery_notification = $DiscoveryNotification
 
 var active_player: CharacterBody2D
 var active_pois: Array[Area2D] = []
 var narrative_open := false
 var journal_open := false
+var quest_notebook_open := false
+var _quest_toast_timer: Timer
 var _spawn_position := Vector2.ZERO
 var _has_moved_from_spawn := false
 
@@ -27,7 +35,25 @@ func _ready() -> void:
 	_spawn_selected_player()
 	closet_button.pressed.connect(_open_closet)
 	journal_button.pressed.connect(_open_journal)
+	quest_button.pressed.connect(_open_quest_notebook)
 	journal.closed.connect(_on_journal_closed)
+	quest_notebook.closed.connect(_on_quest_notebook_closed)
+	QuestManager.notice.connect(_show_quest_toast)
+	QuestManager.puzzle_ready.connect(_on_puzzle_ready)
+	QuestManager.quest_changed.connect(_on_quest_changed)
+	QuestManager.loading_changed.connect(_on_quest_loading_changed)
+	ProgressManager.loading_changed.connect(_on_quest_loading_changed)
+	ProgressManager.place_state_changed.connect(_on_quest_changed)
+	InteractionManager.dialogue_finished_with.connect(_on_dialogue_finished_with)
+	_quest_toast_timer = Timer.new()
+	_quest_toast_timer.one_shot = true
+	_quest_toast_timer.wait_time = 4.5
+	add_child(_quest_toast_timer)
+	_quest_toast_timer.timeout.connect(func() -> void: quest_toast.hide())
+	quest_toast.hide()
+	get_viewport().size_changed.connect(_layout_quest_ui)
+	_layout_quest_ui()
+	_update_quest_hint()
 	discovery_notification.finished.connect(_try_show_discovery_notification)
 	ProgressManager.discovery_reward_available.connect(_try_show_discovery_notification)
 	InteractionManager.dialogue_started.connect(_on_dialogue_started)
@@ -75,7 +101,8 @@ func _physics_process(_delta: float) -> void:
 
 func _load_character_type() -> String:
 	var config := ConfigFile.new()
-	if config.load(CUSTOMIZATION_PATH) != OK:
+	var isolated_path := OS.get_environment("VIDEOJUEGO_CUSTOMIZATION_CACHE")
+	if config.load(isolated_path if not isolated_path.is_empty() else CUSTOMIZATION_PATH) != OK:
 		return "mujer"
 	return str(config.get_value("character", "type", "mujer"))
 
@@ -88,10 +115,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("OpenJournal") and not journal_open:
 		get_viewport().set_input_as_handled()
 		_open_journal()
+	elif event.is_action_pressed("OpenQuests") and not quest_notebook_open:
+		get_viewport().set_input_as_handled()
+		_open_quest_notebook()
 
 
 func _open_journal() -> void:
-	if journal_open or narrative_open or InteractionManager.is_dialogue_active():
+	if journal_open or quest_notebook_open or narrative_open or InteractionManager.is_dialogue_active():
 		return
 	journal_open = true
 	map_ui.hide()
@@ -112,6 +142,28 @@ func _on_journal_closed() -> void:
 	_try_show_discovery_notification()
 
 
+func _open_quest_notebook() -> void:
+	if quest_notebook_open or journal_open or narrative_open or InteractionManager.is_dialogue_active():
+		return
+	quest_notebook_open = true
+	map_ui.hide()
+	poi_prompt.set_suspended(true)
+	if is_instance_valid(active_player):
+		active_player.set_movement_enabled(false)
+	discovery_notification.dismiss()
+	quest_notebook.open_notebook()
+
+
+func _on_quest_notebook_closed() -> void:
+	quest_notebook_open = false
+	if is_instance_valid(active_player) and not narrative_open and not InteractionManager.is_dialogue_active():
+		active_player.set_movement_enabled(true)
+	map_ui.visible = not narrative_open and not journal_open and not InteractionManager.is_dialogue_active()
+	poi_prompt.set_suspended(narrative_open or journal_open or InteractionManager.is_dialogue_active())
+	_refresh_poi_prompt()
+	_try_show_discovery_notification()
+
+
 func _on_dialogue_started() -> void:
 	map_ui.visible = false
 	poi_prompt.set_suspended(true)
@@ -119,9 +171,13 @@ func _on_dialogue_started() -> void:
 
 
 func _on_dialogue_finished() -> void:
-	map_ui.visible = not narrative_open and not journal_open
-	poi_prompt.set_suspended(narrative_open or journal_open)
+	map_ui.visible = not narrative_open and not journal_open and not quest_notebook_open
+	poi_prompt.set_suspended(narrative_open or journal_open or quest_notebook_open)
 	_try_show_discovery_notification()
+
+
+func _on_dialogue_finished_with(npc_id: String) -> void:
+	QuestManager.on_npc_dialogue_finished(npc_id)
 
 
 func _on_poi_zone_entered(point_of_interest: Area2D) -> void:
@@ -142,18 +198,33 @@ func _refresh_poi_prompt() -> void:
 	for index in range(active_pois.size() - 1, -1, -1):
 		if not is_instance_valid(active_pois[index]):
 			active_pois.remove_at(index)
-	if active_pois.is_empty():
+	if QuestManager.is_loading() or ProgressManager.is_loading():
+		poi_prompt.set_locked(true, true)
 		poi_prompt.clear_poi()
-	else:
-		poi_prompt.show_poi(active_pois.back())
+		return
+	for index in range(active_pois.size() - 1, -1, -1):
+		var point_of_interest := active_pois[index]
+		if QuestManager.is_unlocked(str(point_of_interest.get("place_id"))):
+			poi_prompt.set_locked(false)
+			if poi_prompt.get_current_poi() != point_of_interest:
+				poi_prompt.show_poi(point_of_interest)
+			return
+	poi_prompt.set_locked(true)
+	poi_prompt.clear_poi()
 
 
 func _on_poi_selected(point_of_interest: Area2D) -> void:
-	if narrative_open or journal_open or InteractionManager.is_dialogue_active():
+	if narrative_open or journal_open or quest_notebook_open or InteractionManager.is_dialogue_active():
 		return
 	if point_of_interest not in active_pois or not point_of_interest.has_method("get_poi_data"):
 		return
 	var data: Dictionary = point_of_interest.get_poi_data()
+	if QuestManager.is_loading() or ProgressManager.is_loading():
+		_show_quest_toast("Cargando progreso del jugador...")
+		return
+	if not QuestManager.is_unlocked(str(data.get("place_id", ""))):
+		_show_quest_toast("Historia bloqueada. Habla con %s y completa su misión." % str(data.get("npc_name", "el personaje del lugar")))
+		return
 	narrative_open = true
 	poi_prompt.set_suspended(true)
 	map_ui.visible = false
@@ -171,16 +242,16 @@ func _on_poi_selected(point_of_interest: Area2D) -> void:
 
 func _on_narrative_closed() -> void:
 	narrative_open = false
-	if is_instance_valid(active_player) and not journal_open and not InteractionManager.is_dialogue_active():
+	if is_instance_valid(active_player) and not journal_open and not quest_notebook_open and not InteractionManager.is_dialogue_active():
 		active_player.set_movement_enabled(true)
-	map_ui.visible = not journal_open and not InteractionManager.is_dialogue_active()
-	poi_prompt.set_suspended(journal_open or InteractionManager.is_dialogue_active())
+	map_ui.visible = not journal_open and not quest_notebook_open and not InteractionManager.is_dialogue_active()
+	poi_prompt.set_suspended(journal_open or quest_notebook_open or InteractionManager.is_dialogue_active())
 	_refresh_poi_prompt()
 	_try_show_discovery_notification()
 
 
 func _try_show_discovery_notification() -> void:
-	if narrative_open or journal_open or InteractionManager.is_dialogue_active():
+	if narrative_open or journal_open or quest_notebook_open or InteractionManager.is_dialogue_active():
 		return
 	if discovery_notification.is_showing():
 		return
@@ -195,6 +266,52 @@ func _try_show_discovery_notification() -> void:
 		ProgressManager.get_discovered_count(),
 		ProgressManager.get_total_count(),
 	)
+
+
+func _on_quest_changed(_quest_id: String) -> void:
+	_update_quest_hint()
+	_refresh_poi_prompt()
+
+
+func _on_quest_loading_changed(_loading: bool) -> void:
+	_update_quest_hint()
+	_refresh_poi_prompt()
+
+
+func _update_quest_hint() -> void:
+	if QuestManager.is_loading():
+		quest_hint.text = "Cargando pistas..."
+		return
+	for quest_id in ["hippies", "politecnico", "theatron", "final"]:
+		var state := QuestManager.get_quest(quest_id)
+		if not state.is_empty() and str(state.get("status", "")) != "completed":
+			quest_hint.text = "✦  %s: %s" % [QuestManager.QUESTS[quest_id]["title"], QuestManager.instruction(quest_id)]
+			return
+	quest_hint.text = "✦  Habla con un NPC para investigar Chapinero."
+
+
+func _layout_quest_ui() -> void:
+	var viewport_width := get_viewport_rect().size.x
+	var hint_width := clampf(viewport_width * 0.38, 340.0, 476.0)
+	quest_hint_panel.offset_left = -hint_width - 24.0
+	quest_hint_panel.offset_right = -24.0
+	var toast_width := minf(720.0, viewport_width - 32.0)
+	quest_toast.offset_left = -toast_width * 0.5
+	quest_toast.offset_right = toast_width * 0.5
+
+
+func _show_quest_toast(message: String) -> void:
+	quest_toast_text.text = message
+	quest_toast.show()
+	_quest_toast_timer.start()
+
+
+func _on_puzzle_ready(quest_id: String) -> void:
+	if narrative_open or journal_open or InteractionManager.is_dialogue_active():
+		return
+	if not quest_notebook_open:
+		_open_quest_notebook()
+	quest_notebook.show_puzzle(quest_id)
 
 
 ## Crea cuatro paredes invisibles alrededor de todas las celdas usadas del mapa.

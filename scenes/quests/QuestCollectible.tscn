@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/quests/quest_collectible.gd" id="1_script"]
+
+[sub_resource type="CircleShape2D" id="Reach"]
+radius = 38.0
+
+[sub_resource type="StyleBoxFlat" id="PromptStyle"]
+content_margin_left = 14.0
+content_margin_top = 9.0
+content_margin_right = 14.0
+content_margin_bottom = 9.0
+bg_color = Color(0.035, 0.03, 0.03, 0.84)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.91, 0.7, 0.38, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="QuestCollectible" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("1_script")
+
+[node name="Reach" type="CollisionShape2D" parent="."]
+shape = SubResource("Reach")
+
+[node name="Prompt" type="PanelContainer" parent="."]
+visible = false
+z_index = 20
+offset_left = -112.0
+offset_top = -91.0
+offset_right = 112.0
+offset_bottom = -32.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PromptStyle")
+
+[node name="Text" type="Label" parent="Prompt"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.74, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 27
+text = "E  Examinar"
+horizontal_alignment = 1

@@ -7,8 +7,10 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
+    "dev:test": "tsx watch src/server-test.ts",
     "test": "vitest run",
-    "migrate": "tsx src/migrate.ts"
+    "migrate": "tsx src/migrate.ts",
+    "migrate:quests": "tsx src/migrate.ts --only 003_quest_progress.sql"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

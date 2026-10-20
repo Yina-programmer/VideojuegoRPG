@@ -93,7 +93,7 @@ func get_dialogue_data() -> Dictionary:
 		"role": role,
 		"category": category,
 		"location": location_name,
-		"lines": dialogue_lines,
+		"lines": QuestManager.get_dialogue_lines(npc_id, dialogue_lines),
 		"accent": accent_color,
 	}
 

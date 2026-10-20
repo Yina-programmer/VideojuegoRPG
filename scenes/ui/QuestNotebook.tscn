@@ -1,0 +1,113 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/quest_notebook.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="WindowStyle"]
+bg_color = Color(0.105, 0.072, 0.064, 0.5)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.86, 0.57, 0.25, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.48)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StatusStyle"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(0.035, 0.03, 0.03, 0.82)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.58, 0.33, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="QuestNotebook" type="CanvasLayer"]
+layer = 27
+script = ExtResource("1_script")
+
+[node name="Root" type="Control" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Shade" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.035, 0.022, 0.02, 0.08)
+
+[node name="Window" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchor_left = 0.12
+anchor_top = 0.07
+anchor_right = 0.88
+anchor_bottom = 0.93
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("WindowStyle")
+
+[node name="Margin" type="MarginContainer" parent="Root/Window"]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
+
+[node name="Content" type="VBoxContainer" parent="Root/Window/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="Header" type="HBoxContainer" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Root/Window/Margin/Content/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.9, 0.72, 1)
+theme_override_font_sizes/font_size = 26
+text = "✦  LIBRETA DE PISTAS"
+
+[node name="Close" type="Button" parent="Root/Window/Margin/Content/Header"]
+layout_mode = 2
+text = "Cerrar ✕"
+
+[node name="StatusPanel" type="PanelContainer" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StatusStyle")
+
+[node name="Status" type="Label" parent="Root/Window/Margin/Content/StatusPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.8, 0.52, 1)
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 22
+text = "Investiga Chapinero"
+autowrap_mode = 3
+
+[node name="Scroll" type="ScrollContainer" parent="Root/Window/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Cards" type="VBoxContainer" parent="Root/Window/Margin/Content/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12

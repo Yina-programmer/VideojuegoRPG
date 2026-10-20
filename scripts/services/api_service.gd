@@ -36,6 +36,10 @@ signal exploration_loaded(places: Array)
 signal exploration_load_failed(reason: String)
 signal exploration_event_saved(place_id: String, event_type: String, record: Dictionary)
 signal exploration_event_failed(place_id: String, event_type: String, reason: String)
+signal quests_loaded(quests: Array)
+signal quest_load_failed(reason: String)
+signal quest_event_saved(quest_id: String, event_type: String, record: Dictionary)
+signal quest_event_failed(quest_id: String, event_type: String, reason: String, retryable: bool)
 
 # ── Configuración ─────────────────────────────────────────────────────────────
 
@@ -55,6 +59,10 @@ var _exploration_http: HTTPRequest
 var _exploration_queue: Array[Dictionary] = []
 var _exploration_current: Dictionary = {}
 var _exploration_busy := false
+var _quest_http: HTTPRequest
+var _quest_queue: Array[Dictionary] = []
+var _quest_current: Dictionary = {}
+var _quest_busy := false
 
 # ── Ciclo de vida ─────────────────────────────────────────────────────────────
 
@@ -67,6 +75,10 @@ func _ready() -> void:
 	_exploration_http.timeout = 10.0
 	add_child(_exploration_http)
 	_exploration_http.request_completed.connect(_on_exploration_request_completed)
+	_quest_http = HTTPRequest.new()
+	_quest_http.timeout = 10.0
+	add_child(_quest_http)
+	_quest_http.request_completed.connect(_on_quest_request_completed)
 	_player_id = _load_or_create_player_id()
 	print("[ApiService] Inicializado. Player ID: ", _player_id)
 
@@ -75,6 +87,66 @@ func _ready() -> void:
 ## Devuelve el player_id del jugador actual (UUID v4).
 func get_player_id() -> String:
 	return _player_id
+
+
+func _api_base_url() -> String:
+	var override := OS.get_environment("VIDEOJUEGO_API_BASE_URL")
+	return override if not override.is_empty() else API_BASE_URL
+
+
+func cargar_misiones() -> void:
+	_quest_queue.append({"kind": "get"})
+	_pump_quest_queue()
+
+
+func registrar_evento_mision(quest_id: String, event_type: String, payload: Dictionary = {}) -> void:
+	_quest_queue.append({"kind": "put", "quest_id": quest_id, "event": event_type, "payload": payload})
+	_pump_quest_queue()
+
+
+func _pump_quest_queue() -> void:
+	if _quest_busy or _quest_queue.is_empty():
+		return
+	_quest_current = _quest_queue.pop_front()
+	_quest_busy = true
+	var url := "%s/api/quests/%s" % [_api_base_url(), _player_id]
+	var error := OK
+	if str(_quest_current["kind"]) == "get":
+		error = _quest_http.request(url, PackedStringArray(), HTTPClient.METHOD_GET)
+	else:
+		url += "/%s" % str(_quest_current["quest_id"])
+		var payload: Dictionary = _quest_current["payload"].duplicate()
+		payload["event"] = _quest_current["event"]
+		error = _quest_http.request(url, PackedStringArray(["Content-Type: application/json"]), HTTPClient.METHOD_PUT, JSON.stringify(payload))
+	if error != OK:
+		_quest_busy = false
+		_emit_quest_failure("No se pudo iniciar la solicitud HTTP", true)
+		call_deferred("_pump_quest_queue")
+
+
+func _on_quest_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+	_quest_busy = false
+	var data: Variant = JSON.parse_string(body.get_string_from_utf8())
+	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
+		var reason := str(data.get("hint", data.get("error", "Sin conexión con el servidor"))) if data is Dictionary else "Sin conexión con el servidor"
+		_emit_quest_failure(reason, result != HTTPRequest.RESULT_SUCCESS or response_code >= 500)
+	elif not data is Dictionary:
+		_emit_quest_failure("Respuesta inválida del servidor", true)
+	elif str(_quest_current["kind"]) == "get":
+		if data.get("quests") is Array:
+			quests_loaded.emit(data["quests"])
+		else:
+			_emit_quest_failure("Lista de misiones inválida", true)
+	else:
+		quest_event_saved.emit(str(_quest_current["quest_id"]), str(_quest_current["event"]), data)
+	call_deferred("_pump_quest_queue")
+
+
+func _emit_quest_failure(reason: String, retryable: bool) -> void:
+	if str(_quest_current.get("kind", "")) == "get":
+		quest_load_failed.emit(reason)
+	else:
+		quest_event_failed.emit(str(_quest_current.get("quest_id", "")), str(_quest_current.get("event", "")), reason, retryable)
 
 
 ## Usa una solicitud HTTP independiente para no bloquear el guardado del armario.
@@ -98,7 +170,7 @@ func _pump_exploration_queue() -> void:
 	_exploration_current = _exploration_queue.pop_front()
 	_exploration_busy = true
 	var kind := str(_exploration_current["kind"])
-	var url := "%s/api/exploration/%s" % [API_BASE_URL, _player_id]
+	var url := "%s/api/exploration/%s" % [_api_base_url(), _player_id]
 	var error := OK
 	if kind == "get":
 		error = _exploration_http.request(url, PackedStringArray(), HTTPClient.METHOD_GET)
@@ -208,7 +280,7 @@ func guardar_personalizacion(
 		"character_type": character_type,
 	})
 	var headers := PackedStringArray(["Content-Type: application/json"])
-	var url := "%s/api/customization/%s" % [API_BASE_URL, _player_id]
+	var url := "%s/api/customization/%s" % [_api_base_url(), _player_id]
 
 	var err := _http.request(url, headers, HTTPClient.METHOD_PUT, body)
 	if err != OK:
@@ -224,7 +296,7 @@ func _enviar_get() -> void:
 	_request_in_progress = true
 	_current_req = _ReqType.GET_CUSTOMIZATION
 
-	var url := "%s/api/customization/%s" % [API_BASE_URL, _player_id]
+	var url := "%s/api/customization/%s" % [_api_base_url(), _player_id]
 	var err := _http.request(url, PackedStringArray(), HTTPClient.METHOD_GET)
 	if err != OK:
 		_request_in_progress = false
@@ -341,8 +413,11 @@ func _manejar_respuesta_put(result: int, response_code: int) -> void:
 # ── Privado: Player ID ────────────────────────────────────────────────────────
 
 func _load_or_create_player_id() -> String:
+	var isolated_id := OS.get_environment("VIDEOJUEGO_TEST_PLAYER_ID")
+	if not isolated_id.is_empty():
+		return isolated_id
 	var config := ConfigFile.new()
-	if config.load(PLAYER_ID_PATH) == OK:
+	if config.load(_player_id_path()) == OK:
 		var saved_id := str(config.get_value("player", "id", ""))
 		if not saved_id.is_empty():
 			return saved_id
@@ -351,7 +426,7 @@ func _load_or_create_player_id() -> String:
 	var new_id := _generar_uuid_v4()
 	config.set_value("player", "id", new_id)
 	config.set_value("sync", "pending", false)
-	config.save(PLAYER_ID_PATH)
+	config.save(_player_id_path())
 	print("[ApiService] Nuevo player_id generado: ", new_id)
 	return new_id
 
@@ -383,13 +458,18 @@ func _generar_uuid_v4() -> String:
 
 func _get_pending_sync() -> bool:
 	var config := ConfigFile.new()
-	if config.load(PLAYER_ID_PATH) != OK:
+	if config.load(_player_id_path()) != OK:
 		return false
 	return bool(config.get_value("sync", "pending", false))
 
 func _set_pending_sync(value: bool) -> void:
 	var config := ConfigFile.new()
 	# Cargar datos existentes para no perder el player_id
-	config.load(PLAYER_ID_PATH)
+	config.load(_player_id_path())
 	config.set_value("sync", "pending", value)
-	config.save(PLAYER_ID_PATH)
+	config.save(_player_id_path())
+
+
+func _player_id_path() -> String:
+	var isolated_path := OS.get_environment("VIDEOJUEGO_PLAYER_ID_CACHE")
+	return isolated_path if not isolated_path.is_empty() else PLAYER_ID_PATH

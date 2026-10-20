@@ -25,7 +25,7 @@ animation = &"walk_up"
 [node name="InteractionIndicator" parent="." index="4"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 134.0
-offset_bottom = 44.0
+offset_left = -98.0
+offset_top = -136.0
+offset_right = 98.0
+offset_bottom = -78.0
