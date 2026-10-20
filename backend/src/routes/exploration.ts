@@ -61,6 +61,24 @@ router.put('/:playerId/:placeId', async (req: Request, res: Response, next: Next
     }
 
     const isDiscovery = body.data.event === 'discover';
+    if (isDiscovery) {
+      // HU_7 conserva sus descubrimientos históricos. Solo los nuevos requieren
+      // que la aventura correspondiente haya desbloqueado la narrativa.
+      const permission = await pool.query<{ allowed: boolean }>(
+        `SELECT EXISTS (
+           SELECT 1 FROM player_place_progress
+           WHERE player_id = $1 AND place_id = $2 AND discovered_at IS NOT NULL
+         ) OR EXISTS (
+           SELECT 1 FROM player_quest_progress
+           WHERE player_id = $1 AND quest_id = $2 AND status = 'completed'
+         ) AS allowed`,
+        [player.data, place.data],
+      );
+      if (!permission.rows[0].allowed) {
+        res.status(403).json({ error: 'Historia bloqueada', hint: 'Completa la misión del lugar para abrir su narrativa.' });
+        return;
+      }
+    }
     // El único UPDATE permitido es la transición visitado -> descubierto.
     // Repetir visitas o descubrimientos no cambia las fechas originales.
     const upsert = await pool.query<ProgressRow>(

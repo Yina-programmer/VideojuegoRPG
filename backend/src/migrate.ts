@@ -30,7 +30,14 @@ async function runMigration(): Promise<void> {
       .filter((file) => /^\d+_.*\.sql$/.test(file))
       .sort();
 
+    const onlyIndex = process.argv.indexOf('--only');
+    const onlyFile = onlyIndex >= 0 ? process.argv[onlyIndex + 1] : undefined;
+    if (onlyIndex >= 0 && (!onlyFile || !files.includes(onlyFile))) {
+      throw new Error('La migración indicada no existe en backend/migrations.');
+    }
+
     for (const file of files) {
+      if (onlyFile && file !== onlyFile) continue;
       console.log(`⏳  Aplicando ${file}...`);
       await pool.query(fs.readFileSync(path.join(migrationsPath, file), 'utf8'));
       console.log(`✅  ${file} completada.`);

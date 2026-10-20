@@ -2,6 +2,7 @@ extends Node
 
 signal dialogue_started
 signal dialogue_finished
+signal dialogue_finished_with(npc_id: String)
 
 const DIALOGUE_UI_SCENE := preload("res://scenes/ui/dialogue_ui.tscn")
 const INTERACT_ACTION := "Interact"
@@ -101,11 +102,14 @@ func _update_focused_interactable() -> void:
 
 	var nearest: Node2D
 	var nearest_distance := INF
+	var best_priority := -1
 	for candidate in _candidates:
 		if not is_instance_valid(candidate):
 			continue
+		var priority := int(candidate.get_interaction_priority()) if candidate.has_method("get_interaction_priority") else 0
 		var distance := _nearby_player.global_position.distance_squared_to(candidate.global_position)
-		if distance < nearest_distance:
+		if priority > best_priority or (priority == best_priority and distance < nearest_distance):
+			best_priority = priority
 			nearest_distance = distance
 			nearest = candidate
 
@@ -178,6 +182,9 @@ func _finish_dialogue() -> void:
 
 
 func _on_dialogue_closed() -> void:
+	var finished_id := ""
+	if is_instance_valid(_active_interactable):
+		finished_id = str(_active_interactable.get("npc_id"))
 	await _restore_conversation_view()
 	if is_instance_valid(_active_interactable) and _active_interactable.has_method("end_interaction"):
 		_active_interactable.end_interaction()
@@ -185,6 +192,8 @@ func _on_dialogue_closed() -> void:
 		_dialogue_player.set_movement_enabled(true)
 	_reset_dialogue_state()
 	dialogue_finished.emit()
+	if not finished_id.is_empty():
+		dialogue_finished_with.emit(finished_id)
 	_update_focused_interactable()
 
 

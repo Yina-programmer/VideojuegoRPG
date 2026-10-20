@@ -348,7 +348,8 @@ func _go_back() -> void:
 
 func _load_character_type() -> String:
 	var config := ConfigFile.new()
-	if config.load(CUSTOMIZATION_PATH) != OK:
+	var isolated_path := OS.get_environment("VIDEOJUEGO_CUSTOMIZATION_CACHE")
+	if config.load(isolated_path if not isolated_path.is_empty() else CUSTOMIZATION_PATH) != OK:
 		return FEMALE
 	var saved_type := str(config.get_value("character", "type", FEMALE))
 	return saved_type if saved_type in [FEMALE, MALE] else FEMALE

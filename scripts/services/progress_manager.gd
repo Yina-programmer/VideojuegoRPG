@@ -75,6 +75,10 @@ func get_record(place_id: String) -> Dictionary:
 	return _confirmed.get(place_id, {}).duplicate(true)
 
 
+func has_confirmed_discovery(place_id: String) -> bool:
+	return _confirmed_level(place_id) == DISCOVERED
+
+
 func get_discovered_count() -> int:
 	var discovered := 0
 	for place_id in _catalog_order:
@@ -240,7 +244,7 @@ func _emit_sync_status() -> void:
 
 func _load_cache() -> void:
 	var config := ConfigFile.new()
-	if config.load(CACHE_PATH) != OK:
+	if config.load(_cache_path()) != OK:
 		return
 	if str(config.get_value("exploration", "player_id", "")) != ApiService.get_player_id():
 		return
@@ -257,6 +261,11 @@ func _save_cache() -> void:
 	config.set_value("exploration", "player_id", ApiService.get_player_id())
 	config.set_value("exploration", "confirmed", _confirmed)
 	config.set_value("exploration", "pending", _pending)
-	var result := config.save(CACHE_PATH)
+	var result := config.save(_cache_path())
 	if result != OK:
 		push_warning("No se pudo conservar la cola de exploración (%d)" % result)
+
+
+func _cache_path() -> String:
+	var isolated_path := OS.get_environment("VIDEOJUEGO_EXPLORATION_CACHE")
+	return isolated_path if not isolated_path.is_empty() else CACHE_PATH

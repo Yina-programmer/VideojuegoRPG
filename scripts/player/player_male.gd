@@ -145,12 +145,12 @@ func guardar_personalizacion() -> Error:
 	config.set_value("character", "type", "hombre")
 	config.set_value("character", "outfit", outfit_actual)
 	config.set_value("character", "hair", cabello_actual)
-	return config.save(CUSTOMIZATION_PATH)
+	return config.save(_customization_path())
 
 
 func cargar_personalizacion() -> void:
 	var config = ConfigFile.new()
-	if config.load(CUSTOMIZATION_PATH) != OK:
+	if config.load(_customization_path()) != OK:
 		return
 	if str(config.get_value("character", "type", "mujer")) != "hombre":
 		return
@@ -161,6 +161,11 @@ func cargar_personalizacion() -> void:
 		cambiar_outfit(saved_outfit)
 	if hair_styles.has(saved_hair):
 		cambiar_cabello(saved_hair)
+
+
+func _customization_path() -> String:
+	var isolated_path := OS.get_environment("VIDEOJUEGO_CUSTOMIZATION_CACHE")
+	return isolated_path if not isolated_path.is_empty() else CUSTOMIZATION_PATH
 
 
 func _unhandled_key_input(event) -> void:

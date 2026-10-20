@@ -10,6 +10,36 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/poi_prompt.tscn" id="6_poi_prompt"]
 [ext_resource type="PackedScene" path="res://scenes/ui/ExplorationJournal.tscn" id="7_journal"]
 [ext_resource type="PackedScene" path="res://scenes/ui/DiscoveryNotification.tscn" id="8_discovery"]
+[ext_resource type="PackedScene" path="res://scenes/quests/QuestCollectible.tscn" id="9_collectible"]
+[ext_resource type="PackedScene" path="res://scenes/ui/QuestNotebook.tscn" id="10_quests"]
+
+[sub_resource type="StyleBoxFlat" id="QuestHintStyle"]
+bg_color = Color(0.035, 0.03, 0.03, 0.82)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.58, 0.33, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="QuestToastStyle"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.035, 0.03, 0.03, 0.82)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.86, 0.57, 0.25, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]
 texture = ExtResource("1_palki")
@@ -6258,6 +6288,80 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_closet_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_closet_hover")
 text = "📖  BITÁCORA"
 
+[node name="QuestButton" type="Button" parent="MapUI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -230.0
+offset_top = 164.0
+offset_right = -24.0
+offset_bottom = 222.0
+grow_horizontal = 0
+tooltip_text = "Abrir la Libreta de pistas (K)"
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_closet_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_closet_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_closet_hover")
+text = "✦  LIBRETA DE PISTAS"
+
+[node name="QuestHintPanel" type="PanelContainer" parent="MapUI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -500.0
+offset_top = 236.0
+offset_right = -24.0
+offset_bottom = 390.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("QuestHintStyle")
+
+[node name="Margin" type="MarginContainer" parent="MapUI/QuestHintPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="QuestHint" type="Label" parent="MapUI/QuestHintPanel/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+vertical_alignment = 1
+
+[node name="QuestToast" type="PanelContainer" parent="MapUI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = -126.0
+offset_right = 360.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("QuestToastStyle")
+
+[node name="Text" type="Label" parent="MapUI/QuestToast"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="POIPrompt" parent="." unique_id=2000506176 instance=ExtResource("6_poi_prompt")]
 
 [node name="Polito" parent="." unique_id=1229645785 instance=ExtResource("3_o16v3")]
@@ -6285,3 +6389,88 @@ layer = 20
 [node name="ExplorationJournal" parent="." instance=ExtResource("7_journal")]
 
 [node name="DiscoveryNotification" parent="." instance=ExtResource("8_discovery")]
+
+[node name="QuestNotebook" parent="." instance=ExtResource("10_quests")]
+
+[node name="CartelArte" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-720, -1710)
+item_id = "arte"
+quest_id = "hippies"
+item_name = "Cartel ARTE"
+description = "Un cartel habla de creación y expresión."
+hint = "El mensaje empieza con una idea."
+
+[node name="CartelCalle" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-1060, -1490)
+item_id = "calle"
+quest_id = "hippies"
+item_name = "Cartel CALLE"
+description = "Una palabra que recuerda el espacio compartido."
+hint = "El arte sale al espacio público."
+
+[node name="CartelMemoria" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-355, -1250)
+item_id = "memoria"
+quest_id = "hippies"
+item_name = "Cartel MEMORIA"
+description = "El último cartel habla de recordar."
+hint = "¿Qué deja el arte en las calles?"
+
+[node name="CartelFalso" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-840, -1120)
+item_id = "cartel_falso"
+quest_id = "hippies"
+item_name = "Cartel extraño"
+description = "La letra no coincide con los demás carteles."
+hint = "Es una pista falsa. No pierdes los otros carteles."
+paper_color = Color(0.72, 0.79, 0.64, 1)
+
+[node name="Documento1980" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-655, -3180)
+item_id = "doc_1980"
+quest_id = "politecnico"
+required_step = "outfit"
+item_name = "Documento de 1980"
+description = "Fundación del Politécnico Grancolombiano."
+appearance = "Documento"
+paper_color = Color(0.68, 0.87, 0.96, 1)
+
+[node name="Documento1981" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-205, -2960)
+item_id = "doc_1981"
+quest_id = "politecnico"
+required_step = "outfit"
+item_name = "Documento de 1981"
+description = "Las actividades académicas comenzaron en marzo de 1981."
+appearance = "Documento"
+paper_color = Color(0.68, 0.87, 0.96, 1)
+
+[node name="Documento1991" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-665, -2700)
+item_id = "doc_1991"
+quest_id = "politecnico"
+required_step = "outfit"
+item_name = "Documento de 1991"
+description = "Reconocimiento como institución universitaria."
+appearance = "Documento"
+paper_color = Color(0.68, 0.87, 0.96, 1)
+
+[node name="BoletoUno" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-4670, 455)
+item_id = "boleto_1"
+quest_id = "theatron"
+item_name = "Primer fragmento del pase"
+description = "Se alcanza a leer: pantalla y sala."
+hint = "Ese pase parece de un espectáculo anterior."
+appearance = "Boleto"
+paper_color = Color(0.85, 0.67, 0.95, 1)
+
+[node name="BoletoDos" parent="." instance=ExtResource("9_collectible")]
+position = Vector2(-4300, 700)
+item_id = "boleto_2"
+quest_id = "theatron"
+item_name = "Segundo fragmento del pase"
+description = "Una imagen de proyector completa el boleto."
+hint = "Pantalla, sala y proyector: el edificio fue un cine."
+appearance = "Boleto"
+paper_color = Color(0.85, 0.67, 0.95, 1)

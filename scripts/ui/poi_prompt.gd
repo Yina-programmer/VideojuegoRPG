@@ -11,6 +11,8 @@ signal poi_selected(point_of_interest: Area2D)
 
 var _current_poi: Area2D
 var _suspended := false
+var _locked := true
+var _loading := true
 var _transition: Tween
 var _shown_position := Vector2.ZERO
 
@@ -19,6 +21,7 @@ func _ready() -> void:
 	_shown_position = card.position
 	card.visible = false
 	card.modulate.a = 0.0
+	discover_button.hide()
 	discover_button.pressed.connect(_on_discover_pressed)
 
 
@@ -27,7 +30,7 @@ func show_poi(point_of_interest: Area2D) -> void:
 		return
 	_current_poi = point_of_interest
 	_apply_data(point_of_interest.get_poi_data())
-	if not _suspended:
+	if not _suspended and not _locked and not _loading:
 		_animate_in()
 
 
@@ -42,12 +45,25 @@ func set_suspended(suspended: bool) -> void:
 	_suspended = suspended
 	if _suspended:
 		_animate_out()
-	elif is_instance_valid(_current_poi):
+	elif is_instance_valid(_current_poi) and not _locked and not _loading:
 		_animate_in()
 
 
 func get_current_poi() -> Area2D:
 	return _current_poi
+
+
+func set_locked(locked: bool, loading: bool = false) -> void:
+	_locked = locked
+	_loading = loading
+	discover_button.visible = not locked and not loading
+	discover_button.disabled = locked or loading
+	if locked or loading:
+		_kill_transition()
+		card.hide()
+		card.modulate.a = 0.0
+	elif is_instance_valid(_current_poi) and not _suspended and not card.visible:
+		_animate_in()
 
 
 func _apply_data(data: Dictionary) -> void:
@@ -82,6 +98,7 @@ func _animate_in() -> void:
 	if not is_instance_valid(_current_poi):
 		return
 	_kill_transition()
+	discover_button.visible = not _locked and not _loading
 	card.visible = true
 	card.position = _shown_position + Vector2(-22.0, 0.0)
 	card.modulate.a = 0.0
@@ -95,6 +112,7 @@ func _animate_in() -> void:
 
 
 func _animate_out() -> void:
+	discover_button.hide()
 	if not card.visible:
 		return
 	_kill_transition()
@@ -112,5 +130,5 @@ func _kill_transition() -> void:
 
 
 func _on_discover_pressed() -> void:
-	if is_instance_valid(_current_poi) and not _suspended:
+	if is_instance_valid(_current_poi) and not _suspended and not _locked and not _loading:
 		poi_selected.emit(_current_poi)
