@@ -40,7 +40,7 @@ signal exploration_event_failed(place_id: String, event_type: String, reason: St
 # ── Configuración ─────────────────────────────────────────────────────────────
 
 ## URL base de la API. Cambiar aquí si el backend corre en otro puerto o host.
-const API_BASE_URL    := "http://localhost:4000"
+const API_BASE_URL := "http://localhost:4001"
 const PLAYER_ID_PATH  := "user://player_id.cfg"
 
 # ── Estado interno ────────────────────────────────────────────────────────────
