@@ -166,24 +166,54 @@ discovery_hint = "Un espacio donde el arte y las historias se encuentran."
 related_npc_name = "Nico"
 category_color = Color(0.93, 0.48, 0.25, 1)
 
-[node name="PolitecnicoPOI" parent="." instance=ExtResource("3_nbb1n")]
-position = Vector2(-415, -3112)
-scale = Vector2(32, 35)
+[node name="PolitecnicoPOI" parent="." unique_id=2128788537 instance=ExtResource("3_nbb1n")]
+position = Vector2(-631.00006, -2792)
+scale = Vector2(36, 32)
 place_id = "politecnico"
 place_name = "Politécnico Grancolombiano"
 category = "Educación, tecnología e innovación"
-description = "¿Sabías que el Politécnico Grancolombiano comenzó su historia hace más de cuatro décadas?\n\nLa institución fue fundada en 1980 y comenzó sus actividades académicas en marzo de 1981. Desde sus primeros años ofreció formación tecnológica, incluyendo estudios relacionados con la administración de sistemas.\n\nEn 1991 adquirió el carácter de institución universitaria y con el paso del tiempo amplió su oferta académica, incorporando nuevas modalidades de formación.\n\nSu campus en Chapinero reúne espacios de aprendizaje, una biblioteca y recursos audiovisuales dedicados a la fotografía, el sonido y la producción de contenidos.\n\nHoy, el Poli representa un punto de encuentro entre estudiantes, tecnología y creatividad. Aquí las ideas pueden convertirse en investigaciones, proyectos y soluciones para la sociedad.\n\nDato interesante: la formación relacionada con los sistemas y la tecnología formó parte de sus primeros años de enseñanza.\n\nFuentes de referencia:\nhttps://www.poli.edu.co/fundadores\nhttps://www.poli.edu.co/crea/areas-que-componen-el-crea"
+description = "¿Sabías que el Politécnico Grancolombiano comenzó su historia hace más de cuatro décadas?
+
+La institución fue fundada en 1980 y comenzó sus actividades académicas en marzo de 1981. Desde sus primeros años ofreció formación tecnológica, incluyendo estudios relacionados con la administración de sistemas.
+
+En 1991 adquirió el carácter de institución universitaria y con el paso del tiempo amplió su oferta académica, incorporando nuevas modalidades de formación.
+
+Su campus en Chapinero reúne espacios de aprendizaje, una biblioteca y recursos audiovisuales dedicados a la fotografía, el sonido y la producción de contenidos.
+
+Hoy, el Poli representa un punto de encuentro entre estudiantes, tecnología y creatividad. Aquí las ideas pueden convertirse en investigaciones, proyectos y soluciones para la sociedad.
+
+Dato interesante: la formación relacionada con los sistemas y la tecnología formó parte de sus primeros años de enseñanza.
+
+Fuentes de referencia:
+https://www.poli.edu.co/fundadores
+https://www.poli.edu.co/crea/areas-que-componen-el-crea"
 discovery_hint = "Un lugar donde las ideas se transforman en conocimiento."
 related_npc_name = "Polito"
 category_color = Color(0.2, 0.67, 0.87, 1)
 
-[node name="TheatronPOI" parent="." instance=ExtResource("3_nbb1n")]
-position = Vector2(-4473, 733)
-scale = Vector2(24, 26)
+[node name="TheatronPOI" parent="." unique_id=66344684 instance=ExtResource("3_nbb1n")]
+position = Vector2(-4296, 468)
+scale = Vector2(18, 16)
 place_id = "theatron"
 place_name = "Theatron: historia, música y diversidad"
 category = "Vida nocturna, cultura y diversidad"
-description = "¿Sabías que antes de convertirse en uno de los lugares más representativos de la vida nocturna de Bogotá, Theatron fue un cine?\n\nEn este edificio funcionó el antiguo cine Metro Riviera. Con el paso de los años, el espacio tuvo diferentes usos, incluyendo una etapa como iglesia.\n\nEn 2002 comenzó una nueva historia: el lugar se transformó en un espacio de entretenimiento, música y encuentro.\n\nCon el tiempo, Theatron creció y reunió diferentes ambientes musicales, convirtiéndose en uno de los referentes de la vida nocturna de Chapinero.\n\nPero su importancia no está solamente en las fiestas. También se ha convertido en un espacio simbólico de visibilidad, encuentro y expresión para la comunidad LGBTIQ+.\n\nDato interesante: el edificio ha pasado de proyectar películas a reunir personas de diferentes culturas e identidades alrededor de la música.\n\nSu historia demuestra cómo un mismo lugar puede transformarse y adquirir nuevos significados para una ciudad.\n\nFuentes de referencia:\nhttps://bogota.gov.co/mi-ciudad/desarrollo-economico/orgullo-lgbti-en-bogota-empresas-y-organizaciones-con-diversidad\nhttps://www.archdaily.cl/cl/941293/theatron-espacios-que-aprenden-en-colombia"
+description = "¿Sabías que antes de convertirse en uno de los lugares más representativos de la vida nocturna de Bogotá, Theatron fue un cine?
+
+En este edificio funcionó el antiguo cine Metro Riviera. Con el paso de los años, el espacio tuvo diferentes usos, incluyendo una etapa como iglesia.
+
+En 2002 comenzó una nueva historia: el lugar se transformó en un espacio de entretenimiento, música y encuentro.
+
+Con el tiempo, Theatron creció y reunió diferentes ambientes musicales, convirtiéndose en uno de los referentes de la vida nocturna de Chapinero.
+
+Pero su importancia no está solamente en las fiestas. También se ha convertido en un espacio simbólico de visibilidad, encuentro y expresión para la comunidad LGBTIQ+.
+
+Dato interesante: el edificio ha pasado de proyectar películas a reunir personas de diferentes culturas e identidades alrededor de la música.
+
+Su historia demuestra cómo un mismo lugar puede transformarse y adquirir nuevos significados para una ciudad.
+
+Fuentes de referencia:
+https://bogota.gov.co/mi-ciudad/desarrollo-economico/orgullo-lgbti-en-bogota-empresas-y-organizaciones-con-diversidad
+https://www.archdaily.cl/cl/941293/theatron-espacios-que-aprenden-en-colombia"
 discovery_hint = "Un antiguo escenario que encontró una nueva forma de brillar."
 related_npc_name = "Dante"
 category_color = Color(0.73, 0.43, 0.92, 1)
@@ -218,7 +248,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_closet_hover")
 theme_override_styles/focus = SubResource("StyleBoxFlat_closet_hover")
 text = "✦  ARMARIO"
 
-[node name="JournalButton" type="Button" parent="MapUI"]
+[node name="JournalButton" type="Button" parent="MapUI" unique_id=293327648]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -262,6 +292,35 @@ layer = 20
 
 [node name="NarrativePanel" parent="UI_narrative" unique_id=358796154 instance=ExtResource("4_nrt70")]
 
-[node name="ExplorationJournal" parent="." instance=ExtResource("7_journal")]
+[node name="ExplorationJournal" parent="." unique_id=1358998595 instance=ExtResource("7_journal")]
 
-[node name="DiscoveryNotification" parent="." instance=ExtResource("8_discovery")]
+[node name="DiscoveryNotification" parent="." unique_id=222878904 instance=ExtResource("8_discovery")]
+
+[node name="EdificiosColision" type="StaticBody2D" parent="." unique_id=1257250887]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=1229802985]
+polygon = PackedVector2Array(-1253, -3274, -629, -3275, -624, -2964, -160, -2962, -162, -3272, -9, -3276, -2, -2340, -1249, -2338)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=699225200]
+polygon = PackedVector2Array(-1069, -1849, -1077, -1576, -802, -1576, -803, -1623, -456, -1617, -454, -1583, -375, -1583, -313, -1546, -317, -1708, -466, -1710, -471, -1853, -626, -1851, -628, -1712, -807, -1719, -803, -1846)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=1092566434]
+polygon = PackedVector2Array(-1245, -1068, -1245, -967, -5, -968, -9, -1078)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=846715877]
+polygon = PackedVector2Array(-472, -541, -1255, -552, -1259, -160, -469, -156)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=77926066]
+polygon = PackedVector2Array(-4528, -157, -4527, -1877, -1727, -1872, -1720, -155)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=993344140]
+polygon = PackedVector2Array(-3121, -3276, -3121, -2338, -1718, -2338, -1718, -3275)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=597720586]
+polygon = PackedVector2Array(-1252, 782, -1253, 314, -6, 314, -3, 783)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=153907901]
+polygon = PackedVector2Array(1401, 780, 1405, 310, 2181, 315, 2179, 782)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="EdificiosColision" unique_id=44817468]
+polygon = PackedVector2Array(-4523, 780, -4523, 316, -4063, 315, -4056, 778)
