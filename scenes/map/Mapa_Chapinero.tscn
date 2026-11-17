@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bf8x24d4gqcqo" path="res://assets/ui/Narrativa/NarrativePanel.tscn" id="4_nrt70"]
 [ext_resource type="PackedScene" uid="uid://dako7agcuujpn" path="res://scenes/npc/characters/npc_theatron.tscn" id="5_theatron"]
 [ext_resource type="PackedScene" path="res://scenes/ui/poi_prompt.tscn" id="6_poi_prompt"]
-[ext_resource type="PackedScene" path="res://scenes/ui/ExplorationJournal.tscn" id="7_journal"]
+[ext_resource type="PackedScene" uid="uid://6oy34xxe2cxi" path="res://scenes/ui/ExplorationJournal.tscn" id="7_journal"]
 [ext_resource type="PackedScene" path="res://scenes/ui/DiscoveryNotification.tscn" id="8_discovery"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tdpcy"]

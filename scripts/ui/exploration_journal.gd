@@ -10,6 +10,9 @@ signal closed
 @onready var progress_bar: ProgressBar = $Root/Window/Margin/Content/Progress
 @onready var status_label: Label = $Root/Window/Margin/Content/Status
 @onready var completion_label: Label = $Root/Window/Margin/Content/Completion
+@onready var search_input: LineEdit = $Root/Window/Margin/Content/SearchFilters/SearchInput
+@onready var category_filter: OptionButton = $Root/Window/Margin/Content/SearchFilters/CategoryFilter
+@onready var state_filter: OptionButton = $Root/Window/Margin/Content/SearchFilters/StateFilter
 @onready var cards_scroll: ScrollContainer = $Root/Window/Margin/Content/CardsScroll
 @onready var cards_flow: HFlowContainer = $Root/Window/Margin/Content/CardsScroll/CardsFlow
 @onready var detail_scroll: ScrollContainer = $Root/Window/Margin/Content/DetailScroll
@@ -33,6 +36,15 @@ func _ready() -> void:
 	ProgressManager.exploration_progress_changed.connect(_on_progress_counts_changed)
 	ProgressManager.loading_changed.connect(_on_loading_changed)
 	ProgressManager.synchronization_changed.connect(_on_sync_changed)
+	state_filter.clear()
+	state_filter.add_item("Todos")
+	state_filter.add_item("Pendientes")
+	state_filter.add_item("Descubiertos")
+	state_filter.select(0)
+
+	search_input.text_changed.connect(_on_filter_changed)
+	category_filter.item_selected.connect(_on_filter_selected)
+	state_filter.item_selected.connect(_on_filter_selected)
 	_refresh()
 
 
@@ -123,15 +135,80 @@ func _update_status() -> void:
 	else:
 		status_label.text = "✓ Recorrido sincronizado"
 
+func _update_category_options() -> void:
+	var previous_category := ""
+	if category_filter.selected >= 0:
+		previous_category = category_filter.get_item_text(category_filter.selected)
+
+	category_filter.clear()
+	category_filter.add_item("Todas las categorías")
+
+	var categories: Array[String] = []
+	for place in ProgressManager.get_places():
+		var place_id := str(place.get("place_id", ""))
+		# La categoría de un lugar totalmente pendiente sigue siendo desconocida.
+		if ProgressManager.get_state(place_id) == ProgressManager.PENDING:
+			continue
+		var category := str(place.get("category", ""))
+		if not category.is_empty() and not categories.has(category):
+			categories.append(category)
+
+	categories.sort()
+	for category in categories:
+		category_filter.add_item(category)
+
+	category_filter.select(0)
+	for index in range(1, category_filter.item_count):
+		if category_filter.get_item_text(index) == previous_category:
+			category_filter.select(index)
+			break
+
+
+func _matches_filters(place: Dictionary) -> bool:
+	var place_id := str(place.get("place_id", ""))
+	var state := ProgressManager.get_state(place_id)
+	var query := search_input.text.strip_edges().to_lower()
+
+	if state_filter.selected == 1 and state == ProgressManager.DISCOVERED:
+		return false
+	if state_filter.selected == 2 and state != ProgressManager.DISCOVERED:
+		return false
+
+	if category_filter.selected > 0:
+		# No revelar la categoría de un lugar que aún no se ha visitado.
+		if state == ProgressManager.PENDING:
+			return false
+		if str(place.get("category", "")) != category_filter.get_item_text(category_filter.selected):
+			return false
+
+	if not query.is_empty():
+		# El nombre de un lugar pendiente permanece oculto en la búsqueda.
+		if state == ProgressManager.PENDING:
+			return false
+		if not str(place.get("name", "")).to_lower().contains(query):
+			return false
+
+	return true
+func _on_filter_changed(_new_text: String) -> void:
+	_rebuild_cards()
+
+
+func _on_filter_selected(_index: int) -> void:
+	_rebuild_cards()
+
 
 func _rebuild_cards() -> void:
 	for child in cards_flow.get_children():
 		cards_flow.remove_child(child)
 		child.queue_free()
+
+	_update_category_options()
 	for place in ProgressManager.get_places():
-		cards_flow.add_child(_make_card(place))
+		if _matches_filters(place):
+			cards_flow.add_child(_make_card(place))
+
 	if root.visible and detail_scroll.visible:
-		# La vista de detalle también debe reflejar la confirmación de la fecha.
+		# Actualizar también el detalle si está abierto.
 		var place_id := str(detail_scroll.get_meta("place_id", ""))
 		if not place_id.is_empty():
 			_fill_detail(place_id)
