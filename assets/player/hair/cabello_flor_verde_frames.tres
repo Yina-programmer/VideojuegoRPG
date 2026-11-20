@@ -2,6 +2,42 @@
 
 [ext_resource type="Texture2D" uid="uid://cp88p7f4sdxdw" path="res://assets/player/hair/cabello_trenza_flor_verde.png" id="1"]
 
+[sub_resource type="AtlasTexture" id="D1"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="D2"]
+atlas = ExtResource("1")
+region = Rect2(325, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="D3"]
+atlas = ExtResource("1")
+region = Rect2(650, 0, 325, 403)
+
+[sub_resource type="AtlasTexture" id="L1"]
+atlas = ExtResource("1")
+region = Rect2(0, 403, 325, 403)
+
+[sub_resource type="AtlasTexture" id="L2"]
+atlas = ExtResource("1")
+region = Rect2(325, 403, 325, 403)
+
+[sub_resource type="AtlasTexture" id="L3"]
+atlas = ExtResource("1")
+region = Rect2(650, 403, 325, 403)
+
+[sub_resource type="AtlasTexture" id="R1"]
+atlas = ExtResource("1")
+region = Rect2(0, 806, 325, 403)
+
+[sub_resource type="AtlasTexture" id="R2"]
+atlas = ExtResource("1")
+region = Rect2(325, 806, 325, 403)
+
+[sub_resource type="AtlasTexture" id="R3"]
+atlas = ExtResource("1")
+region = Rect2(650, 806, 325, 403)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_uf5tr"]
 atlas = ExtResource("1")
 region = Rect2(0, 1209, 325, 403)
@@ -16,6 +52,48 @@ region = Rect2(650, 1209, 325, 403)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("D1")
+}, {
+"duration": 1.0,
+"texture": SubResource("D2")
+}, {
+"duration": 1.0,
+"texture": SubResource("D3")
+}],
+"loop": 1,
+"name": &"walk_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("L1")
+}, {
+"duration": 1.0,
+"texture": SubResource("L2")
+}, {
+"duration": 1.0,
+"texture": SubResource("L3")
+}],
+"loop": 1,
+"name": &"walk_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("R1")
+}, {
+"duration": 1.0,
+"texture": SubResource("R2")
+}, {
+"duration": 1.0,
+"texture": SubResource("R3")
+}],
+"loop": 1,
+"name": &"walk_right",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uf5tr")
