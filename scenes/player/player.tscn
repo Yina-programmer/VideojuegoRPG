@@ -475,9 +475,9 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5h11f"]
-size = Vector2(174, 365)
+size = Vector2(120, 140)
 
-[node name="player" type="CharacterBody2D" groups=["player"] unique_id=18230161]
+[node name="player" type="CharacterBody2D" unique_id=18230161 groups=["player"]]
 position = Vector2(-3, -24)
 scale = Vector2(0.274, 0.274)
 script = ExtResource("1_gmlin")
@@ -616,7 +616,7 @@ frame_progress = 0.99422556
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=166824803]
 visible = false
 modulate = Color(0.9999997, 0.11356702, 0.86151034, 1)
-position = Vector2(0, 10)
+position = Vector2(0, 90)
 shape = SubResource("RectangleShape2D_5h11f")
 
 [editable path="visual/hair_castano"]
