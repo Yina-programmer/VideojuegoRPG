@@ -4,12 +4,15 @@ import fs from 'fs';
 import path from 'path';
 import app from '../src/app';
 import { pool } from '../src/db';
+import { deleteAuthenticatedPlayers, seedAuthenticatedPlayer } from './authTestUtils';
 
 // ── UUID fijo para todos los tests ───────────────────────────────────────────
 // Este ID nunca debe aparecer en la base de desarrollo.
 // Se usa para aislar los datos de test y limpiarlos con DELETE puntual.
 const TEST_PLAYER_ID = 'a1b2c3d4-e5f6-4789-8abc-def012345678';
 const TEST_MALE_PLAYER_ID = 'b1b2c3d4-e5f6-4789-8abc-def012345678';
+let api: ReturnType<typeof request.agent>;
+let maleApi: ReturnType<typeof request.agent>;
 
 const VALID_BODY = {
   outfit_id: 'rosa',
@@ -38,6 +41,14 @@ beforeAll(async () => {
     'DELETE FROM player_customization WHERE player_id IN ($1, $2)',
     [TEST_PLAYER_ID, TEST_MALE_PLAYER_ID],
   );
+  await pool.query(fs.readFileSync(path.resolve(__dirname, '../migrations/004_player_accounts.sql'), 'utf8'));
+  await deleteAuthenticatedPlayers([TEST_PLAYER_ID, TEST_MALE_PLAYER_ID]);
+  const token = await seedAuthenticatedPlayer(TEST_PLAYER_ID, 'customization_female');
+  const maleToken = await seedAuthenticatedPlayer(TEST_MALE_PLAYER_ID, 'customization_male');
+  api = request.agent(app);
+  api.set('Authorization', `Bearer ${token}`);
+  maleApi = request.agent(app);
+  maleApi.set('Authorization', `Bearer ${maleToken}`);
 });
 
 afterAll(async () => {
@@ -46,6 +57,7 @@ afterAll(async () => {
     'DELETE FROM player_customization WHERE player_id IN ($1, $2)',
     [TEST_PLAYER_ID, TEST_MALE_PLAYER_ID],
   );
+  await deleteAuthenticatedPlayers([TEST_PLAYER_ID, TEST_MALE_PLAYER_ID]);
   await pool.end();
 });
 
@@ -53,7 +65,7 @@ afterAll(async () => {
 
 describe('GET /api/customization/:playerId — jugador sin registro', () => {
   it('devuelve 404 cuando el jugador no tiene personalización guardada', async () => {
-    const res = await request(app).get(
+    const res = await api.get(
       `/api/customization/${TEST_PLAYER_ID}`,
     );
     expect(res.status).toBe(404);
@@ -61,10 +73,9 @@ describe('GET /api/customization/:playerId — jugador sin registro', () => {
   });
 
   it('devuelve 400 para un UUID con formato inválido', async () => {
-    const res = await request(app).get('/api/customization/no-es-uuid');
-    expect(res.status).toBe(400);
+    const res = await api.get('/api/customization/no-es-uuid');
+    expect(res.status).toBe(403);
     expect(res.body).toHaveProperty('error');
-    expect(res.body).toHaveProperty('details');
   });
 });
 
@@ -72,7 +83,7 @@ describe('GET /api/customization/:playerId — jugador sin registro', () => {
 
 describe('PUT /api/customization/:playerId — validación Zod', () => {
   it('devuelve 422 para outfit_id fuera de la lista blanca', async () => {
-    const res = await request(app)
+    const res = await api
       .put(`/api/customization/${TEST_PLAYER_ID}`)
       .send({ ...VALID_BODY, outfit_id: 'outfit_fantasma' });
 
@@ -82,7 +93,7 @@ describe('PUT /api/customization/:playerId — validación Zod', () => {
   });
 
   it('devuelve 422 para hair_style_id fuera de la lista blanca', async () => {
-    const res = await request(app)
+    const res = await api
       .put(`/api/customization/${TEST_PLAYER_ID}`)
       .send({ ...VALID_BODY, hair_style_id: 'pelo_imaginario' });
 
@@ -91,7 +102,7 @@ describe('PUT /api/customization/:playerId — validación Zod', () => {
   });
 
   it('devuelve 422 para character_type no permitido', async () => {
-    const res = await request(app)
+    const res = await api
       .put(`/api/customization/${TEST_PLAYER_ID}`)
       .send({ ...VALID_BODY, character_type: 'robot' });
 
@@ -100,11 +111,11 @@ describe('PUT /api/customization/:playerId — validación Zod', () => {
   });
 
   it('devuelve 400 para UUID malformado en la URL', async () => {
-    const res = await request(app)
+    const res = await api
       .put('/api/customization/uuid-malo-123')
       .send(VALID_BODY);
 
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(403);
     expect(res.body).toHaveProperty('error');
   });
 });
@@ -113,7 +124,7 @@ describe('PUT /api/customization/:playerId — validación Zod', () => {
 
 describe('PUT /api/customization/:playerId — UPSERT', () => {
   it('crea un nuevo registro para un jugador nuevo (primer PUT)', async () => {
-    const res = await request(app)
+    const res = await api
       .put(`/api/customization/${TEST_PLAYER_ID}`)
       .send(VALID_BODY);
 
@@ -128,7 +139,7 @@ describe('PUT /api/customization/:playerId — UPSERT', () => {
 
   it('CRÍTICO: dos PUTs del mismo player_id producen exactamente 1 fila', async () => {
     // Segundo PUT con datos diferentes
-    const segundoPut = await request(app)
+    const segundoPut = await api
       .put(`/api/customization/${TEST_PLAYER_ID}`)
       .send({ outfit_id: 'azul', hair_style_id: 'flor_verde', character_type: 'mujer' });
 
@@ -153,7 +164,7 @@ describe('PUT /api/customization/:playerId — UPSERT', () => {
     const createdAtBefore = before[0].created_at.getTime();
 
     // Tercer PUT
-    await request(app)
+    await api
       .put(`/api/customization/${TEST_PLAYER_ID}`)
       .send({ outfit_id: 'negro', hair_style_id: 'trenzas_rojas', character_type: 'mujer' });
 
@@ -181,7 +192,7 @@ describe('PUT /api/customization/:playerId — UPSERT', () => {
 
 describe('PUT/GET masculino — persistencia completa', () => {
   it('guarda y recupera outfit, cabello y tipo del personaje hombre', async () => {
-    const putResponse = await request(app)
+    const putResponse = await maleApi
       .put(`/api/customization/${TEST_MALE_PLAYER_ID}`)
       .send(VALID_MALE_BODY);
 
@@ -190,7 +201,7 @@ describe('PUT/GET masculino — persistencia completa', () => {
     expect(putResponse.body.hair_style_id).toBe(VALID_MALE_BODY.hair_style_id);
     expect(putResponse.body.character_type).toBe(VALID_MALE_BODY.character_type);
 
-    const getResponse = await request(app).get(
+    const getResponse = await maleApi.get(
       `/api/customization/${TEST_MALE_PLAYER_ID}`,
     );
 
@@ -203,7 +214,7 @@ describe('PUT/GET masculino — persistencia completa', () => {
 
 describe('GET /api/customization/:playerId — después de UPSERT', () => {
   it('devuelve los datos del último PUT correctamente', async () => {
-    const res = await request(app).get(
+    const res = await api.get(
       `/api/customization/${TEST_PLAYER_ID}`,
     );
 

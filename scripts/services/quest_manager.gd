@@ -7,6 +7,7 @@ signal puzzle_ready(quest_id: String)
 
 const CACHE_PATH := "user://quest_queue.cfg"
 const NPC_QUESTS := {"hippie": "hippies", "polito": "politecnico", "theatron_host": "theatron"}
+const MAIN_PLACE_IDS: Array[String] = ["hippies", "politecnico", "theatron"]
 const QUESTS := {
 	"hippies": {"title": "Los mensajes perdidos", "npc": "Nico", "items": ["arte", "calle", "memoria"], "symbol": "Arte"},
 	"politecnico": {"title": "El archivo secreto", "npc": "Polito", "items": ["doc_1980", "doc_1981", "doc_1991"], "symbol": "Conocimiento"},
@@ -42,8 +43,12 @@ func _ready() -> void:
 	_retry.one_shot = true
 	add_child(_retry)
 	_retry.timeout.connect(_refresh)
-	_load_cache()
-	_refresh()
+	AuthManager.session_started.connect(_on_session_started)
+	AuthManager.session_ended.connect(_on_session_ended)
+	if ApiService.has_authenticated_player():
+		_on_session_started(AuthManager.get_profile())
+	else:
+		_loading = true
 
 
 func is_loading() -> bool:
@@ -79,6 +84,18 @@ func is_completed(quest_id: String) -> bool:
 
 func is_unlocked(place_id: String) -> bool:
 	return is_completed(place_id) or ProgressManager.has_confirmed_discovery(place_id)
+
+
+func is_tunnel_access_unlocked() -> bool:
+	# El túnel es una recompensa posterior a HU_8: no basta con tener eventos
+	# pendientes en la cola local. Tanto las misiones como los descubrimientos
+	# deben formar parte del estado confirmado del jugador.
+	if is_loading() or ProgressManager.is_loading():
+		return false
+	for place_id in MAIN_PLACE_IDS:
+		if not is_completed(place_id) or not ProgressManager.has_confirmed_discovery(place_id):
+			return false
+	return true
 
 
 func has_items(quest_id: String) -> bool:
@@ -192,6 +209,8 @@ func send_event(quest_id: String, event_type: String, payload: Dictionary = {}) 
 
 
 func _refresh() -> void:
+	if not ApiService.has_authenticated_player():
+		return
 	ApiService.cargar_misiones()
 
 
@@ -220,7 +239,7 @@ func _on_load_failed(reason: String) -> void:
 
 
 func _flush() -> void:
-	if _sending or _pending.is_empty():
+	if _sending or _pending.is_empty() or not ApiService.has_authenticated_player():
 		return
 	_sending = true
 	var action: Dictionary = _pending.front()
@@ -289,3 +308,26 @@ func _save_cache() -> void:
 func _cache_path() -> String:
 	var isolated_path := OS.get_environment("VIDEOJUEGO_QUEST_CACHE")
 	return isolated_path if not isolated_path.is_empty() else CACHE_PATH
+
+
+func _on_session_started(_profile: Dictionary) -> void:
+	_reset_runtime_state()
+	_loading = true
+	_load_cache()
+	loading_changed.emit(true)
+	_refresh()
+
+
+func _on_session_ended() -> void:
+	_reset_runtime_state()
+	_loading = true
+	loading_changed.emit(true)
+	for quest_id in QUESTS:
+		quest_changed.emit(quest_id)
+
+
+func _reset_runtime_state() -> void:
+	_retry.stop()
+	_confirmed.clear()
+	_pending.clear()
+	_sending = false

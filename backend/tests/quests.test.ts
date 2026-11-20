@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import app from '../src/app';
 import { pool } from '../src/db';
+import { deleteAuthenticatedPlayers, seedAuthenticatedPlayer } from './authTestUtils';
 
 // UUID exclusivos de la base de pruebas.
 const NICO = 'f2176900-7708-4b8a-9001-000000000001';
@@ -12,39 +13,50 @@ const POLITO_F = 'f2176900-7708-4b8a-9001-000000000003';
 const DANTE = 'f2176900-7708-4b8a-9001-000000000004';
 const OTHER = 'f2176900-7708-4b8a-9001-000000000005';
 const players = [NICO, POLITO_M, POLITO_F, DANTE, OTHER];
+const tokens: Record<string, string> = {};
+const apiFor = (id: string) => {
+  const agent = request.agent(app);
+  agent.set('Authorization', `Bearer ${tokens[id]}`);
+  return agent;
+};
 const quest = (id: string, place: string, event: string, extra = {}) =>
-  request(app).put(`/api/quests/${id}/${place}`).send({ event, ...extra });
+  apiFor(id).put(`/api/quests/${id}/${place}`).send({ event, ...extra });
 
 beforeAll(async () => {
-  for (const file of ['001_initial.sql', '002_player_place_progress.sql', '003_quest_progress.sql']) {
+  for (const file of ['001_initial.sql', '002_player_place_progress.sql', '003_quest_progress.sql', '004_player_accounts.sql']) {
     await pool.query(fs.readFileSync(path.resolve(__dirname, '../migrations', file), 'utf8'));
   }
   await pool.query('DELETE FROM player_quest_progress WHERE player_id = ANY($1::uuid[])', [players]);
   await pool.query('DELETE FROM player_place_progress WHERE player_id = ANY($1::uuid[])', [players]);
   await pool.query('DELETE FROM player_customization WHERE player_id = ANY($1::uuid[])', [players]);
+  await deleteAuthenticatedPlayers(players);
+  for (const [index, player] of players.entries()) {
+    tokens[player] = await seedAuthenticatedPlayer(player, `quest_player_${index}`);
+  }
 });
 
 afterAll(async () => {
   await pool.query('DELETE FROM player_quest_progress WHERE player_id = ANY($1::uuid[])', [players]);
   await pool.query('DELETE FROM player_place_progress WHERE player_id = ANY($1::uuid[])', [players]);
   await pool.query('DELETE FROM player_customization WHERE player_id = ANY($1::uuid[])', [players]);
+  await deleteAuthenticatedPlayers(players);
   await pool.end();
 });
 
 describe('HU_8: aventuras validadas por el servidor', () => {
   it('bloquea narrativas nuevas y acciones fuera de orden; conserva visitas', async () => {
-    expect((await request(app).put(`/api/exploration/${NICO}/hippies`).send({ event: 'visit' })).status).toBe(200);
-    expect((await request(app).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).status).toBe(403);
+    expect((await apiFor(NICO).put(`/api/exploration/${NICO}/hippies`).send({ event: 'visit' })).status).toBe(200);
+    expect((await apiFor(NICO).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).status).toBe(403);
     expect((await quest(NICO, 'hippies', 'collect', { item_id: 'arte' })).status).toBe(409);
     expect((await quest(NICO, 'fantasma', 'start')).status).toBe(422);
     expect((await quest(NICO, 'hippies', 'complete')).status).toBe(409);
-    expect((await request(app).get(`/api/quests/${OTHER}`)).body.quests).toEqual([]);
+    expect((await apiFor(OTHER).get(`/api/quests/${OTHER}`)).body.quests).toEqual([]);
   });
 
   it('Nico: cartel falso, piezas únicas, orden erróneo y desbloqueo final', async () => {
     expect((await quest(NICO, 'hippies', 'start')).status).toBe(200);
     expect((await quest(NICO, 'hippies', 'start')).status).toBe(200);
-    expect((await request(app).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).status).toBe(403);
+    expect((await apiFor(NICO).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).status).toBe(403);
     expect((await quest(NICO, 'hippies', 'solve_order', { answer: ['arte', 'calle', 'memoria'] })).status).toBe(409);
     for (const item_id of ['cartel_falso', 'arte', 'calle', 'memoria', 'arte']) {
       expect((await quest(NICO, 'hippies', 'collect', { item_id })).status).toBe(200);
@@ -52,15 +64,15 @@ describe('HU_8: aventuras validadas por el servidor', () => {
     expect((await quest(NICO, 'hippies', 'solve_order', { answer: ['memoria', 'calle', 'arte'] })).status).toBe(409);
     expect((await quest(NICO, 'hippies', 'complete')).status).toBe(409);
     expect((await quest(NICO, 'hippies', 'solve_order', { answer: ['arte', 'calle', 'memoria'] })).status).toBe(200);
-    expect((await request(app).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).status).toBe(403);
+    expect((await apiFor(NICO).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).status).toBe(403);
     const completed = await quest(NICO, 'hippies', 'complete');
     expect(completed.body.status).toBe('completed');
     expect(completed.body.narrative_unlocked_at).toBeTruthy();
     expect(completed.body.collected_items).toHaveLength(4);
-    expect((await request(app).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).body.newly_discovered).toBe(true);
-    expect((await request(app).put(`/api/exploration/${NICO}/politecnico`).send({ event: 'discover' })).status).toBe(403);
-    expect((await request(app).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).body.newly_discovered).toBe(false);
-    expect((await request(app).get(`/api/quests/${NICO}`)).body.quests[0].status).toBe('completed');
+    expect((await apiFor(NICO).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).body.newly_discovered).toBe(true);
+    expect((await apiFor(NICO).put(`/api/exploration/${NICO}/politecnico`).send({ event: 'discover' })).status).toBe(403);
+    expect((await apiFor(NICO).put(`/api/exploration/${NICO}/hippies`).send({ event: 'discover' })).body.newly_discovered).toBe(false);
+    expect((await apiFor(NICO).get(`/api/quests/${NICO}`)).body.quests[0].status).toBe('completed');
   });
 
   it.each([
@@ -109,6 +121,6 @@ describe('HU_8: aventuras validadas por el servidor', () => {
     expect((await quest(NICO, 'final', 'complete')).body.status).toBe('completed');
     const repeated = await quest(NICO, 'final', 'complete');
     expect(repeated.body.changed).toBe(false);
-    expect((await request(app).get(`/api/quests/${OTHER}`)).body.quests).toEqual([]);
+    expect((await apiFor(OTHER).get(`/api/quests/${OTHER}`)).body.quests).toEqual([]);
   });
 });

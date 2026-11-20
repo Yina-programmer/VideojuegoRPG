@@ -3,3 +3,5 @@
 /android/
 
 Gemu/
+
+/backend/.env

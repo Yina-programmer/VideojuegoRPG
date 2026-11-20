@@ -46,6 +46,7 @@ signal quest_event_failed(quest_id: String, event_type: String, reason: String, 
 ## URL base de la API. Cambiar aquí si el backend corre en otro puerto o host.
 const API_BASE_URL := "http://localhost:4000"
 const PLAYER_ID_PATH  := "user://player_id.cfg"
+const SYNC_STATE_PATH := "user://customization_sync.cfg"
 
 # ── Estado interno ────────────────────────────────────────────────────────────
 
@@ -79,8 +80,12 @@ func _ready() -> void:
 	_quest_http.timeout = 10.0
 	add_child(_quest_http)
 	_quest_http.request_completed.connect(_on_quest_request_completed)
-	_player_id = _load_or_create_player_id()
-	print("[ApiService] Inicializado. Player ID: ", _player_id)
+	AuthManager.session_started.connect(_on_session_started)
+	AuthManager.session_ended.connect(_on_session_ended)
+	_player_id = AuthManager.get_player_id()
+	if _player_id.is_empty():
+		_player_id = OS.get_environment("VIDEOJUEGO_TEST_PLAYER_ID")
+	print("[ApiService] Inicializado. Esperando sesion autenticada.")
 
 # ── API pública ───────────────────────────────────────────────────────────────
 
@@ -89,17 +94,37 @@ func get_player_id() -> String:
 	return _player_id
 
 
+func has_authenticated_player() -> bool:
+	return not _player_id.is_empty() and (
+		AuthManager.is_authenticated()
+		or not OS.get_environment("VIDEOJUEGO_TEST_PLAYER_ID").is_empty()
+	)
+
+
+func cargar_personalizacion() -> void:
+	if not has_authenticated_player():
+		customization_load_failed.emit("Inicia sesion para cargar tu personaje")
+		return
+	_enviar_get()
+
+
 func _api_base_url() -> String:
 	var override := OS.get_environment("VIDEOJUEGO_API_BASE_URL")
 	return override if not override.is_empty() else API_BASE_URL
 
 
 func cargar_misiones() -> void:
+	if not has_authenticated_player():
+		quest_load_failed.emit("Inicia sesion para cargar tus misiones")
+		return
 	_quest_queue.append({"kind": "get"})
 	_pump_quest_queue()
 
 
 func registrar_evento_mision(quest_id: String, event_type: String, payload: Dictionary = {}) -> void:
+	if not has_authenticated_player():
+		quest_event_failed.emit(quest_id, event_type, "Sesion requerida", false)
+		return
 	_quest_queue.append({"kind": "put", "quest_id": quest_id, "event": event_type, "payload": payload})
 	_pump_quest_queue()
 
@@ -112,12 +137,12 @@ func _pump_quest_queue() -> void:
 	var url := "%s/api/quests/%s" % [_api_base_url(), _player_id]
 	var error := OK
 	if str(_quest_current["kind"]) == "get":
-		error = _quest_http.request(url, PackedStringArray(), HTTPClient.METHOD_GET)
+		error = _quest_http.request(url, AuthManager.authorization_headers(), HTTPClient.METHOD_GET)
 	else:
 		url += "/%s" % str(_quest_current["quest_id"])
 		var payload: Dictionary = _quest_current["payload"].duplicate()
 		payload["event"] = _quest_current["event"]
-		error = _quest_http.request(url, PackedStringArray(["Content-Type: application/json"]), HTTPClient.METHOD_PUT, JSON.stringify(payload))
+		error = _quest_http.request(url, AuthManager.authorization_headers(true), HTTPClient.METHOD_PUT, JSON.stringify(payload))
 	if error != OK:
 		_quest_busy = false
 		_emit_quest_failure("No se pudo iniciar la solicitud HTTP", true)
@@ -127,6 +152,8 @@ func _pump_quest_queue() -> void:
 func _on_quest_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	_quest_busy = false
 	var data: Variant = JSON.parse_string(body.get_string_from_utf8())
+	if response_code == 401:
+		AuthManager.expire_session()
 	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
 		var reason := str(data.get("hint", data.get("error", "Sin conexión con el servidor"))) if data is Dictionary else "Sin conexión con el servidor"
 		_emit_quest_failure(reason, result != HTTPRequest.RESULT_SUCCESS or response_code >= 500)
@@ -151,11 +178,17 @@ func _emit_quest_failure(reason: String, retryable: bool) -> void:
 
 ## Usa una solicitud HTTP independiente para no bloquear el guardado del armario.
 func cargar_exploracion() -> void:
+	if not has_authenticated_player():
+		exploration_load_failed.emit("Inicia sesion para cargar tu progreso")
+		return
 	_exploration_queue.append({"kind": "get"})
 	_pump_exploration_queue()
 
 
 func registrar_evento_exploracion(place_id: String, event_type: String) -> void:
+	if not has_authenticated_player():
+		exploration_event_failed.emit(place_id, event_type, "Sesion requerida")
+		return
 	_exploration_queue.append({
 		"kind": "put",
 		"place_id": place_id,
@@ -173,13 +206,13 @@ func _pump_exploration_queue() -> void:
 	var url := "%s/api/exploration/%s" % [_api_base_url(), _player_id]
 	var error := OK
 	if kind == "get":
-		error = _exploration_http.request(url, PackedStringArray(), HTTPClient.METHOD_GET)
+		error = _exploration_http.request(url, AuthManager.authorization_headers(), HTTPClient.METHOD_GET)
 	else:
 		url += "/%s" % str(_exploration_current["place_id"])
 		var body := JSON.stringify({"event": _exploration_current["event"]})
 		error = _exploration_http.request(
 			url,
-			PackedStringArray(["Content-Type: application/json"]),
+			AuthManager.authorization_headers(true),
 			HTTPClient.METHOD_PUT,
 			body,
 		)
@@ -196,6 +229,8 @@ func _on_exploration_request_completed(
 	body: PackedByteArray,
 ) -> void:
 	_exploration_busy = false
+	if response_code == 401:
+		AuthManager.expire_session()
 	if result != HTTPRequest.RESULT_SUCCESS or response_code != 200:
 		_emit_exploration_failure("Error de conexión o servidor (%d / %d)" % [result, response_code])
 		call_deferred("_pump_exploration_queue")
@@ -239,6 +274,9 @@ func iniciar_sincronizacion(
 ) -> void:
 	if _request_in_progress:
 		return
+	if not has_authenticated_player():
+		customization_load_failed.emit("Inicia sesion para usar el armario")
+		return
 
 	if _get_pending_sync():
 		# Cambios locales no sincronizados → prioridad al dato local
@@ -261,6 +299,9 @@ func guardar_personalizacion(
 	hair_style_id: String,
 	character_type: String,
 ) -> void:
+	if not has_authenticated_player():
+		customization_save_failed.emit("Inicia sesion para guardar tu personaje")
+		return
 	if _request_in_progress:
 		print("[ApiService] Solicitud en curso. Ignorando guardado duplicado.")
 		return
@@ -279,7 +320,7 @@ func guardar_personalizacion(
 		"hair_style_id":  api_hair_style_id,
 		"character_type": character_type,
 	})
-	var headers := PackedStringArray(["Content-Type: application/json"])
+	var headers := AuthManager.authorization_headers(true)
 	var url := "%s/api/customization/%s" % [_api_base_url(), _player_id]
 
 	var err := _http.request(url, headers, HTTPClient.METHOD_PUT, body)
@@ -297,7 +338,7 @@ func _enviar_get() -> void:
 	_current_req = _ReqType.GET_CUSTOMIZATION
 
 	var url := "%s/api/customization/%s" % [_api_base_url(), _player_id]
-	var err := _http.request(url, PackedStringArray(), HTTPClient.METHOD_GET)
+	var err := _http.request(url, AuthManager.authorization_headers(), HTTPClient.METHOD_GET)
 	if err != OK:
 		_request_in_progress = false
 		_current_req = _ReqType.NONE
@@ -315,6 +356,8 @@ func _on_request_completed(
 	var req_type := _current_req
 	_request_in_progress = false
 	_current_req = _ReqType.NONE
+	if response_code == 401:
+		AuthManager.expire_session()
 
 	match req_type:
 		_ReqType.GET_CUSTOMIZATION:
@@ -454,22 +497,48 @@ func _generar_uuid_v4() -> String:
 			uuid += "-"
 	return uuid
 
+
+func _on_session_started(profile: Dictionary) -> void:
+	clear_authenticated_state()
+	_player_id = str(profile.get("player_id", ""))
+
+
+func _on_session_ended() -> void:
+	clear_authenticated_state()
+	_player_id = ""
+
+
+func clear_authenticated_state() -> void:
+	_http.cancel_request()
+	_exploration_http.cancel_request()
+	_quest_http.cancel_request()
+	_request_in_progress = false
+	_current_req = _ReqType.NONE
+	_exploration_queue.clear()
+	_exploration_current.clear()
+	_exploration_busy = false
+	_quest_queue.clear()
+	_quest_current.clear()
+	_quest_busy = false
+
 # ── Privado: Pending Sync ─────────────────────────────────────────────────────
 
 func _get_pending_sync() -> bool:
 	var config := ConfigFile.new()
 	if config.load(_player_id_path()) != OK:
 		return false
+	if str(config.get_value("sync", "player_id", "")) != _player_id:
+		return false
 	return bool(config.get_value("sync", "pending", false))
 
 func _set_pending_sync(value: bool) -> void:
 	var config := ConfigFile.new()
-	# Cargar datos existentes para no perder el player_id
 	config.load(_player_id_path())
+	config.set_value("sync", "player_id", _player_id)
 	config.set_value("sync", "pending", value)
 	config.save(_player_id_path())
 
 
 func _player_id_path() -> String:
 	var isolated_path := OS.get_environment("VIDEOJUEGO_PLAYER_ID_CACHE")
-	return isolated_path if not isolated_path.is_empty() else PLAYER_ID_PATH
+	return isolated_path if not isolated_path.is_empty() else SYNC_STATE_PATH

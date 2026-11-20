@@ -1,0 +1,2470 @@
+{
+  "tile_size": 156,
+  "columns": 12,
+  "rows": 8,
+  "atlas": {
+    "01_pisos_paredes.png": [
+      {
+        "col": 0,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 0,0"
+      },
+      {
+        "col": 1,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 1,0"
+      },
+      {
+        "col": 2,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 2,0"
+      },
+      {
+        "col": 3,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 3,0"
+      },
+      {
+        "col": 4,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 4,0"
+      },
+      {
+        "col": 5,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 5,0"
+      },
+      {
+        "col": 6,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 6,0"
+      },
+      {
+        "col": 7,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 7,0"
+      },
+      {
+        "col": 8,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 8,0"
+      },
+      {
+        "col": 9,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 9,0"
+      },
+      {
+        "col": 10,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 10,0"
+      },
+      {
+        "col": 11,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 11,0"
+      },
+      {
+        "col": 0,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 0,1"
+      },
+      {
+        "col": 1,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 1,1"
+      },
+      {
+        "col": 2,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 2,1"
+      },
+      {
+        "col": 3,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 3,1"
+      },
+      {
+        "col": 4,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 4,1"
+      },
+      {
+        "col": 5,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 5,1"
+      },
+      {
+        "col": 6,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 6,1"
+      },
+      {
+        "col": 7,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 7,1"
+      },
+      {
+        "col": 8,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 8,1"
+      },
+      {
+        "col": 9,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 9,1"
+      },
+      {
+        "col": 10,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 10,1"
+      },
+      {
+        "col": 11,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 11,1"
+      },
+      {
+        "col": 0,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 0,2"
+      },
+      {
+        "col": 1,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 1,2"
+      },
+      {
+        "col": 2,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 2,2"
+      },
+      {
+        "col": 3,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 3,2"
+      },
+      {
+        "col": 4,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 4,2"
+      },
+      {
+        "col": 5,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 5,2"
+      },
+      {
+        "col": 6,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 6,2"
+      },
+      {
+        "col": 7,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 7,2"
+      },
+      {
+        "col": 8,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 8,2"
+      },
+      {
+        "col": 9,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 9,2"
+      },
+      {
+        "col": 10,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 10,2"
+      },
+      {
+        "col": 11,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 11,2"
+      },
+      {
+        "col": 0,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 0,3"
+      },
+      {
+        "col": 1,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 1,3"
+      },
+      {
+        "col": 2,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 2,3"
+      },
+      {
+        "col": 3,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 3,3"
+      },
+      {
+        "col": 4,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 4,3"
+      },
+      {
+        "col": 5,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 5,3"
+      },
+      {
+        "col": 6,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 6,3"
+      },
+      {
+        "col": 7,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 7,3"
+      },
+      {
+        "col": 8,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 8,3"
+      },
+      {
+        "col": 9,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 9,3"
+      },
+      {
+        "col": 10,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 10,3"
+      },
+      {
+        "col": 11,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 11,3"
+      },
+      {
+        "col": 0,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 0,4"
+      },
+      {
+        "col": 1,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 1,4"
+      },
+      {
+        "col": 2,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 2,4"
+      },
+      {
+        "col": 3,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 3,4"
+      },
+      {
+        "col": 4,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 4,4"
+      },
+      {
+        "col": 5,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 5,4"
+      },
+      {
+        "col": 6,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 6,4"
+      },
+      {
+        "col": 7,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 7,4"
+      },
+      {
+        "col": 8,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 8,4"
+      },
+      {
+        "col": 9,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 9,4"
+      },
+      {
+        "col": 10,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 10,4"
+      },
+      {
+        "col": 11,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 11,4"
+      },
+      {
+        "col": 0,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 0,5"
+      },
+      {
+        "col": 1,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 1,5"
+      },
+      {
+        "col": 2,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 2,5"
+      },
+      {
+        "col": 3,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 3,5"
+      },
+      {
+        "col": 4,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 4,5"
+      },
+      {
+        "col": 5,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 5,5"
+      },
+      {
+        "col": 6,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 6,5"
+      },
+      {
+        "col": 7,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 7,5"
+      },
+      {
+        "col": 8,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 8,5"
+      },
+      {
+        "col": 9,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 9,5"
+      },
+      {
+        "col": 10,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 10,5"
+      },
+      {
+        "col": 11,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 11,5"
+      },
+      {
+        "col": 0,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 0,6"
+      },
+      {
+        "col": 1,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 1,6"
+      },
+      {
+        "col": 2,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 2,6"
+      },
+      {
+        "col": 3,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 3,6"
+      },
+      {
+        "col": 4,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 4,6"
+      },
+      {
+        "col": 5,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 5,6"
+      },
+      {
+        "col": 6,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 6,6"
+      },
+      {
+        "col": 7,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 7,6"
+      },
+      {
+        "col": 8,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 8,6"
+      },
+      {
+        "col": 9,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 9,6"
+      },
+      {
+        "col": 10,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 10,6"
+      },
+      {
+        "col": 11,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 11,6"
+      },
+      {
+        "col": 0,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 0,7"
+      },
+      {
+        "col": 1,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 1,7"
+      },
+      {
+        "col": 2,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 2,7"
+      },
+      {
+        "col": 3,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 3,7"
+      },
+      {
+        "col": 4,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 4,7"
+      },
+      {
+        "col": 5,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 5,7"
+      },
+      {
+        "col": 6,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 6,7"
+      },
+      {
+        "col": 7,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 7,7"
+      },
+      {
+        "col": 8,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 8,7"
+      },
+      {
+        "col": 9,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 9,7"
+      },
+      {
+        "col": 10,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 10,7"
+      },
+      {
+        "col": 11,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Base 11,7"
+      }
+    ],
+    "02_entradas_escaleras.png": [
+      {
+        "col": 0,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 0,0"
+      },
+      {
+        "col": 1,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 1,0"
+      },
+      {
+        "col": 2,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 2,0"
+      },
+      {
+        "col": 3,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 3,0"
+      },
+      {
+        "col": 4,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 4,0"
+      },
+      {
+        "col": 0,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 0,1"
+      },
+      {
+        "col": 1,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 1,1"
+      },
+      {
+        "col": 2,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 2,1"
+      },
+      {
+        "col": 3,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 3,1"
+      },
+      {
+        "col": 4,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 4,1"
+      },
+      {
+        "col": 0,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 0,2"
+      },
+      {
+        "col": 1,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 1,2"
+      },
+      {
+        "col": 2,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 2,2"
+      },
+      {
+        "col": 3,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 3,2"
+      },
+      {
+        "col": 4,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 4,2"
+      },
+      {
+        "col": 0,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 0,3"
+      },
+      {
+        "col": 1,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 1,3"
+      },
+      {
+        "col": 2,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 2,3"
+      },
+      {
+        "col": 3,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 3,3"
+      },
+      {
+        "col": 4,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 4,3"
+      },
+      {
+        "col": 0,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 0,4"
+      },
+      {
+        "col": 1,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 1,4"
+      },
+      {
+        "col": 2,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 2,4"
+      },
+      {
+        "col": 3,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 3,4"
+      },
+      {
+        "col": 4,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 4,4"
+      },
+      {
+        "col": 0,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 0,5"
+      },
+      {
+        "col": 1,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 1,5"
+      },
+      {
+        "col": 2,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 2,5"
+      },
+      {
+        "col": 3,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 3,5"
+      },
+      {
+        "col": 4,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Suelo complementario 4,5"
+      },
+      {
+        "col": 5,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 0,0"
+      },
+      {
+        "col": 6,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 1,0"
+      },
+      {
+        "col": 7,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 2,0"
+      },
+      {
+        "col": 8,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 3,0"
+      },
+      {
+        "col": 9,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 4,0"
+      },
+      {
+        "col": 10,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 5,0"
+      },
+      {
+        "col": 5,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 0,1"
+      },
+      {
+        "col": 6,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 1,1"
+      },
+      {
+        "col": 7,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 2,1"
+      },
+      {
+        "col": 8,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 3,1"
+      },
+      {
+        "col": 9,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 4,1"
+      },
+      {
+        "col": 10,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 5,1"
+      },
+      {
+        "col": 5,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 0,2"
+      },
+      {
+        "col": 6,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 1,2"
+      },
+      {
+        "col": 7,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 2,2"
+      },
+      {
+        "col": 8,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 3,2"
+      },
+      {
+        "col": 9,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 4,2"
+      },
+      {
+        "col": 10,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 5,2"
+      },
+      {
+        "col": 5,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 0,3"
+      },
+      {
+        "col": 6,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 1,3"
+      },
+      {
+        "col": 7,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 2,3"
+      },
+      {
+        "col": 8,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 3,3"
+      },
+      {
+        "col": 9,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 4,3"
+      },
+      {
+        "col": 10,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 5,3"
+      },
+      {
+        "col": 5,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 0,4"
+      },
+      {
+        "col": 6,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 1,4"
+      },
+      {
+        "col": 7,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 2,4"
+      },
+      {
+        "col": 8,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 3,4"
+      },
+      {
+        "col": 9,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 4,4"
+      },
+      {
+        "col": 10,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 5,4"
+      },
+      {
+        "col": 5,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 0,5"
+      },
+      {
+        "col": 6,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 1,5"
+      },
+      {
+        "col": 7,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 2,5"
+      },
+      {
+        "col": 8,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 3,5"
+      },
+      {
+        "col": 9,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 4,5"
+      },
+      {
+        "col": 10,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared modular 5,5"
+      },
+      {
+        "col": 11,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Detalle estructural 0"
+      },
+      {
+        "col": 11,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Detalle estructural 1"
+      },
+      {
+        "col": 11,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Detalle estructural 2"
+      },
+      {
+        "col": 11,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Detalle estructural 3"
+      },
+      {
+        "col": 11,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Detalle estructural 4"
+      },
+      {
+        "col": 11,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Detalle estructural 5"
+      },
+      {
+        "col": 0,
+        "row": 6,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portón dorado"
+      },
+      {
+        "col": 1,
+        "row": 6,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal del arte"
+      },
+      {
+        "col": 2,
+        "row": 6,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal de conocimiento"
+      },
+      {
+        "col": 3,
+        "row": 6,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Puerta de fiesta KINDER"
+      },
+      {
+        "col": 4,
+        "row": 6,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Puerta secreta encadenada"
+      },
+      {
+        "col": 5,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Barril de madera"
+      },
+      {
+        "col": 6,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Bidón morado"
+      },
+      {
+        "col": 7,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Columna"
+      },
+      {
+        "col": 8,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Cono"
+      },
+      {
+        "col": 9,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Esfera de fiesta"
+      },
+      {
+        "col": 10,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Lámpara"
+      },
+      {
+        "col": 11,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Candelabro"
+      },
+      {
+        "col": 5,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Escalones"
+      },
+      {
+        "col": 6,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Caja de madera"
+      },
+      {
+        "col": 7,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Mural Chapinero"
+      },
+      {
+        "col": 8,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Flecha de salida"
+      },
+      {
+        "col": 9,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Vitrina de pistas"
+      },
+      {
+        "col": 10,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Neón musical"
+      },
+      {
+        "col": 11,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Escaleras largas"
+      }
+    ],
+    "03_kinder_terror_recuerdos.png": [
+      {
+        "col": 0,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal memoria"
+      },
+      {
+        "col": 1,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal conocimiento"
+      },
+      {
+        "col": 2,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal arte"
+      },
+      {
+        "col": 3,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal KINDER fiesta"
+      },
+      {
+        "col": 4,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal secreto"
+      },
+      {
+        "col": 5,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal laboratorio"
+      },
+      {
+        "col": 6,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Portal terror"
+      },
+      {
+        "col": 7,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Escalera con luces"
+      },
+      {
+        "col": 8,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Escalera gris"
+      },
+      {
+        "col": 9,
+        "row": 0,
+        "size": [
+          1,
+          2
+        ],
+        "name": "Escalera metálica"
+      },
+      {
+        "col": 10,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pasarela metálica"
+      },
+      {
+        "col": 11,
+        "row": 0,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Panel eléctrico"
+      },
+      {
+        "col": 10,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Reja"
+      },
+      {
+        "col": 11,
+        "row": 1,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Puerta industrial"
+      },
+      {
+        "col": 0,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 0,0"
+      },
+      {
+        "col": 1,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 0,1"
+      },
+      {
+        "col": 2,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 0,2"
+      },
+      {
+        "col": 3,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 0,3"
+      },
+      {
+        "col": 4,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 0,4"
+      },
+      {
+        "col": 5,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 0,5"
+      },
+      {
+        "col": 6,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 0,6"
+      },
+      {
+        "col": 7,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 1,0"
+      },
+      {
+        "col": 8,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 1,1"
+      },
+      {
+        "col": 9,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 1,2"
+      },
+      {
+        "col": 10,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 1,3"
+      },
+      {
+        "col": 11,
+        "row": 2,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 1,4"
+      },
+      {
+        "col": 0,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 1,5"
+      },
+      {
+        "col": 1,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 1,6"
+      },
+      {
+        "col": 2,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 2,0"
+      },
+      {
+        "col": 3,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 2,1"
+      },
+      {
+        "col": 4,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 2,2"
+      },
+      {
+        "col": 5,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 2,3"
+      },
+      {
+        "col": 6,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 2,4"
+      },
+      {
+        "col": 7,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 2,5"
+      },
+      {
+        "col": 8,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 2,6"
+      },
+      {
+        "col": 9,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 3,0"
+      },
+      {
+        "col": 10,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 3,1"
+      },
+      {
+        "col": 11,
+        "row": 3,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 3,2"
+      },
+      {
+        "col": 0,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 3,3"
+      },
+      {
+        "col": 1,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 3,4"
+      },
+      {
+        "col": 2,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 3,5"
+      },
+      {
+        "col": 3,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 3,6"
+      },
+      {
+        "col": 4,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 4,0"
+      },
+      {
+        "col": 5,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 4,1"
+      },
+      {
+        "col": 6,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 4,2"
+      },
+      {
+        "col": 7,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 4,3"
+      },
+      {
+        "col": 8,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 4,4"
+      },
+      {
+        "col": 9,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 4,5"
+      },
+      {
+        "col": 10,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pavimento y marcas 4,6"
+      },
+      {
+        "col": 11,
+        "row": 4,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 0,0"
+      },
+      {
+        "col": 0,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 0,1"
+      },
+      {
+        "col": 1,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 0,2"
+      },
+      {
+        "col": 2,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 0,3"
+      },
+      {
+        "col": 3,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 0,4"
+      },
+      {
+        "col": 4,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 0,5"
+      },
+      {
+        "col": 5,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 1,0"
+      },
+      {
+        "col": 6,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 1,1"
+      },
+      {
+        "col": 7,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 1,2"
+      },
+      {
+        "col": 8,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 1,3"
+      },
+      {
+        "col": 9,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 1,4"
+      },
+      {
+        "col": 10,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 1,5"
+      },
+      {
+        "col": 11,
+        "row": 5,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 2,0"
+      },
+      {
+        "col": 0,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 2,1"
+      },
+      {
+        "col": 1,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 2,2"
+      },
+      {
+        "col": 2,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 2,3"
+      },
+      {
+        "col": 3,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 2,4"
+      },
+      {
+        "col": 4,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pared industrial y arcos 2,5"
+      },
+      {
+        "col": 5,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Caja"
+      },
+      {
+        "col": 6,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Barriles"
+      },
+      {
+        "col": 7,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Cono de peligro"
+      },
+      {
+        "col": 8,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Barricada"
+      },
+      {
+        "col": 9,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Señal alerta"
+      },
+      {
+        "col": 10,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Ángel misterioso"
+      },
+      {
+        "col": 11,
+        "row": 6,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Busto histórico"
+      },
+      {
+        "col": 0,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Gárgola"
+      },
+      {
+        "col": 1,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Candelabros"
+      },
+      {
+        "col": 2,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Símbolo y cruz"
+      },
+      {
+        "col": 3,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Bola disco"
+      },
+      {
+        "col": 4,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Banderines neón"
+      },
+      {
+        "col": 5,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Cabina música"
+      },
+      {
+        "col": 6,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Barra de fiesta"
+      },
+      {
+        "col": 7,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Pista luminosa"
+      },
+      {
+        "col": 8,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Sábanas fantasma ficcional"
+      },
+      {
+        "col": 9,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Árbol seco"
+      },
+      {
+        "col": 10,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Cristales"
+      },
+      {
+        "col": 11,
+        "row": 7,
+        "size": [
+          1,
+          1
+        ],
+        "name": "Fuente azul"
+      }
+    ]
+  }
+}

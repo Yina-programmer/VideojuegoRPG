@@ -4,8 +4,10 @@ import {
   customizationBodySchema,
   playerIdSchema,
 } from '../validators/customization.schema';
+import { requireAuth, requirePlayerOwnership } from '../middleware/auth';
 
 const router = Router();
+router.use(requireAuth);
 
 // ── Tipo de fila devuelta por la BD ──────────────────────────────────────────
 interface CustomizationRow {
@@ -28,6 +30,7 @@ interface CustomizationRow {
  */
 router.get(
   '/:playerId',
+  requirePlayerOwnership,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const idParse = playerIdSchema.safeParse(req.params.playerId);
@@ -72,6 +75,7 @@ router.get(
  */
 router.put(
   '/:playerId',
+  requirePlayerOwnership,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       // 1. Validar player_id

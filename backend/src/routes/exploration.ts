@@ -5,8 +5,10 @@ import {
   placeIdSchema,
   playerIdSchema,
 } from '../validators/exploration.schema';
+import { requireAuth, requirePlayerOwnership } from '../middleware/auth';
 
 const router = Router();
+router.use(requireAuth);
 
 interface ProgressRow {
   player_id: string;
@@ -24,7 +26,7 @@ function present(row: ProgressRow) {
 }
 
 // Un jugador sin filas recibe una colección vacía, no un error ni un falso descubrimiento.
-router.get('/:playerId', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get('/:playerId', requirePlayerOwnership, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const player = playerIdSchema.safeParse(req.params.playerId);
     if (!player.success) {
@@ -43,7 +45,7 @@ router.get('/:playerId', async (req: Request, res: Response, next: NextFunction)
   }
 });
 
-router.put('/:playerId/:placeId', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.put('/:playerId/:placeId', requirePlayerOwnership, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const player = playerIdSchema.safeParse(req.params.playerId);
     const place = placeIdSchema.safeParse(req.params.placeId);

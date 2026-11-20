@@ -38,8 +38,12 @@ func _ready() -> void:
 	_retry_timer.one_shot = true
 	add_child(_retry_timer)
 	_retry_timer.timeout.connect(_retry)
-	_load_cache()
-	_refresh_from_server()
+	AuthManager.session_started.connect(_on_session_started)
+	AuthManager.session_ended.connect(_on_session_ended)
+	if ApiService.has_authenticated_player():
+		_on_session_started(AuthManager.get_profile())
+	else:
+		_loading = true
 
 
 func register_places(places: Array) -> void:
@@ -146,6 +150,8 @@ func _confirmed_level(place_id: String) -> int:
 
 
 func _refresh_from_server() -> void:
+	if not ApiService.has_authenticated_player():
+		return
 	if _load_in_flight or not _syncing_place_id.is_empty():
 		return
 	_load_in_flight = true
@@ -222,6 +228,8 @@ func _flush_pending() -> void:
 
 
 func _retry() -> void:
+	if not ApiService.has_authenticated_player():
+		return
 	if not _online:
 		_refresh_from_server()
 	else:
@@ -269,3 +277,28 @@ func _save_cache() -> void:
 func _cache_path() -> String:
 	var isolated_path := OS.get_environment("VIDEOJUEGO_EXPLORATION_CACHE")
 	return isolated_path if not isolated_path.is_empty() else CACHE_PATH
+
+
+func _on_session_started(_profile: Dictionary) -> void:
+	_reset_runtime_state()
+	_loading = true
+	_load_cache()
+	loading_changed.emit(true)
+	_refresh_from_server()
+
+
+func _on_session_ended() -> void:
+	_reset_runtime_state()
+	_loading = true
+	loading_changed.emit(true)
+	_emit_all_states()
+
+
+func _reset_runtime_state() -> void:
+	_retry_timer.stop()
+	_confirmed.clear()
+	_pending.clear()
+	_rewards.clear()
+	_online = false
+	_load_in_flight = false
+	_syncing_place_id = ""
