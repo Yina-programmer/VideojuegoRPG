@@ -4,6 +4,7 @@ import { errorHandler } from './middleware/errorHandler';
 import customizationRouter from './routes/customization';
 import explorationRouter from './routes/exploration';
 import questsRouter from './routes/quests';
+import authRouter from './routes/auth';
 import { pool } from './db';
 
 const app = express();
@@ -31,6 +32,7 @@ app.get('/health', async (_req, res) => {
 });
 
 // Funcionalidades del videojuego
+app.use('/api/auth', authRouter);
 app.use('/api/customization', customizationRouter);
 app.use('/api/exploration', explorationRouter);
 app.use('/api/quests', questsRouter);

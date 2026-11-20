@@ -1,0 +1,436 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/auth/auth_screen.gd" id="1_auth"]
+[ext_resource type="Script" path="res://scripts/auth/auth_background.gd" id="2_background"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="3_female"]
+[ext_resource type="PackedScene" path="res://scenes/player/player_male.tscn" id="4_male"]
+
+[sub_resource type="StyleBoxFlat" id="PanelMain"]
+bg_color = Color(0.025, 0.02, 0.09, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.65, 0.18, 0.96, 0.95)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0.08, 0.72, 1, 0.3)
+shadow_size = 16
+
+[sub_resource type="StyleBoxFlat" id="ButtonPrimary"]
+bg_color = Color(0.04, 0.48, 0.78, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.9, 1, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="ButtonPrimaryHover"]
+bg_color = Color(0.15, 0.64, 0.93, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.72, 0.98, 1, 1)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+shadow_color = Color(0.05, 0.8, 1, 0.45)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="ButtonSecondary"]
+bg_color = Color(0.2, 0.07, 0.34, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.25, 0.78, 0.95)
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[sub_resource type="StyleBoxFlat" id="InputNormal"]
+bg_color = Color(0.035, 0.04, 0.12, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.36, 0.65, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 16.0
+content_margin_right = 16.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="InputFocus"]
+bg_color = Color(0.045, 0.045, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.12, 0.86, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 16.0
+content_margin_right = 16.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="GhostButton"]
+bg_color = Color(0.07, 0.035, 0.15, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7, 0.32, 0.95, 0.7)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="OuterFrame"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.08, 0.76, 1, 0.55)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[node name="AuthScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_auth")
+
+[node name="Background" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_background")
+
+[node name="OuterFrame" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = -18.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("OuterFrame")
+
+[node name="TitleArea" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 24.0
+offset_bottom = 151.0
+grow_horizontal = 2
+theme_override_constants/separation = -5
+
+[node name="Title" type="Label" parent="TitleArea"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.98, 1, 1)
+theme_override_colors/font_outline_color = Color(0.98, 0.08, 0.77, 0.95)
+theme_override_colors/font_shadow_color = Color(0.05, 0.75, 1, 0.8)
+theme_override_constants/outline_size = 9
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 72
+text = "ChapiUnderLand"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="TitleArea"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.56, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "AVENTURAS Y SECRETOS BAJO CHAPINERO"
+horizontal_alignment = 1
+
+[node name="Characters" type="Node2D" parent="."]
+z_index = 4
+
+[node name="FemaleCharacter" parent="Characters" instance=ExtResource("3_female")]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 0
+
+[node name="MaleCharacter" parent="Characters" instance=ExtResource("4_male")]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 0
+
+[node name="ContentCenter" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 140.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FormPanel" type="PanelContainer" parent="ContentCenter"]
+custom_minimum_size = Vector2(610, 460)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelMain")
+
+[node name="Margin" type="MarginContainer" parent="ContentCenter/FormPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 42
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 42
+theme_override_constants/margin_bottom = 16
+
+[node name="MainVBox" type="VBoxContainer" parent="ContentCenter/FormPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="WelcomePanel" type="VBoxContainer" parent="ContentCenter/FormPanel/Margin/MainVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="WelcomeTitle" type="Label" parent="ContentCenter/FormPanel/Margin/MainVBox/WelcomePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.83, 0.43, 1)
+theme_override_font_sizes/font_size = 31
+text = "Tu aventura cultural comienza aqui"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="WelcomeText" type="Label" parent="ContentCenter/FormPanel/Margin/MainVBox/WelcomePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.86, 0.96, 1)
+theme_override_font_sizes/font_size = 20
+text = "Inicia sesion para continuar tu historia o crea una cuenta para comenzar una partida independiente."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Spacer" type="Control" parent="ContentCenter/FormPanel/Margin/MainVBox/WelcomePanel"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+
+[node name="WelcomeLogin" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/WelcomePanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("ButtonPrimary")
+theme_override_styles/hover = SubResource("ButtonPrimaryHover")
+theme_override_styles/focus = SubResource("ButtonPrimaryHover")
+text = "INICIAR SESION"
+
+[node name="WelcomeRegister" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/WelcomePanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("ButtonSecondary")
+theme_override_styles/hover = SubResource("ButtonPrimaryHover")
+theme_override_styles/focus = SubResource("ButtonPrimaryHover")
+text = "CREAR CUENTA"
+
+[node name="LoginForm" type="VBoxContainer" parent="ContentCenter/FormPanel/Margin/MainVBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="Header" type="Label" parent="ContentCenter/FormPanel/Margin/MainVBox/LoginForm"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "RECUPERA TU AVENTURA"
+horizontal_alignment = 1
+
+[node name="LoginValue" type="LineEdit" parent="ContentCenter/FormPanel/Margin/MainVBox/LoginForm"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "Nombre de usuario o correo"
+clear_button_enabled = true
+
+[node name="PasswordRow" type="HBoxContainer" parent="ContentCenter/FormPanel/Margin/MainVBox/LoginForm"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LoginPassword" type="LineEdit" parent="ContentCenter/FormPanel/Margin/MainVBox/LoginForm/PasswordRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "Contrasena"
+secret = true
+
+[node name="ShowLoginPassword" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/LoginForm/PasswordRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(108, 50)
+layout_mode = 2
+toggle_mode = true
+theme_override_styles/normal = SubResource("GhostButton")
+theme_override_styles/pressed = SubResource("ButtonSecondary")
+text = "MOSTRAR"
+
+[node name="LoginButton" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/LoginForm"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("ButtonPrimary")
+theme_override_styles/hover = SubResource("ButtonPrimaryHover")
+theme_override_styles/focus = SubResource("ButtonPrimaryHover")
+text = "ENTRAR"
+
+[node name="GoRegister" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/LoginForm"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.55, 0.84, 1)
+theme_override_styles/normal = SubResource("GhostButton")
+text = "¿Aun no tienes cuenta? Crear cuenta"
+
+[node name="LoginBack" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/LoginForm"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("GhostButton")
+text = "Volver"
+
+[node name="RegisterForm" type="VBoxContainer" parent="ContentCenter/FormPanel/Margin/MainVBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Header" type="Label" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.42, 0.82, 1)
+theme_override_font_sizes/font_size = 28
+text = "CREA TU PARTIDA"
+horizontal_alignment = 1
+
+[node name="RegisterUsername" type="LineEdit" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "Nombre de usuario"
+clear_button_enabled = true
+
+[node name="RegisterEmail" type="LineEdit" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "Correo electronico"
+clear_button_enabled = true
+
+[node name="RegisterPassword" type="LineEdit" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "Contrasena (minimo 8 caracteres)"
+secret = true
+
+[node name="RegisterConfirmation" type="LineEdit" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("InputNormal")
+theme_override_styles/focus = SubResource("InputFocus")
+placeholder_text = "Confirmar contrasena"
+secret = true
+
+[node name="ShowRegisterPassword" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+toggle_mode = true
+theme_override_styles/normal = SubResource("GhostButton")
+theme_override_styles/pressed = SubResource("ButtonSecondary")
+text = "Mostrar contrasenas"
+
+[node name="RegisterButton" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("ButtonSecondary")
+theme_override_styles/hover = SubResource("ButtonPrimaryHover")
+theme_override_styles/focus = SubResource("ButtonPrimaryHover")
+text = "REGISTRARME"
+
+[node name="GoLogin" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.9, 1, 1)
+theme_override_styles/normal = SubResource("GhostButton")
+text = "¿Ya tienes cuenta? Iniciar sesion"
+
+[node name="RegisterBack" type="Button" parent="ContentCenter/FormPanel/Margin/MainVBox/RegisterForm"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("GhostButton")
+text = "Volver"
+
+[node name="StatusLabel" type="Label" parent="ContentCenter/FormPanel/Margin/MainVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Estado"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LoadingLabel" type="Label" parent="ContentCenter/FormPanel/Margin/MainVBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.74, 0.27, 1)
+theme_override_font_sizes/font_size = 16
+text = "✦ SINCRONIZANDO TU HISTORIA ✦"
+horizontal_alignment = 1

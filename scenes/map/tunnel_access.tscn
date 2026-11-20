@@ -1,0 +1,208 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/map/tunnel_access.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="InteractionShape"]
+size = Vector2(196, 148)
+
+[sub_resource type="Gradient" id="GlowGradient"]
+offsets = PackedFloat32Array(0, 0.42, 1)
+colors = PackedColorArray(0.58, 0.24, 1, 0.8, 0.2, 0.72, 1, 0.38, 0.12, 0.28, 0.55, 0)
+
+[sub_resource type="GradientTexture2D" id="GlowTexture"]
+gradient = SubResource("GlowGradient")
+width = 192
+height = 192
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="PlaqueStyle"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.025, 0.018, 0.04, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.38, 1, 0.96)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.66)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="PromptStyle"]
+content_margin_left = 18.0
+content_margin_top = 11.0
+content_margin_right = 18.0
+content_margin_bottom = 11.0
+bg_color = Color(0.025, 0.018, 0.04, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.82, 1, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 6
+
+[node name="TunnelAccess" type="Area2D"]
+visible = false
+z_index = 4
+collision_layer = 0
+collision_mask = 1
+monitoring = false
+monitorable = false
+script = ExtResource("1_script")
+
+[node name="InteractionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("InteractionShape")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Light" type="PointLight2D" parent="Visual"]
+position = Vector2(0, 3)
+energy = 0.85
+texture = SubResource("GlowTexture")
+texture_scale = 1.15
+color = Color(0.55, 0.35, 1, 1)
+
+[node name="Halo" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(-104, 0, -91, -39, -57, -68, 0, -79, 57, -68, 91, -39, 104, 0, 91, 39, 57, 68, 0, 79, -57, 68, -91, 39)
+color = Color(0.27, 0.12, 0.43, 0.42)
+
+[node name="StoneRim" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(-88, 0, -75, -32, -46, -52, 0, -61, 46, -52, 75, -32, 88, 0, 75, 32, 46, 52, 0, 61, -46, 52, -75, 32)
+color = Color(0.16, 0.12, 0.23, 1)
+
+[node name="Opening" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(-69, 0, -58, -24, -35, -39, 0, -46, 35, -39, 58, -24, 69, 0, 58, 24, 35, 39, 0, 46, -35, 39, -58, 24)
+color = Color(0.012, 0.012, 0.025, 1)
+
+[node name="OuterRing" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-88, 0, -75, -32, -46, -52, 0, -61, 46, -52, 75, -32, 88, 0, 75, 32, 46, 52, 0, 61, -46, 52, -75, 32, -88, 0)
+width = 7.0
+default_color = Color(0.63, 0.35, 0.95, 1)
+antialiased = false
+
+[node name="InnerRing" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-69, 0, -58, -24, -35, -39, 0, -46, 35, -39, 58, -24, 69, 0, 58, 24, 35, 39, 0, 46, -35, 39, -58, 24, -69, 0)
+width = 3.0
+default_color = Color(0.22, 0.76, 1, 0.9)
+antialiased = false
+
+[node name="RailLeft" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-31, -31, -31, 32)
+width = 5.0
+default_color = Color(0.48, 0.43, 0.63, 1)
+
+[node name="RailRight" type="Line2D" parent="Visual"]
+points = PackedVector2Array(31, -31, 31, 32)
+width = 5.0
+default_color = Color(0.48, 0.43, 0.63, 1)
+
+[node name="Step1" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-31, -23, 31, -23)
+width = 5.0
+default_color = Color(0.7, 0.56, 0.92, 1)
+
+[node name="Step2" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-31, -9, 31, -9)
+width = 5.0
+default_color = Color(0.63, 0.52, 0.84, 1)
+
+[node name="Step3" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-31, 5, 31, 5)
+width = 5.0
+default_color = Color(0.55, 0.48, 0.75, 1)
+
+[node name="Step4" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-31, 19, 31, 19)
+width = 5.0
+default_color = Color(0.47, 0.42, 0.67, 1)
+
+[node name="Step5" type="Line2D" parent="Visual"]
+points = PackedVector2Array(-31, 32, 31, 32)
+width = 5.0
+default_color = Color(0.39, 0.36, 0.58, 1)
+
+[node name="Symbols" type="Node2D" parent="Visual"]
+
+[node name="Arte" type="Polygon2D" parent="Visual/Symbols"]
+position = Vector2(-45, -65)
+polygon = PackedVector2Array(0, -8, 8, 0, 0, 8, -8, 0)
+color = Color(1, 0.48, 0.22, 1)
+
+[node name="Conocimiento" type="Polygon2D" parent="Visual/Symbols"]
+position = Vector2(0, -75)
+polygon = PackedVector2Array(0, -8, 8, 0, 0, 8, -8, 0)
+color = Color(0.2, 0.72, 1, 1)
+
+[node name="Diversidad" type="Polygon2D" parent="Visual/Symbols"]
+position = Vector2(45, -65)
+polygon = PackedVector2Array(0, -8, 8, 0, 0, 8, -8, 0)
+color = Color(0.78, 0.42, 1, 1)
+
+[node name="Plaque" type="PanelContainer" parent="."]
+z_index = 30
+offset_left = -185.0
+offset_top = -172.0
+offset_right = 185.0
+offset_bottom = -94.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PlaqueStyle")
+
+[node name="Margin" type="MarginContainer" parent="Plaque"]
+layout_mode = 2
+
+[node name="Content" type="VBoxContainer" parent="Plaque/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Plaque/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.88, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 21
+text = "✦  TÚNEL DE LOS ECOS  ✦"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Plaque/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.52, 0.82, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "ARTE  ·  CONOCIMIENTO  ·  DIVERSIDAD"
+horizontal_alignment = 1
+
+[node name="Prompt" type="PanelContainer" parent="."]
+visible = false
+z_index = 40
+offset_left = -500.0
+offset_top = -10.0
+offset_right = -110.0
+offset_bottom = 48.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("PromptStyle")
+
+[node name="Label" type="Label" parent="Prompt"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 19
+text = "[E]  Entrar al Túnel de los Ecos"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SurfaceSpawn" type="Marker2D" parent="."]
+position = Vector2(148, 0)

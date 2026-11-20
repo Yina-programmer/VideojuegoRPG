@@ -31,7 +31,7 @@ func _check_map() -> void:
 			return
 
 	for name in [
-		"PlayerSpawn", "Polito", "Hippie", "TheatronHost",
+		"PlayerSpawn", "Polito", "Hippie", "TheatronHost", "TunnelAccess",
 		"CartelArte", "CartelCalle", "CartelMemoria", "CartelFalso",
 		"Documento1980", "Documento1981", "Documento1991",
 		"BoletoUno", "BoletoDos",
@@ -48,6 +48,11 @@ func _check_map() -> void:
 			if Geometry2D.is_point_in_polygon(item.position, polygon.polygon):
 				_fail("%s quedó dentro de %s" % [name, polygon.name])
 				return
+
+	var tunnel_access := map.get_node("TunnelAccess")
+	if tunnel_access.visible or not tunnel_access.has_method("set_unlocked") or not tunnel_access.has_signal("enter_requested"):
+		_fail("El pasadizo del túnel no inicia oculto o no es interactivo")
+		return
 
 	for scene_path in ["res://scenes/player/player.tscn", "res://scenes/player/player_male.tscn"]:
 		var player := (load(scene_path) as PackedScene).instantiate() as CharacterBody2D

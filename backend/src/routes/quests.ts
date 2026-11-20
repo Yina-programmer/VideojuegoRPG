@@ -3,8 +3,10 @@ import { PoolClient } from 'pg';
 import { pool } from '../db';
 import { playerIdSchema } from '../validators/exploration.schema';
 import { questEventSchema, questIdSchema } from '../validators/quests.schema';
+import { requireAuth, requirePlayerOwnership } from '../middleware/auth';
 
 const router = Router();
+router.use(requireAuth);
 type QuestId = 'hippies' | 'politecnico' | 'theatron' | 'final';
 type Row = {
   player_id: string; quest_id: QuestId; status: 'active' | 'completed';
@@ -42,7 +44,7 @@ async function readRow(client: PoolClient, playerId: string, questId: QuestId): 
   )).rows[0];
 }
 
-router.get('/:playerId', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get('/:playerId', requirePlayerOwnership, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const id = playerIdSchema.safeParse(req.params.playerId);
     if (!id.success) { reject(res, 'Jugador inválido', 'Reinicia el juego.', 400); return; }
@@ -53,7 +55,7 @@ router.get('/:playerId', async (req: Request, res: Response, next: NextFunction)
   } catch (error) { next(error); }
 });
 
-router.put('/:playerId/:questId', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.put('/:playerId/:questId', requirePlayerOwnership, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const id = playerIdSchema.safeParse(req.params.playerId);
   const quest = questIdSchema.safeParse(req.params.questId);
   const body = questEventSchema.safeParse(req.body);

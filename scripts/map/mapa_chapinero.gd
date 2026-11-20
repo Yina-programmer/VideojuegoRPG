@@ -4,6 +4,8 @@ const CUSTOMIZATION_PATH = "user://player_customization.cfg"
 const CLOSET_SCENE = "res://scenes/player/wardrobe_ui.tscn"
 const FEMALE_PLAYER_SCENE = "res://scenes/player/player.tscn"
 const MALE_PLAYER_SCENE = "res://scenes/player/player_male.tscn"
+const TUNNEL_SCENE = "res://scenes/map/TunelEcosChapinero_Generado.tscn"
+const RETURN_FROM_TUNNEL_META = "returning_from_tunnel"
 
 @onready var calles: TileMapLayer = $Calles
 @onready var map_ui: CanvasLayer = $MapUI
@@ -20,6 +22,7 @@ const MALE_PLAYER_SCENE = "res://scenes/player/player_male.tscn"
 @onready var journal = $ExplorationJournal
 @onready var quest_notebook = $QuestNotebook
 @onready var discovery_notification = $DiscoveryNotification
+@onready var tunnel_access = $TunnelAccess
 
 var active_player: CharacterBody2D
 var active_pois: Array[Area2D] = []
@@ -29,6 +32,7 @@ var quest_notebook_open := false
 var _quest_toast_timer: Timer
 var _spawn_position := Vector2.ZERO
 var _has_moved_from_spawn := false
+var _changing_scene := false
 
 
 func _ready() -> void:
@@ -44,6 +48,8 @@ func _ready() -> void:
 	QuestManager.loading_changed.connect(_on_quest_loading_changed)
 	ProgressManager.loading_changed.connect(_on_quest_loading_changed)
 	ProgressManager.place_state_changed.connect(_on_quest_changed)
+	tunnel_access.enter_requested.connect(_enter_tunnel)
+	tunnel_access.focus_changed.connect(_on_tunnel_access_focus_changed)
 	InteractionManager.dialogue_finished_with.connect(_on_dialogue_finished_with)
 	_quest_toast_timer = Timer.new()
 	_quest_toast_timer.one_shot = true
@@ -68,6 +74,7 @@ func _ready() -> void:
 			point_of_interest.zone_entered.connect(_on_poi_zone_entered)
 			point_of_interest.zone_exited.connect(_on_poi_zone_exited)
 	ProgressManager.register_places(catalog)
+	_refresh_tunnel_access(false)
 	call_deferred("_try_show_discovery_notification")
 
 
@@ -80,10 +87,18 @@ func _spawn_selected_player() -> void:
 
 	selected_player.name = "player"
 	selected_player.position = player_spawn.position
+	if get_tree().root.has_meta(RETURN_FROM_TUNNEL_META):
+		selected_player.position = tunnel_access.get_surface_spawn_position()
+		get_tree().root.remove_meta(RETURN_FROM_TUNNEL_META)
 	add_child(selected_player)
 	if not selected_player.is_in_group("player"):
 		selected_player.add_to_group("player")
-	player_camera.reparent(selected_player, true)
+	# La cámara debe conservar su posición local respecto al personaje. Si se
+	# preserva la transformación global al regresar desde el túnel, se queda en
+	# el antiguo punto de aparición del Politécnico y el jugador sale de pantalla.
+	player_camera.reparent(selected_player, false)
+	player_camera.position = Vector2.ZERO
+	player_camera.make_current()
 	player_spawn.free()
 	active_player = selected_player
 	_spawn_position = selected_player.global_position
@@ -271,16 +286,21 @@ func _try_show_discovery_notification() -> void:
 func _on_quest_changed(_quest_id: String) -> void:
 	_update_quest_hint()
 	_refresh_poi_prompt()
+	_refresh_tunnel_access(true)
 
 
 func _on_quest_loading_changed(_loading: bool) -> void:
 	_update_quest_hint()
 	_refresh_poi_prompt()
+	_refresh_tunnel_access(true)
 
 
 func _update_quest_hint() -> void:
-	if QuestManager.is_loading():
+	if QuestManager.is_loading() or ProgressManager.is_loading():
 		quest_hint.text = "Cargando pistas..."
+		return
+	if QuestManager.is_tunnel_access_unlocked():
+		quest_hint.text = "✦  Túnel de los Ecos desbloqueado: busca el pasadizo secreto en el Parque de los Hippies."
 		return
 	for quest_id in ["hippies", "politecnico", "theatron", "final"]:
 		var state := QuestManager.get_quest(quest_id)
@@ -288,6 +308,42 @@ func _update_quest_hint() -> void:
 			quest_hint.text = "✦  %s: %s" % [QuestManager.QUESTS[quest_id]["title"], QuestManager.instruction(quest_id)]
 			return
 	quest_hint.text = "✦  Habla con un NPC para investigar Chapinero."
+
+
+func _refresh_tunnel_access(announce: bool) -> void:
+	var was_unlocked: bool = tunnel_access.is_unlocked()
+	var unlocked := QuestManager.is_tunnel_access_unlocked()
+	tunnel_access.set_unlocked(unlocked)
+	if announce and unlocked and not was_unlocked:
+		_show_quest_toast("✦ Pasadizo secreto desbloqueado: el Túnel de los Ecos apareció cerca del Parque de los Hippies.")
+
+
+func _on_tunnel_access_focus_changed(focused: bool) -> void:
+	if focused:
+		poi_prompt.set_suspended(true)
+	else:
+		poi_prompt.set_suspended(
+			narrative_open or journal_open or quest_notebook_open or InteractionManager.is_dialogue_active()
+		)
+		_refresh_poi_prompt()
+
+
+func _enter_tunnel() -> void:
+	if _changing_scene:
+		return
+	if not QuestManager.is_tunnel_access_unlocked():
+		_refresh_tunnel_access(false)
+		_show_quest_toast("El pasadizo todavía no está disponible.")
+		return
+	_changing_scene = true
+	if is_instance_valid(active_player):
+		active_player.set_movement_enabled(false)
+	var error := get_tree().change_scene_to_file(TUNNEL_SCENE)
+	if error != OK:
+		_changing_scene = false
+		if is_instance_valid(active_player):
+			active_player.set_movement_enabled(true)
+		_show_quest_toast("No fue posible abrir el Túnel de los Ecos.")
 
 
 func _layout_quest_ui() -> void:
